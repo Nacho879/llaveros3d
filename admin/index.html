@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backoffice - Llaveros 3D</title>
+    <meta name="description" content="Panel de administración para gestionar pedidos de llaveros 3D personalizados">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="../assets/logo.svg">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header del Backoffice -->
+    <header class="admin-header">
+        <div class="header-content">
+            <div class="logo-section">
+                <img src="../assets/logo.svg" alt="Logo Llaveros 3D" class="logo">
+                <h1>Backoffice</h1>
+            </div>
+            <nav class="admin-nav">
+                <a href="#dashboard" class="nav-link active" data-section="dashboard">
+                    <i class="fas fa-chart-line"></i> Dashboard
+                </a>
+                <a href="#pedidos" class="nav-link" data-section="pedidos">
+                    <i class="fas fa-shopping-cart"></i> Pedidos
+                </a>
+                <a href="#clientes" class="nav-link" data-section="clientes">
+                    <i class="fas fa-users"></i> Clientes
+                </a>
+                <a href="#reportes" class="nav-link" data-section="reportes">
+                    <i class="fas fa-chart-bar"></i> Reportes
+                </a>
+            </nav>
+            <div class="user-section">
+                <span class="user-name">Admin</span>
+                <button class="btn-logout" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Contenido principal -->
+    <main class="admin-main">
+        <!-- Dashboard -->
+        <section id="dashboard" class="admin-section active">
+            <div class="section-header">
+                <h2><i class="fas fa-chart-line"></i> Dashboard</h2>
+                <p>Resumen general del negocio</p>
+            </div>
+            
+            <!-- Estadísticas rápidas -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="total-pedidos">0</h3>
+                        <p>Total Pedidos</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="pedidos-pendientes">0</h3>
+                        <p>Pendientes</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="pedidos-completados">0</h3>
+                        <p>Completados</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-euro-sign"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 id="ingresos-totales">0€</h3>
+                        <p>Ingresos</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gráfico de pedidos por mes -->
+            <div class="chart-section">
+                <h3>Pedidos por Mes</h3>
+                <canvas id="pedidos-chart" width="400" height="200"></canvas>
+            </div>
+
+            <!-- Pedidos recientes -->
+            <div class="recent-section">
+                <h3>Pedidos Recientes</h3>
+                <div class="recent-pedidos" id="recent-pedidos">
+                    <!-- Se llena dinámicamente -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Gestión de Pedidos -->
+        <section id="pedidos" class="admin-section">
+            <div class="section-header">
+                <h2><i class="fas fa-shopping-cart"></i> Gestión de Pedidos</h2>
+                <p>Administra todos los pedidos recibidos</p>
+            </div>
+            
+            <!-- Filtros y búsqueda -->
+            <div class="filters-section">
+                <div class="search-box">
+                    <input type="text" id="search-pedidos" placeholder="Buscar por cliente, empresa o ID...">
+                    <i class="fas fa-search"></i>
+                </div>
+                
+                <div class="filter-controls">
+                    <select id="filter-status">
+                        <option value="">Todos los estados</option>
+                        <option value="nuevo">Nuevo</option>
+                        <option value="en-proceso">En Proceso</option>
+                        <option value="produccion">En Producción</option>
+                        <option value="completado">Completado</option>
+                        <option value="enviado">Enviado</option>
+                        <option value="cancelado">Cancelado</option>
+                    </select>
+                    
+                    <select id="filter-date">
+                        <option value="">Todas las fechas</option>
+                        <option value="hoy">Hoy</option>
+                        <option value="semana">Esta semana</option>
+                        <option value="mes">Este mes</option>
+                        <option value="trimestre">Este trimestre</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Tabla de pedidos -->
+            <div class="table-container">
+                <table class="pedidos-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Fecha</th>
+                            <th>Cliente</th>
+                            <th>Empresa</th>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Total</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pedidos-tbody">
+                        <!-- Se llena dinámicamente -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Paginación -->
+            <div class="pagination" id="pagination">
+                <!-- Se genera dinámicamente -->
+            </div>
+        </section>
+
+        <!-- Gestión de Clientes -->
+        <section id="clientes" class="admin-section">
+            <div class="section-header">
+                <h2><i class="fas fa-users"></i> Gestión de Clientes</h2>
+                <p>Administra la base de datos de clientes</p>
+            </div>
+            
+            <div class="clients-grid" id="clients-grid">
+                <!-- Se llena dinámicamente -->
+            </div>
+        </section>
+
+        <!-- Reportes -->
+        <section id="reportes" class="admin-section">
+            <div class="section-header">
+                <h2><i class="fas fa-chart-bar"></i> Reportes</h2>
+                <p>Análisis y estadísticas del negocio</p>
+            </div>
+            
+            <div class="reports-grid">
+                <div class="report-card">
+                    <h3>Ventas por Período</h3>
+                    <canvas id="ventas-chart" width="300" height="200"></canvas>
+                </div>
+                
+                <div class="report-card">
+                    <h3>Productos Más Vendidos</h3>
+                    <div id="top-products">
+                        <!-- Se llena dinámicamente -->
+                    </div>
+                </div>
+                
+                <div class="report-card">
+                    <h3>Clientes Recurrentes</h3>
+                    <div id="recurring-clients">
+                        <!-- Se llena dinámicamente -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal para ver/editar pedido -->
+    <div id="pedido-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Detalles del Pedido</h3>
+                <button class="close-modal" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <!-- Se llena dinámicamente -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal()">Cerrar</button>
+                <button class="btn btn-primary" onclick="savePedido()">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>

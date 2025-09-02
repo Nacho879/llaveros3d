@@ -283,21 +283,16 @@ function drawSilhouette(ctx, width, height) {
 let currentSlideIndex = 0;
 const slides = document.querySelectorAll('.carousel-slide');
 const dots = document.querySelectorAll('.dot');
-const captions = document.querySelectorAll('.caption');
 
 function showSlide(index) {
     // Ocultar todas las slides
     slides.forEach(slide => slide.classList.remove('active'));
     dots.forEach(dot => dot.classList.remove('active'));
-    captions.forEach(caption => caption.classList.remove('active'));
     
     // Mostrar la slide actual
     if (slides[index]) {
         slides[index].classList.add('active');
         dots[index].classList.add('active');
-        if (captions[index]) {
-            captions[index].classList.add('active');
-        }
     }
 }
 
@@ -539,5 +534,95 @@ if (!CanvasRenderingContext2D.prototype.roundRect) {
         this.quadraticCurveTo(x, y, x + radius, y);
         this.closePath();
     };
+}
+
+// Funciones auxiliares para el backoffice
+function generatePedidoId() {
+    const timestamp = Date.now();
+    const random = Math.floor(Math.random() * 1000);
+    return `P${timestamp}${random}`;
+}
+
+function calculatePrice() {
+    const cantidad = parseInt($('cantidad').value);
+    const precioBase = 1.20; // Precio base por unidad
+    const iva = 0.21; // 21% IVA
+    
+    const precioSinIva = cantidad * precioBase;
+    const precioConIva = precioSinIva * (1 + iva);
+    
+    return parseFloat(precioConIva.toFixed(2));
+}
+
+function getImageData() {
+    if (!originalImage) return null;
+    
+    // Crear canvas temporal para convertir imagen a base64
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = originalImage.width;
+    canvas.height = originalImage.height;
+    
+    ctx.drawImage(originalImage, 0, 0);
+    return canvas.toDataURL('image/png');
+}
+
+function savePedidoToLocalStorage(pedidoData) {
+    // Obtener pedidos existentes
+    let pedidos = JSON.parse(localStorage.getItem('llaveros3d_pedidos') || '[]');
+    
+    // Añadir nuevo pedido
+    pedidos.push(pedidoData);
+    
+    // Guardar en localStorage
+    localStorage.setItem('llaveros3d_pedidos', JSON.stringify(pedidos));
+    
+    console.log('Pedido guardado en localStorage:', pedidoData);
+}
+
+function showSuccessMessage(pedidoData) {
+    // Crear mensaje de éxito
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'success-message';
+    messageDiv.innerHTML = `
+        <div class="success-content">
+            <h3>¡Pedido enviado con éxito!</h3>
+            <p><strong>ID del pedido:</strong> ${pedidoData.id}</p>
+            <p><strong>Total:</strong> ${pedidoData.precio.toFixed(2)}€</p>
+            <p>Te hemos enviado un email de confirmación.</p>
+            <div class="success-actions">
+                <button onclick="window.open('admin/', '_blank')" class="btn btn-secondary">
+                    Ver en Backoffice
+                </button>
+                <button onclick="this.parentElement.parentElement.remove()" class="btn btn-primary">
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    `;
+    
+    // Añadir estilos
+    messageDiv.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+    `;
+    
+    // Añadir al body
+    document.body.appendChild(messageDiv);
+    
+    // Auto-remover después de 10 segundos
+    setTimeout(() => {
+        if (messageDiv.parentElement) {
+            messageDiv.remove();
+        }
+    }, 10000);
 }
 
