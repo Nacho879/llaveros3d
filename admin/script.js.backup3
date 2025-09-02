@@ -43,7 +43,7 @@ let pedidos = [];
 //     // loadSampleData();
 //     updateDashboard();
 //     setupEventListeners();
-});
+// });
 // 
 // // Inicializar el admin
 // function initializeAdmin() {
@@ -60,7 +60,7 @@ let pedidos = [];
 //     if (savedClientes) {
 //         clientes = JSON.parse(savedClientes);
 //     }
-}
+// }
 // 
 // // Configurar navegación
 // function setupNavigation() {
@@ -73,9 +73,43 @@ let pedidos = [];
 //             showSection(section);
 //         });
 //     });
-}
+// }
 // 
 // // Mostrar sección
+function showSection(sectionName) {
+    // Ocultar todas las secciones
+//     document.querySelectorAll('.admin-section').forEach(section => {
+//         section.classList.remove('active');
+//     });
+//     
+    // Mostrar la sección seleccionada
+    document.getElementById(sectionName).classList.add('active');
+    
+    // Actualizar navegación activa
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.classList.remove('active');
+    });
+    
+    document.querySelector(`[data-section="${sectionName}"]`).classList.add('active');
+    
+    currentSection = sectionName;
+    
+    // Cargar datos específicos de la sección
+    switch(sectionName) {
+        case 'dashboard':
+            updateDashboard();
+            break;
+        case 'pedidos':
+            renderPedidosTable();
+            break;
+        case 'clientes':
+            renderClientesGrid();
+            break;
+        case 'reportes':
+            renderReportes();
+            break;
+    }
+}
 // 
 // // Configurar event listeners
 // function setupEventListeners() {
@@ -97,7 +131,7 @@ let pedidos = [];
 //     if (filterDate) {
 //         filterDate.addEventListener('change', filterPedidos);
 //     }
-}
+// }
 // 
 // // Cargar datos de ejemplo
 // // function loadSampleData() {
@@ -207,7 +241,7 @@ let pedidos = [];
 //     updateStats();
 //     updateRecentPedidos();
 //     updateChart();
-}
+// }
 // 
 // // Actualizar estadísticas
 // function updateStats() {
@@ -220,7 +254,7 @@ let pedidos = [];
 //     document.getElementById('pedidos-pendientes').textContent = pedidosPendientes;
 //     document.getElementById('pedidos-completados').textContent = pedidosCompletados;
 //     document.getElementById('ingresos-totales').textContent = ingresosTotales.toFixed(2) + '€';
-}
+// }
 // 
 // // Actualizar pedidos recientes
 // function updateRecentPedidos() {
@@ -240,7 +274,7 @@ let pedidos = [];
 //             </div>
 //         </div>
 //     `).join('');
-}
+// }
 // 
 // // Actualizar gráfico
 // function updateChart() {
@@ -282,7 +316,7 @@ let pedidos = [];
 //         
 //         ctx.fillStyle = '#667eea';
 //     });
-}
+// }
 // 
 // // Renderizar tabla de pedidos
 // function renderPedidosTable() {
@@ -319,7 +353,7 @@ let pedidos = [];
 //     `).join('');
 //     
 //     renderPagination();
-}
+// }
 // 
 // // Renderizar paginación
 // function renderPagination() {
@@ -350,13 +384,13 @@ let pedidos = [];
 //     }
 //     
 //     pagination.innerHTML = paginationHTML;
-}
+// }
 // 
 // // Cambiar página
 // function changePage(page) {
 //     currentPage = page;
 //     renderPedidosTable();
-}
+// }
 // 
 // // Filtrar pedidos
 // function filterPedidos() {
@@ -404,7 +438,7 @@ let pedidos = [];
 //     
 //     // Actualizar tabla con resultados filtrados
 //     renderFilteredPedidos(filteredPedidos);
-}
+// }
 // 
 // // Renderizar pedidos filtrados
 // function renderFilteredPedidos(filteredPedidos) {
@@ -435,7 +469,7 @@ let pedidos = [];
 //             </td>
 //         </tr>
 //     `).join('');
-}
+// }
 // 
 // // Ver pedido
 // function viewPedido(pedidoId) {
@@ -510,12 +544,12 @@ let pedidos = [];
 //     `;
 //     
 //     modal.style.display = 'block';
-}
+// }
 // 
 // // Editar pedido
 // function editPedido(pedidoId) {
 //     viewPedido(pedidoId); // Por ahora, usar la misma función
-}
+// }
 // 
 // // Guardar cambios del pedido
 // function savePedido() {
@@ -539,13 +573,13 @@ let pedidos = [];
 //         // Mostrar mensaje de éxito
 //         showMessage('Pedido actualizado correctamente', 'success');
 //     }
-}
+// }
 // 
 // // Cerrar modal
 // function closeModal() {
 //     const modal = document.getElementById('pedido-modal');
 //     modal.style.display = 'none';
-}
+// }
 // 
 // // Renderizar grid de clientes
 // function renderClientesGrid() {
@@ -565,7 +599,7 @@ let pedidos = [];
 //             </div>
 //         </div>
 //     `).join('');
-}
+// }
 // 
 // // Renderizar reportes
 // function renderReportes() {
@@ -579,7 +613,7 @@ let pedidos = [];
 //             </div>
 //         `;
 //     }
-}
+// }
 // 
 // // Utilidades
 // function formatDate(dateString) {
@@ -589,7 +623,7 @@ let pedidos = [];
 //         month: 'short',
 //         day: 'numeric'
 //     });
-}
+// }
 // 
 // function showMessage(message, type = 'info') {
 //     // Crear elemento de mensaje
@@ -608,7 +642,7 @@ let pedidos = [];
 //         messageDiv.classList.remove('show');
 //         setTimeout(() => messageDiv.remove(), 300);
 //     }, 3000);
-}
+// }
 // 
 // // Logout
 // function logout() {
@@ -616,7 +650,7 @@ let pedidos = [];
 //         // Por ahora, solo redirigir a la página principal
 //         window.location.href = '../index.html';
 //     }
-}
+// }
 // 
 // // Cerrar modal al hacer clic fuera
 // window.onclick = function(event) {
@@ -624,7 +658,7 @@ let pedidos = [];
 //     if (event.target === modal) {
 //         closeModal();
 //     }
-}
+// }
 // 
 // // Mostrar información del usuario autenticado
 // function displayUserInfo() {
@@ -634,41 +668,4 @@ let pedidos = [];
 //     if (userEmailElement && userEmail) {
 //         userEmailElement.textContent = userEmail;
 //     }
-}
-// Función para mostrar secciones del admin
-function showSection(sectionName) {
-    // Ocultar todas las secciones
-    document.querySelectorAll('.admin-section').forEach(section => {
-        section.classList.remove('active');
-    });
-    
-    // Mostrar la sección seleccionada
-    document.getElementById(sectionName).classList.add('active');
-    
-    // Actualizar navegación activa
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.classList.remove('active');
-    });
-    
-    document.querySelector(`[data-section="${sectionName}"]`).classList.add('active');
-    
-    currentSection = sectionName;
-    
-    // Cargar datos específicos de la sección
-    switch(sectionName) {
-        case 'dashboard':
-            updateDashboard();
-            break;
-        case 'pedidos':
-            renderPedidosTable();
-            break;
-        case 'clientes':
-            renderClientesTable();
-            break;
-        case 'reportes':
-            updateReportes();
-            break;
-        default:
-            updateDashboard();
-    }
-}
+// }
