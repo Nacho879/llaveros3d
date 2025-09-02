@@ -1,0 +1,34 @@
+{
+  "name": "llaveros3d",
+  "version": "1.0.0",
+  "description": "Landing page profesional para llaveros 3D personalizados B2B",
+  "main": "index.html",
+  "scripts": {
+    "start": "python3 -m http.server 8000",
+    "dev": "python3 -m http.server 8000",
+    "build": "echo 'No build step required for static site'",
+    "deploy": "echo 'Deploy to your preferred hosting service'"
+  },
+  "keywords": [
+    "llaveros",
+    "3d",
+    "personalizados",
+    "b2b",
+    "landing-page",
+    "html",
+    "css",
+    "javascript"
+  ],
+  "author": "Ignacio López",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yourusername/llaveros3d.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/llaveros3d/issues"
+  },
+  "homepage": "https://yourusername.github.io/llaveros3d",
+  "devDependencies": {},
+  "dependencies": {}
+}
