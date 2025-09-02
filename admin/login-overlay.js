@@ -26,7 +26,7 @@ function initializeLoginOverlay() {
     loginForm.addEventListener('submit', handleLogin);
     
     // Pre-llenar email si está guardado
-    const savedEmail = localStorage.getItem('llaveros3d_saved_email');
+    const savedEmail = localStorage.getItem('llavero3d_saved_email');
     if (savedEmail) {
         emailInput.value = savedEmail;
         document.getElementById('remember').checked = true;
@@ -134,9 +134,9 @@ async function handleLogin(e) {
 function handleSuccessfulLogin(email, remember, user) {
     // Guardar email si se marca "recordar"
     if (remember) {
-        localStorage.setItem('llaveros3d_saved_email', email);
+        localStorage.setItem('llavero3d_saved_email', email);
     } else {
-        localStorage.removeItem('llaveros3d_saved_email');
+        localStorage.removeItem('llavero3d_saved_email');
     }
     
     // Limpiar formulario
