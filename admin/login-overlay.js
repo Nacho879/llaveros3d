@@ -8,7 +8,8 @@ let loginOverlay, backofficeContent;
 // Inicialización
 document.addEventListener('DOMContentLoaded', function() {
     initializeLoginOverlay();
-    checkExistingSession();
+    // checkExistingSession();
+    showLogin();
 });
 
 // Inicializar elementos del login overlay
