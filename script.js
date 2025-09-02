@@ -434,11 +434,38 @@ function handleFormSubmit(e) {
     submitBtn.disabled = true;
     form.classList.add('loading');
     
+    // Crear objeto del pedido
+    const pedidoData = {
+        id: generatePedidoId(),
+        fecha: new Date().toISOString(),
+        nombre: $('nombre').value,
+        email: $('email').value,
+        telefono: $('telefono').value,
+        ciudad: $('ciudad').value,
+        direccion: $('direccion').value,
+        cantidad: parseInt($('cantidad').value),
+        tamaño: $('tamaño').value,
+        estilo: $('estilo').value,
+        forma: $('forma').value,
+        color: $('color').value,
+        notasPedido: $('notasPedido').value,
+        newsletter: $('newsletter').checked,
+        imagen: getImageData(),
+        precio: calculatePrice(),
+        estado: 'Nuevo'
+    };
+    
     // Simular envío (reemplazar con Formspree real)
     fakeNetwork(2000).then(() => {
+        // Guardar en localStorage
+        savePedidoToLocalStorage(pedidoData);
+        
         // Éxito
         submitBtn.textContent = '¡Pedido enviado!';
         submitBtn.classList.add('success');
+        
+        // Mostrar mensaje de éxito
+        showSuccessMessage(pedidoData);
         
         // Limpiar formulario
         setTimeout(() => {
@@ -569,13 +596,13 @@ function getImageData() {
 
 function savePedidoToLocalStorage(pedidoData) {
     // Obtener pedidos existentes
-    let pedidos = JSON.parse(localStorage.getItem('llavero3d_pedidos') || '[]');
+    let pedidos = JSON.parse(localStorage.getItem('llaveros3d_pedidos') || '[]');
     
     // Añadir nuevo pedido
     pedidos.push(pedidoData);
     
     // Guardar en localStorage
-    localStorage.setItem('llavero3d_pedidos', JSON.stringify(pedidos));
+    localStorage.setItem('llaveros3d_pedidos', JSON.stringify(pedidos));
     
     console.log('Pedido guardado en localStorage:', pedidoData);
 }
@@ -592,7 +619,7 @@ function showSuccessMessage(pedidoData) {
             <p>Te hemos enviado un email de confirmación.</p>
             <div class="success-actions">
                 <button onclick="window.open('admin/', '_blank')" class="btn btn-secondary">
-                    Acceder al Backoffice
+                    Ver en Backoffice
                 </button>
                 <button onclick="this.parentElement.parentElement.remove()" class="btn btn-primary">
                     Cerrar
