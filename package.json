@@ -6,8 +6,8 @@
   "scripts": {
     "start": "python3 -m http.server 8000",
     "dev": "python3 -m http.server 8000",
-    "build": "echo 'No build step required for static site'",
-    "deploy": "echo 'Deploy to your preferred hosting service'"
+    "build": "echo 'Static site - no build required'",
+    "deploy": "echo 'Deploy to Vercel'"
   },
   "keywords": [
     "llaveros",
@@ -23,12 +23,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yourusername/llaveros3d.git"
+    "url": "git+https://github.com/Nacho879/llaveros3d.git"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/llaveros3d/issues"
+    "url": "https://github.com/Nacho879/llaveros3d/issues"
   },
-  "homepage": "https://yourusername.github.io/llaveros3d",
+  "homepage": "https://llaveros3d.vercel.app",
   "devDependencies": {},
   "dependencies": {}
 }
