@@ -50,7 +50,7 @@ let pedidos = [];
 //     console.log('Backoffice inicializado');
 //     
 //     // Cargar datos del localStorage si existen
-//     const savedPedidos = localStorage.getItem('llaveros3d_pedidos');
+//     const savedPedidos = localStorage.getItem('llavero3d_pedidos');
 //     const savedClientes = localStorage.getItem('llaveros3d_clientes');
 //     
 //     if (savedPedidos) {
@@ -194,7 +194,7 @@ let pedidos = [];
 // //         ];
 // //         
 // //         // Guardar en localStorage
-// //         localStorage.setItem('llaveros3d_pedidos', JSON.stringify(pedidos));
+// //         localStorage.setItem('llavero3d_pedidos', JSON.stringify(pedidos));
 // //     }
 // //     
 // //     if (clientes.length === 0) {
@@ -561,7 +561,7 @@ let pedidos = [];
 //         pedido.estado = newStatus;
 //         
 //         // Guardar en localStorage
-//         localStorage.setItem('llaveros3d_pedidos', JSON.stringify(pedidos));
+//         localStorage.setItem('llavero3d_pedidos', JSON.stringify(pedidos));
 //         
 //         // Actualizar dashboard y tabla
 //         updateDashboard();

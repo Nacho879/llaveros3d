@@ -569,13 +569,13 @@ function getImageData() {
 
 function savePedidoToLocalStorage(pedidoData) {
     // Obtener pedidos existentes
-    let pedidos = JSON.parse(localStorage.getItem('llaveros3d_pedidos') || '[]');
+    let pedidos = JSON.parse(localStorage.getItem('llavero3d_pedidos') || '[]');
     
     // Añadir nuevo pedido
     pedidos.push(pedidoData);
     
     // Guardar en localStorage
-    localStorage.setItem('llaveros3d_pedidos', JSON.stringify(pedidos));
+    localStorage.setItem('llavero3d_pedidos', JSON.stringify(pedidos));
     
     console.log('Pedido guardado en localStorage:', pedidoData);
 }
