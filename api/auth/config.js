@@ -2,7 +2,7 @@
 const USERS = [
     {
         id: 1,
-        email: 'Admin@llaveros3d.com',
+        email: 'admin@llaveros3d.com',
         password: 'Nacho1992!', // En producción, esto debería estar hasheado
         name: 'Administrador',
         role: 'admin',
