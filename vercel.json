@@ -1,14 +1,3 @@
 {
-  "version": 2,
-  "functions": {
-    "api/auth/login.js": {
-      "runtime": "@vercel/node@18.17.0"
-    },
-    "api/auth/logout.js": {
-      "runtime": "@vercel/node@18.17.0"
-    },
-    "api/auth/verify.js": {
-      "runtime": "@vercel/node@18.17.0"
-    }
-  }
+  "version": 2
 }
