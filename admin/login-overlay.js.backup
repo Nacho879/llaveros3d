@@ -1,5 +1,8 @@
-// Credenciales de acceso (ahora manejadas por la API)
-const API_BASE = '/api/auth';
+// Credenciales de acceso
+const VALID_CREDENTIALS = {
+    email: 'Admin@llaveros3d.com',
+    password: 'Nacho1992!'
+};
 
 // Elementos del DOM
 let loginForm, emailInput, passwordInput, errorMessage, errorText;
@@ -35,19 +38,21 @@ function initializeLoginOverlay() {
     emailInput.focus();
 }
 
-// Verificar sesión existente con la API
-async function checkExistingSession() {
-    try {
-        const response = await fetch(`${API_BASE}/verify`);
-        const data = await response.json();
-        
-        if (data.authenticated) {
+// Verificar sesión existente
+function checkExistingSession() {
+    const isAuthenticated = localStorage.getItem('llaveros3d_authenticated');
+    const sessionExpiry = localStorage.getItem('llaveros3d_session_expiry');
+    
+    if (isAuthenticated === 'true' && sessionExpiry) {
+        const now = Date.now();
+        if (now < parseInt(sessionExpiry)) {
             // Sesión válida, mostrar backoffice
             showBackoffice();
             return;
+        } else {
+            // Sesión expirada, limpiar
+            clearSession();
         }
-    } catch (error) {
-        console.error('Error al verificar sesión:', error);
     }
     
     // No hay sesión válida, mostrar login
@@ -79,8 +84,8 @@ function showBackoffice() {
     }
 }
 
-// Manejar el login con la API
-async function handleLogin(e) {
+// Manejar el login
+function handleLogin(e) {
     e.preventDefault();
     
     const email = emailInput.value.trim();
@@ -93,67 +98,54 @@ async function handleLogin(e) {
         return;
     }
     
+    // Validar credenciales
+    if (validateCredentials(email, password)) {
+        // Login exitoso
+        handleSuccessfulLogin(email, remember);
+    } else {
+        // Login fallido
+        handleFailedLogin();
+    }
+}
+
+// Validar credenciales
+function validateCredentials(email, password) {
+    // Comparar con las credenciales válidas (case-insensitive para email)
+    return email.toLowerCase() === VALID_CREDENTIALS.email.toLowerCase() && 
+           password === VALID_CREDENTIALS.password;
+}
+
+// Manejar login exitoso
+function handleSuccessfulLogin(email, remember) {
     // Mostrar estado de carga
     const loginBtn = document.querySelector('.login-btn');
     const originalText = loginBtn.innerHTML;
     loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Iniciando sesión...';
     loginBtn.disabled = true;
     
-    try {
-        // Enviar login a la API
-        const response = await fetch(`${API_BASE}/login`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email, password, remember })
-        });
-        
-        const data = await response.json();
-        
-        if (response.ok && data.success) {
-            // Login exitoso
-            handleSuccessfulLogin(email, remember, data.user);
-        } else {
-            // Login fallido
-            handleFailedLogin(data.error || 'Error en el login');
-        }
-        
-    } catch (error) {
-        console.error('Error en login:', error);
-        handleFailedLogin('Error de conexión');
-    } finally {
-        // Restaurar botón
-        loginBtn.innerHTML = originalText;
-        loginBtn.disabled = false;
-    }
-}
-
-// Manejar login exitoso
-function handleSuccessfulLogin(email, remember, user) {
-    // Guardar email si se marca "recordar"
-    if (remember) {
-        localStorage.setItem('llaveros3d_saved_email', email);
-    } else {
-        localStorage.removeItem('llaveros3d_saved_email');
-    }
-    
-    // Limpiar formulario
-    loginForm.reset();
-    
-    // Mostrar mensaje de éxito
-    showSuccess();
-    
-    // Mostrar backoffice después de 1 segundo
+    // Simular delay de autenticación
     setTimeout(() => {
-        showBackoffice();
-    }, 1000);
+        // Guardar sesión
+        saveSession(email, remember);
+        
+        // Limpiar formulario
+        loginForm.reset();
+        
+        // Mostrar mensaje de éxito
+        showSuccess();
+        
+        // Mostrar backoffice después de 1 segundo
+        setTimeout(() => {
+            showBackoffice();
+        }, 1000);
+        
+    }, 1500);
 }
 
 // Manejar login fallido
-function handleFailedLogin(errorMessage) {
+function handleFailedLogin() {
     // Mostrar error
-    showError(errorMessage);
+    showError('Email o contraseña incorrectos');
     
     // Limpiar contraseña
     passwordInput.value = '';
@@ -164,6 +156,37 @@ function handleFailedLogin(errorMessage) {
     setTimeout(() => {
         loginForm.classList.remove('shake');
     }, 500);
+    
+    // Incrementar contador de intentos fallidos
+    incrementFailedAttempts();
+}
+
+// Guardar sesión
+function saveSession(email, remember) {
+    const now = Date.now();
+    const sessionDuration = remember ? 7 * 24 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000; // 7 días o 1 día
+    const expiry = now + sessionDuration;
+    
+    localStorage.setItem('llaveros3d_authenticated', 'true');
+    localStorage.setItem('llaveros3d_user_email', email);
+    localStorage.setItem('llaveros3d_session_expiry', expiry.toString());
+    
+    // Guardar email si se marca "recordar"
+    if (remember) {
+        localStorage.setItem('llaveros3d_saved_email', email);
+    } else {
+        localStorage.removeItem('llaveros3d_saved_email');
+    }
+    
+    console.log('Sesión iniciada para:', email);
+}
+
+// Limpiar sesión
+function clearSession() {
+    localStorage.removeItem('llaveros3d_authenticated');
+    localStorage.removeItem('llaveros3d_user_email');
+    localStorage.removeItem('llaveros3d_session_expiry');
+    console.log('Sesión limpiada');
 }
 
 // Mostrar error
@@ -213,19 +236,28 @@ function showSuccess() {
 }
 
 // Mostrar información del usuario autenticado
-async function displayUserInfo() {
-    try {
-        const response = await fetch(`${API_BASE}/verify`);
-        const data = await response.json();
+function displayUserInfo() {
+    const userEmail = localStorage.getItem('llaveros3d_user_email');
+    const userEmailElement = document.getElementById('userEmail');
+    
+    if (userEmailElement && userEmail) {
+        userEmailElement.textContent = userEmail;
+    }
+}
+
+// Incrementar contador de intentos fallidos
+function incrementFailedAttempts() {
+    const attempts = parseInt(localStorage.getItem('llaveros3d_failed_attempts') || '0') + 1;
+    localStorage.setItem('llaveros3d_failed_attempts', attempts.toString());
+    
+    // Si hay muchos intentos fallidos, mostrar advertencia
+    if (attempts >= 5) {
+        showError('Demasiados intentos fallidos. Por favor, espera unos minutos antes de intentar de nuevo.');
         
-        if (data.authenticated && data.user) {
-            const userEmailElement = document.getElementById('userEmail');
-            if (userEmailElement) {
-                userEmailElement.textContent = data.user.email;
-            }
-        }
-    } catch (error) {
-        console.error('Error al obtener información del usuario:', error);
+        // Bloquear temporalmente (5 minutos)
+        setTimeout(() => {
+            localStorage.removeItem('llaveros3d_failed_attempts');
+        }, 5 * 60 * 1000);
     }
 }
 
@@ -243,27 +275,14 @@ function togglePassword() {
     }
 }
 
-// Función global para logout con la API
-async function logout() {
+// Función global para logout
+function logout() {
     if (confirm('¿Estás seguro de que quieres cerrar sesión?')) {
-        try {
-            // Enviar logout a la API
-            await fetch(`${API_BASE}/logout`, {
-                method: 'POST'
-            });
-            
-            // Mostrar login
-            showLogin();
-            
-            // Resetear estado del backoffice
-            window.backofficeInitialized = false;
-            
-        } catch (error) {
-            console.error('Error en logout:', error);
-            // Aún así, mostrar login
-            showLogin();
-            window.backofficeInitialized = false;
-        }
+        clearSession();
+        showLogin();
+        
+        // Resetear estado del backoffice
+        window.backofficeInitialized = false;
     }
 }
 
