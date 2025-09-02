@@ -1,3 +1,34 @@
+// Verificar autenticación antes de inicializar
+function checkAuth() {
+    const isAuthenticated = localStorage.getItem("llaveros3d_authenticated");
+    const sessionExpiry = localStorage.getItem("llaveros3d_session_expiry");
+    
+    if (isAuthenticated !== "true" || !sessionExpiry) {
+        redirectToLogin();
+        return false;
+    }
+    
+    const now = Date.now();
+    if (now >= parseInt(sessionExpiry)) {
+        clearSession();
+        redirectToLogin();
+        return false;
+    }
+    
+    return true;
+}
+
+// Redirigir al login
+function redirectToLogin() {
+    window.location.href = "login.html";
+}
+
+// Limpiar sesión
+function clearSession() {
+    localStorage.removeItem("llaveros3d_authenticated");
+    localStorage.removeItem("llaveros3d_user_email");
+    localStorage.removeItem("llaveros3d_session_expiry");
+}
 // Variables globales
 let pedidos = [];
 let clientes = [];
@@ -626,5 +657,15 @@ window.onclick = function(event) {
     const modal = document.getElementById('pedido-modal');
     if (event.target === modal) {
         closeModal();
+    }
+}
+
+// Mostrar información del usuario autenticado
+function displayUserInfo() {
+    const userEmail = localStorage.getItem("llaveros3d_user_email");
+    const userEmailElement = document.getElementById("userEmail");
+    
+    if (userEmailElement && userEmail) {
+        userEmailElement.textContent = userEmail;
     }
 }

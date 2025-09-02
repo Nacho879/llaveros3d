@@ -592,7 +592,7 @@ function showSuccessMessage(pedidoData) {
             <p>Te hemos enviado un email de confirmación.</p>
             <div class="success-actions">
                 <button onclick="window.open('admin/', '_blank')" class="btn btn-secondary">
-                    Ver en Backoffice
+                    Acceder al Backoffice
                 </button>
                 <button onclick="this.parentElement.parentElement.remove()" class="btn btn-primary">
                     Cerrar
