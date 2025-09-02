@@ -1,5 +1,5 @@
 // Credenciales de acceso (ahora manejadas por la API)
-const API_BASE = 'https://llaveros3d-bx9vhfalz-nachos-projects-9e724aa3.vercel.app/api/auth';
+const API_BASE = '/api/auth';
 
 // Elementos del DOM
 let loginForm, emailInput, passwordInput, errorMessage, errorText;
