@@ -40,7 +40,7 @@ const itemsPerPage = 10;
 document.addEventListener('DOMContentLoaded', function() {
     initializeAdmin();
     setupNavigation();
-    loadSampleData();
+    // loadSampleData();
     updateDashboard();
     setupEventListeners();
 });
