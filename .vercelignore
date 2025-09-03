@@ -1,24 +1,11 @@
-# Git files
-.git/
-.gitignore
+# Excluir archivos de configuración de autenticación
+.vercel/project.json
+.vercel/project-settings.json
 
-# Documentation
-README.md
+# Excluir archivos de entorno local
+.env.local
+.env.production
 
-# Development files
+# Excluir archivos de desarrollo
+node_modules/
 *.log
-.env*
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# IDE files
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# Temporary files
-*.tmp
-*.temp
