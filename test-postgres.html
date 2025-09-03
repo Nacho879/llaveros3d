@@ -39,7 +39,7 @@
         
         <div class="test-section info">
             <h2>📊 Estado de la Base de Datos</h2>
-            <p>Esta página prueba la conexión a la base de datos Postgres de Neon usando API consolidada.</p>
+            <p>Prueba la conexión a la base de datos usando la API unificada.</p>
             <button onclick="testDatabase()">🧪 Probar Conexión a Postgres</button>
             <div id="dbStatus"></div>
         </div>
@@ -128,14 +128,14 @@
             statusDiv.innerHTML = '<div class="loading">🔄 Inicializando base de datos...</div>';
             
             try {
-                const response = await fetch('/api/init-db');
+                const response = await fetch('/api/llaveros?action=init');
                 
                 if (response.status === 500) {
                     const errorData = await response.json();
                     statusDiv.innerHTML = `
                         <div class="error">
                             <div class="error-text">❌ Error inicializando base de datos</div>
-                            <div class="result">${errorData.message}<br>Detalles: ${errorData.details}</div>
+                            <div class="result">${errorData.message}</div>
                         </div>
                     `;
                     return;
@@ -147,7 +147,7 @@
                     statusDiv.innerHTML = `
                         <div class="success">
                             <div class="success-text">✅ Base de datos inicializada</div>
-                            <div class="result">Tablas: ${result.tables.join(', ')}<br>Índices: ${result.indexes.join(', ')}</div>
+                            <div class="result">${result.message}</div>
                         </div>
                     `;
                 } else {
@@ -174,14 +174,14 @@
             statusDiv.innerHTML = '<div class="loading">🔄 Probando conexión a Postgres...</div>';
             
             try {
-                const response = await fetch('/api/postgres-test?action=test');
+                const response = await fetch('/api/llaveros?action=list');
                 const result = await response.json();
                 
                 if (result.success) {
                     statusDiv.innerHTML = `
                         <div class="success">
                             <div class="success-text">✅ Conexión exitosa a Postgres</div>
-                            <div class="result">Timestamp: ${result.timestamp}<br>Versión: ${result.postgres_version}<br>Estado: ${result.connection_status}</div>
+                            <div class="result">Total pedidos: ${result.total}<br>Base de datos funcionando correctamente</div>
                         </div>
                     `;
                 } else {
@@ -228,7 +228,7 @@
             };
             
             try {
-                const response = await fetch('/api/postgres-test?action=create', {
+                const response = await fetch('/api/llaveros?action=create', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
