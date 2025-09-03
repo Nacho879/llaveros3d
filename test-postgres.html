@@ -52,6 +52,13 @@
         </div>
         
         <div class="test-section info">
+            <h2>🧪 Test de Conexión Simple a Postgres</h2>
+            <p>Prueba solo la conexión básica sin crear tablas.</p>
+            <button onclick="testPostgresSimple()">🧪 Probar Conexión Simple</button>
+            <div id="postgresSimpleStatus"></div>
+        </div>
+        
+        <div class="test-section info">
             <h2>📊 Estado de la Base de Datos</h2>
             <p>Prueba la conexión a la base de datos usando la API unificada.</p>
             <button onclick="testDatabase()">🧪 Probar Conexión a Postgres</button>
@@ -130,6 +137,48 @@
                         <div class="error">
                             <div class="error-text">❌ Error en API</div>
                             <div class="result">${JSON.stringify(result, null, 2)}</div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                statusDiv.innerHTML = `
+                    <div class="error">
+                        <div class="error-text">❌ Error de conexión: ${error.message}</div>
+                        <div class="result">Verifica que la API esté funcionando</div>
+                    </div>
+                `;
+            }
+        }
+
+        // Función para probar conexión simple a Postgres
+        async function testPostgresSimple() {
+            const statusDiv = document.getElementById('postgresSimpleStatus');
+            statusDiv.innerHTML = '<div class="loading">🧪 Probando conexión simple a Postgres...</div>';
+            
+            try {
+                const response = await fetch('/api/test-postgres-simple');
+                const result = await response.json();
+                
+                if (result.success) {
+                    statusDiv.innerHTML = `
+                        <div class="success">
+                            <div class="success-text">✅ Conexión simple exitosa</div>
+                            <div class="result">
+                                Test: ${result.test}<br>
+                                Timestamp: ${result.timestamp}<br>
+                                Estado: ${result.connection_status}
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    statusDiv.innerHTML = `
+                        <div class="error">
+                            <div class="error-text">❌ Error en conexión simple</div>
+                            <div class="result">
+                                ${result.error}<br>
+                                Mensaje: ${result.message}<br>
+                                Sugerencia: ${result.suggestion}
+                            </div>
                         </div>
                     `;
                 }
