@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Dashboard - Diagnóstico</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+        .debug-section { margin: 20px 0; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .debug-info { background: #f8f9fa; padding: 15px; border-radius: 5px; margin: 10px 0; }
+        .error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .warning { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+        button { padding: 10px 20px; margin: 5px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        .success-btn { background: #28a745; }
+        .warning-btn { background: #ffc107; color: #212529; }
+        .danger-btn { background: #dc3545; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 5px; overflow-x: auto; font-size: 12px; }
+        .element-status { display: inline-block; width: 20px; height: 20px; border-radius: 50%; margin-right: 10px; }
+        .element-found { background: #28a745; }
+        .element-missing { background: #dc3545; }
+    </style>
+</head>
+<body>
+    <h1>🔍 Debug Dashboard - Diagnóstico Completo</h1>
+    
+    <div class="debug-section">
+        <h2>1. Estado del DOM</h2>
+        <button onclick="checkDOMState()" class="success-btn">Verificar Estado del DOM</button>
+        <div id="domState"></div>
+    </div>
+    
+    <div class="debug-section">
+        <h2>2. Verificar Secciones</h2>
+        <button onclick="checkSections()" class="warning-btn">Verificar Secciones</button>
+        <div id="sectionsState"></div>
+    </div>
+    
+    <div class="debug-section">
+        <h2>3. Verificar CSS</h2>
+        <button onclick="checkCSS()" class="warning-btn">Verificar Estilos CSS</button>
+        <div id="cssState"></div>
+    </div>
+    
+    <div class="debug-section">
+        <h2>4. Forzar Activación del Dashboard</h2>
+        <button onclick="forceActivateDashboard()" class="success-btn">Forzar Activación</button>
+        <div id="forceActivation"></div>
+    </div>
+    
+    <div class="debug-section">
+        <h2>5. Crear Pedidos de Prueba</h2>
+        <button onclick="createTestPedidos()" class="success-btn">Crear 3 Pedidos de Prueba</button>
+        <div id="testPedidos"></div>
+    </div>
+    
+    <div class="debug-section">
+        <h2>6. Ir al Backoffice</h2>
+        <button onclick="goToBackoffice()" class="success-btn">Ir al Backoffice</button>
+        <p>Después de crear pedidos y forzar la activación, ve al backoffice para ver si funciona.</p>
+    </div>
+    
+    <script>
+        // Función para verificar el estado del DOM
+        function checkDOMState() {
+            const domState = document.getElementById('domState');
+            
+            // Verificar si estamos en el contexto correcto
+            const isAdminPage = window.location.pathname.includes('/admin');
+            
+            let html = '<div class="debug-info">';
+            html += '<h3>Estado del DOM:</h3>';
+            html += `<p><strong>URL actual:</strong> ${window.location.href}</p>`;
+            html += `<p><strong>¿Es página admin?</strong> ${isAdminPage ? '✅ Sí' : '❌ No'}</p>`;
+            html += `<p><strong>Document ready:</strong> ${document.readyState}</p>`;
+            html += '</div>';
+            
+            if (!isAdminPage) {
+                html += '<div class="debug-info warning">';
+                html += '<p><strong>⚠️ ADVERTENCIA:</strong> Esta página debe abrirse desde el contexto del backoffice.</p>';
+                html += '<p>Para un diagnóstico completo, abre esta página desde: <code>/admin/debug-dashboard.html</code></p>';
+                html += '</div>';
+            }
+            
+            domState.innerHTML = html;
+        }
+        
+        // Función para verificar secciones
+        function checkSections() {
+            const sectionsState = document.getElementById('sectionsState');
+            
+            // Verificar secciones del dashboard
+            const dashboardSection = document.getElementById('dashboard');
+            const statsGrid = document.querySelector('.stats-grid');
+            const statCards = document.querySelectorAll('.stat-card');
+            
+            let html = '<div class="debug-info">';
+            html += '<h3>Estado de las Secciones:</h3>';
+            html += `<p><span class="element-status ${dashboardSection ? 'element-found' : 'element-missing'}"></span><strong>Sección Dashboard:</strong> ${dashboardSection ? '✅ Encontrada' : '❌ No encontrada'}</p>`;
+            html += `<p><span class="element-status ${statsGrid ? 'element-found' : 'element-missing'}"></span><strong>Stats Grid:</strong> ${statsGrid ? '✅ Encontrado' : '❌ No encontrado'}</p>`;
+            html += `<p><span class="element-status ${statCards.length > 0 ? 'element-found' : 'element-missing'}"></span><strong>Stat Cards:</strong> ${statCards.length} encontrados</p>`;
+            
+            if (dashboardSection) {
+                html += `<p><strong>Clases CSS:</strong> ${dashboardSection.className}</p>`;
+                html += `<p><strong>Display CSS:</strong> ${window.getComputedStyle(dashboardSection).display}</p>`;
+                html += `<p><strong>Visibility CSS:</strong> ${window.getComputedStyle(dashboardSection).visibility}</p>`;
+                html += `<p><strong>Opacity CSS:</strong> ${window.getComputedStyle(dashboardSection).opacity}</p>`;
+            }
+            
+            html += '</div>';
+            
+            sectionsState.innerHTML = html;
+        }
+        
+        // Función para verificar CSS
+        function checkCSS() {
+            const cssState = document.getElementById('cssState');
+            
+            let html = '<div class="debug-info">';
+            html += '<h3>Verificación de CSS:</h3>';
+            
+            // Verificar si los estilos están cargados
+            const adminSection = document.querySelector('.admin-section');
+            if (adminSection) {
+                const computedStyle = window.getComputedStyle(adminSection);
+                html += `<p><strong>Display por defecto:</strong> ${computedStyle.display}</p>`;
+                html += `<p><strong>Visibility por defecto:</strong> ${computedStyle.visibility}</p>`;
+                html += `<p><strong>Opacity por defecto:</strong> ${computedStyle.opacity}</p>`;
+                html += `<p><strong>Height:</strong> ${computedStyle.height}</p>`;
+                html += `<p><strong>Width:</strong> ${computedStyle.width}</p>`;
+            } else {
+                html += '<p class="error">❌ No se encontró ninguna sección admin-section</p>';
+            }
+            
+            html += '</div>';
+            
+            cssState.innerHTML = html;
+        }
+        
+        // Función para forzar la activación del dashboard
+        function forceActivateDashboard() {
+            const forceActivation = document.getElementById('forceActivation');
+            
+            let html = '<div class="debug-info">';
+            html += '<h3>Forzando Activación del Dashboard:</h3>';
+            
+            try {
+                // Forzar activación manual
+                const dashboardSection = document.getElementById('dashboard');
+                if (dashboardSection) {
+                    // Remover clase active de todas las secciones
+                    document.querySelectorAll('.admin-section').forEach(section => {
+                        section.classList.remove('active');
+                    });
+                    
+                    // Añadir clase active al dashboard
+                    dashboardSection.classList.add('active');
+                    
+                    // Forzar display block
+                    dashboardSection.style.display = 'block';
+                    dashboardSection.style.visibility = 'visible';
+                    dashboardSection.style.opacity = '1';
+                    
+                    html += '<p class="success">✅ Dashboard forzado a activo</p>';
+                    html += `<p><strong>Clases CSS:</strong> ${dashboardSection.className}</p>`;
+                    html += `<p><strong>Display inline:</strong> ${dashboardSection.style.display}</p>`;
+                    html += `<p><strong>Visibility inline:</strong> ${dashboardSection.style.visibility}</p>`;
+                    html += `<p><strong>Opacity inline:</strong> ${dashboardSection.style.opacity}</p>`;
+                } else {
+                    html += '<p class="error">❌ No se pudo encontrar la sección dashboard</p>';
+                }
+            } catch (error) {
+                html += `<p class="error">❌ Error al forzar activación: ${error.message}</p>`;
+            }
+            
+            html += '</div>';
+            
+            forceActivation.innerHTML = html;
+        }
+        
+        // Función para crear pedidos de prueba
+        function createTestPedidos() {
+            const testPedidos = document.getElementById('testPedidos');
+            
+            const pedidos = [
+                {
+                    id: 'P' + Date.now() + '001',
+                    fecha: new Date().toISOString(),
+                    nombre: 'Empresa Test 1',
+                    email: 'test1@empresa.com',
+                    telefono: '+34 600 001 001',
+                    ciudad: 'Madrid',
+                    direccion: 'Calle Test 1, 123',
+                    cantidad: 50,
+                    tamaño: 'Mediano',
+                    estilo: 'Realista',
+                    forma: 'round',
+                    color: 'Negro',
+                    notasPedido: 'Pedido de prueba para testing',
+                    newsletter: true,
+                    imagen: null,
+                    precio: 72.60,
+                    estado: 'Nuevo'
+                },
+                {
+                    id: 'P' + Date.now() + '002',
+                    fecha: new Date().toISOString(),
+                    nombre: 'Empresa Test 2',
+                    email: 'test2@empresa.com',
+                    telefono: '+34 600 002 002',
+                    ciudad: 'Barcelona',
+                    direccion: 'Avenida Test 2, 456',
+                    cantidad: 100,
+                    tamaño: 'Grande',
+                    estilo: 'Estilizado',
+                    forma: 'rectangular',
+                    color: 'Blanco',
+                    notasPedido: 'Segundo pedido de prueba',
+                    newsletter: false,
+                    imagen: null,
+                    precio: 145.20,
+                    estado: 'En Proceso'
+                },
+                {
+                    id: 'P' + Date.now() + '003',
+                    fecha: new Date().toISOString(),
+                    nombre: 'Empresa Test 3',
+                    email: 'test3@empresa.com',
+                    telefono: '+34 600 003 003',
+                    ciudad: 'Valencia',
+                    direccion: 'Plaza Test 3, 789',
+                    cantidad: 75,
+                    tamaño: 'Pequeño',
+                    estilo: 'Minimalista',
+                    forma: 'pill',
+                    color: 'Gris',
+                    notasPedido: 'Tercer pedido de prueba',
+                    newsletter: true,
+                    imagen: null,
+                    precio: 108.90,
+                    estado: 'Completado'
+                }
+            ];
+            
+            // Guardar en localStorage
+            localStorage.setItem('llavero3d_pedidos', JSON.stringify(pedidos));
+            
+            let html = '<div class="debug-info success">';
+            html += '<h3>✅ Pedidos de Prueba Creados:</h3>';
+            html += `<p><strong>Total pedidos:</strong> ${pedidos.length}</p>`;
+            html += `<p><strong>Ingresos totales:</strong> ${pedidos.reduce((sum, p) => sum + p.precio, 0).toFixed(2)}€</p>`;
+            html += '<p><strong>Estados:</strong></p>';
+            html += '<ul>';
+            const estados = {};
+            pedidos.forEach(p => {
+                estados[p.estado] = (estados[p.estado] || 0) + 1;
+            });
+            Object.entries(estados).forEach(([estado, count]) => {
+                html += `<li>${estado}: ${count}</li>`;
+            });
+            html += '</ul>';
+            html += '</div>';
+            
+            testPedidos.innerHTML = html;
+        }
+        
+        // Función para ir al backoffice
+        function goToBackoffice() {
+            window.open('/admin/', '_blank');
+        }
+        
+        // Ejecutar verificaciones al cargar la página
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                checkDOMState();
+                checkSections();
+                checkCSS();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
