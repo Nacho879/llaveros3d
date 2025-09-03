@@ -63,21 +63,23 @@ function showLogin() {
 
 // Ocultar overlay de login y mostrar backoffice
 function showBackoffice() {
-    loginOverlay.classList.remove('active');
-    backofficeContent.style.display = 'block';
+    console.log('🔄 Mostrando backoffice...');
+    
+    // Ocultar login
+    loginOverlay.style.display = 'none';
+    
+    // Mostrar contenido del backoffice
+    const backofficeContent = document.querySelector('.admin-content');
+    if (backofficeContent) {
+        backofficeContent.style.display = 'block';
+    }
     
     // Mostrar información del usuario
     displayUserInfo();
     
-    // Inicializar backoffice si no se ha hecho
-    if (typeof initializeAdmin === 'function' && !window.backofficeInitialized) {
-        initializeAdmin();
-        setupNavigation();
-        loadSampleData();
-        updateDashboard();
-        setupEventListeners();
-        window.backofficeInitialized = true;
-    }
+    // El backoffice ya se inicializa automáticamente en script.js
+    // No necesitamos llamar a funciones adicionales aquí
+    console.log('✅ Backoffice mostrado correctamente');
 }
 
 // Manejar el login con la API
