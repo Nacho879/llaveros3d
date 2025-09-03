@@ -39,8 +39,7 @@ export default async function handler(req, res) {
         console.error('❌ Error en API Llaveros:', error);
         res.status(500).json({
             error: 'Error interno del servidor',
-            message: error.message,
-            details: error.stack
+            message: error.message
         });
     }
 }
@@ -97,12 +96,7 @@ async function initDatabase(req, res) {
         });
 
     } catch (error) {
-        console.error('❌ Error en initDatabase:', error);
-        res.status(500).json({
-            error: 'Error inicializando base de datos',
-            message: error.message,
-            details: error.stack
-        });
+        throw error;
     }
 }
 
@@ -156,12 +150,7 @@ async function createPedido(req, res) {
         });
 
     } catch (error) {
-        console.error('❌ Error en createPedido:', error);
-        res.status(500).json({
-            error: 'Error creando pedido',
-            message: error.message,
-            details: error.stack
-        });
+        throw error;
     }
 }
 
@@ -179,12 +168,7 @@ async function listPedidos(req, res) {
         });
 
     } catch (error) {
-        console.error('❌ Error en listPedidos:', error);
-        res.status(500).json({
-            error: 'Error listando pedidos',
-            message: error.message,
-            details: error.stack
-        });
+        throw error;
     }
 }
 
@@ -211,11 +195,6 @@ async function updatePedido(req, res) {
         });
 
     } catch (error) {
-        console.error('❌ Error en updatePedido:', error);
-        res.status(500).json({
-            error: 'Error actualizando pedido',
-            message: error.message,
-            details: error.stack
-        });
+        throw error;
     }
 }
