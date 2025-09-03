@@ -24,6 +24,13 @@
         <h1>🧪 Test de Postgres - Llaveros 3D</h1>
         
         <div class="test-section info">
+            <h2>🔧 Test de API Básica</h2>
+            <p>Primero prueba que la API básica esté funcionando.</p>
+            <button onclick="testBasicAPI()">🔧 Probar API Básica</button>
+            <div id="basicAPIStatus"></div>
+        </div>
+        
+        <div class="test-section info">
             <h2>📊 Estado de la Base de Datos</h2>
             <p>Esta página prueba la conexión a la base de datos Postgres de Neon usando API consolidada.</p>
             <button onclick="testDatabase()">🧪 Probar Conexión a Postgres</button>
@@ -53,6 +60,40 @@
     </div>
 
     <script>
+        // Función para probar la API básica
+        async function testBasicAPI() {
+            const statusDiv = document.getElementById('basicAPIStatus');
+            statusDiv.innerHTML = '<div class="loading">🔄 Probando API básica...</div>';
+            
+            try {
+                const response = await fetch('/api/test');
+                const result = await response.json();
+                
+                if (result.success) {
+                    statusDiv.innerHTML = `
+                        <div class="success">
+                            <div class="success-text">✅ API básica funcionando</div>
+                            <div class="result">Mensaje: ${result.message}<br>Timestamp: ${result.timestamp}<br>Método: ${result.method}</div>
+                        </div>
+                    `;
+                } else {
+                    statusDiv.innerHTML = `
+                        <div class="error">
+                            <div class="error-text">❌ Error en API básica</div>
+                            <div class="result">${JSON.stringify(result, null, 2)}</div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                statusDiv.innerHTML = `
+                    <div class="error">
+                        <div class="error-text">❌ Error de conexión: ${error.message}</div>
+                        <div class="result">Verifica que la API esté funcionando</div>
+                    </div>
+                `;
+            }
+        }
+
         // Función para probar la conexión a la base de datos
         async function testDatabase() {
             const statusDiv = document.getElementById('dbStatus');
