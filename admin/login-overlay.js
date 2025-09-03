@@ -68,13 +68,28 @@ function showBackoffice() {
     // Ocultar login
     loginOverlay.style.display = 'none';
     
-    // Mostrar contenido del backoffice (usar .admin-main en lugar de .admin-content)
-    const backofficeContent = document.querySelector('.admin-main');
+    // Mostrar contenido del backoffice (usar #backofficeContent)
+    const backofficeContent = document.getElementById('backofficeContent');
     if (backofficeContent) {
         backofficeContent.style.display = 'block';
         console.log('✅ Contenido del backoffice mostrado');
+        
+        // Forzar la activación del dashboard
+        const dashboardSection = document.getElementById('dashboard');
+        if (dashboardSection) {
+            // Remover clase active de todas las secciones
+            document.querySelectorAll('.admin-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Añadir clase active al dashboard
+            dashboardSection.classList.add('active');
+            console.log('✅ Dashboard activado');
+        } else {
+            console.error('❌ Sección dashboard no encontrada');
+        }
     } else {
-        console.error('❌ Elemento .admin-main no encontrado');
+        console.error('❌ Elemento #backofficeContent no encontrado');
     }
     
     // Mostrar información del usuario

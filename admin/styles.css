@@ -101,12 +101,28 @@ body {
     padding: 2rem;
 }
 
+/* Contenido del Backoffice */
+.backoffice-content {
+    display: none; /* Oculto por defecto */
+}
+
+.backoffice-content.active {
+    display: block; /* Visible cuando está activo */
+}
+
+/* Secciones del Backoffice */
 .admin-section {
-    display: none;
+    display: none; /* Ocultas por defecto */
 }
 
 .admin-section.active {
+    display: block; /* Solo la activa se muestra */
+}
+
+/* Asegurar que el contenido principal sea visible */
+.admin-main {
     display: block;
+    width: 100%;
 }
 
 .section-header {

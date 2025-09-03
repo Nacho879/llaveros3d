@@ -473,8 +473,28 @@ function getRecurringClients() {
 function initializeAdmin() {
     console.log('🚀 Backoffice inicializando...');
     
+    // Verificar que los elementos existan
+    const dashboardSection = document.getElementById('dashboard');
+    const adminSections = document.querySelectorAll('.admin-section');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    console.log('🔍 Verificación de elementos:');
+    console.log('- Dashboard section:', !!dashboardSection);
+    console.log('- Admin sections:', adminSections.length);
+    console.log('- Nav links:', navLinks.length);
+    
+    if (!dashboardSection) {
+        console.error('❌ CRÍTICO: Sección dashboard no encontrada');
+        return;
+    }
+    
+    if (adminSections.length === 0) {
+        console.error('❌ CRÍTICO: No se encontraron secciones admin');
+        return;
+    }
+    
     // Configurar navegación
-    document.querySelectorAll('.nav-link').forEach(link => {
+    navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             const section = link.getAttribute('data-section');
