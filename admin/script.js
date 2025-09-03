@@ -39,16 +39,20 @@ function clearSession() {
 
 // Función para cargar datos del localStorage
 function loadDataFromLocalStorage() {
+    console.log('🔄 Cargando datos del localStorage...');
+    
     // Cargar pedidos del localStorage
     const savedPedidos = localStorage.getItem('llavero3d_pedidos');
     if (savedPedidos) {
         try {
             pedidos = JSON.parse(savedPedidos);
-            console.log('Pedidos cargados:', pedidos.length);
+            console.log('✅ Pedidos cargados:', pedidos.length);
         } catch (error) {
-            console.error('Error al cargar pedidos:', error);
+            console.error('❌ Error al cargar pedidos:', error);
             pedidos = [];
         }
+    } else {
+        console.log('ℹ️ No hay pedidos guardados');
     }
     
     // Cargar clientes del localStorage
@@ -56,11 +60,13 @@ function loadDataFromLocalStorage() {
     if (savedClientes) {
         try {
             clientes = JSON.parse(savedClientes);
-            console.log('Clientes cargados:', clientes.length);
+            console.log('✅ Clientes cargados:', clientes.length);
         } catch (error) {
-            console.error('Error al cargar clientes:', error);
+            console.error('❌ Error al cargar clientes:', error);
             clientes = [];
         }
+    } else {
+        console.log('ℹ️ No hay clientes guardados');
     }
     
     // Actualizar dashboard con los datos cargados
@@ -69,15 +75,28 @@ function loadDataFromLocalStorage() {
 
 // Función para mostrar secciones
 function showSection(sectionName) {
+    console.log('🔄 Cambiando a sección:', sectionName);
+    
     document.querySelectorAll('.admin-section').forEach(section => {
         section.classList.remove('active');
     });
-    document.getElementById(sectionName).classList.add('active');
+    
+    const targetSection = document.getElementById(sectionName);
+    if (targetSection) {
+        targetSection.classList.add('active');
+        console.log('✅ Sección activada:', sectionName);
+    } else {
+        console.error('❌ Sección no encontrada:', sectionName);
+    }
     
     document.querySelectorAll('.nav-link').forEach(link => {
         link.classList.remove('active');
     });
-    document.querySelector(`[data-section="${sectionName}"]`).classList.add('active');
+    
+    const targetLink = document.querySelector(`[data-section="${sectionName}"]`);
+    if (targetLink) {
+        targetLink.classList.add('active');
+    }
     
     currentSection = sectionName;
     
@@ -94,11 +113,15 @@ function showSection(sectionName) {
         case 'reportes':
             renderReports();
             break;
+        default:
+            console.log('⚠️ Sección no manejada:', sectionName);
     }
 }
 
 // Actualizar dashboard
 function updateDashboard() {
+    console.log('🔄 Actualizando dashboard...');
+    
     const totalPedidos = pedidos.length;
     const pedidosNuevos = pedidos.filter(p => p.estado === 'Nuevo').length;
     const pedidosEnProceso = pedidos.filter(p => p.estado === 'En Proceso').length;
@@ -107,31 +130,84 @@ function updateDashboard() {
     const totalClientes = clientes.length;
     const totalIngresos = pedidos.reduce((sum, p) => sum + (p.precio || 0), 0);
     
+    console.log('📊 Estadísticas calculadas:', {
+        totalPedidos,
+        pedidosNuevos,
+        pedidosEnProceso,
+        pedidosCompletados,
+        totalClientes,
+        totalIngresos
+    });
+    
     // Actualizar estadísticas usando los IDs correctos del HTML
     const totalPedidosElement = document.getElementById('total-pedidos');
     const pedidosPendientesElement = document.getElementById('pedidos-pendientes');
     const pedidosCompletadosElement = document.getElementById('pedidos-completados');
     const ingresosTotalesElement = document.getElementById('ingresos-totales');
     
-    if (totalPedidosElement) totalPedidosElement.textContent = totalPedidos;
-    if (pedidosPendientesElement) pedidosPendientesElement.textContent = pedidosNuevos;
-    if (pedidosCompletadosElement) pedidosCompletadosElement.textContent = pedidosCompletados;
-    if (ingresosTotalesElement) ingresosTotalesElement.textContent = totalIngresos.toFixed(2) + '€';
+    console.log('🔍 Elementos encontrados:', {
+        totalPedidosElement: !!totalPedidosElement,
+        pedidosPendientesElement: !!pedidosPendientesElement,
+        pedidosCompletadosElement: !!pedidosCompletadosElement,
+        ingresosTotalesElement: !!ingresosTotalesElement
+    });
+    
+    if (totalPedidosElement) {
+        totalPedidosElement.textContent = totalPedidos;
+        console.log('✅ total-pedidos actualizado');
+    } else {
+        console.error('❌ Elemento total-pedidos no encontrado');
+    }
+    
+    if (pedidosPendientesElement) {
+        pedidosPendientesElement.textContent = pedidosNuevos;
+        console.log('✅ pedidos-pendientes actualizado');
+    } else {
+        console.error('❌ Elemento pedidos-pendientes no encontrado');
+    }
+    
+    if (pedidosCompletadosElement) {
+        pedidosCompletadosElement.textContent = pedidosCompletados;
+        console.log('✅ pedidos-completados actualizado');
+    } else {
+        console.error('❌ Elemento pedidos-completados no encontrado');
+    }
+    
+    if (ingresosTotalesElement) {
+        ingresosTotalesElement.textContent = totalIngresos.toFixed(2) + '€';
+        console.log('✅ ingresos-totales actualizado');
+    } else {
+        console.error('❌ Elemento ingresos-totales no encontrado');
+    }
     
     // Actualizar gráfico de pedidos recientes
+    console.log('🔄 Actualizando pedidos recientes...');
     renderRecentOrders();
+    console.log('✅ Dashboard actualizado completamente');
 }
 
 // Renderizar tabla de pedidos
 function renderPedidosTable() {
+    console.log('🔄 Renderizando tabla de pedidos...');
+    
     const tableBody = document.getElementById('pedidos-tbody');
-    if (!tableBody) return;
+    if (!tableBody) {
+        console.error('❌ Elemento pedidos-tbody no encontrado');
+        return;
+    }
     
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     const pedidosToShow = pedidos.slice(startIndex, endIndex);
     
+    console.log(`📋 Mostrando pedidos ${startIndex + 1}-${Math.min(endIndex, pedidos.length)} de ${pedidos.length}`);
+    
     tableBody.innerHTML = '';
+    
+    if (pedidosToShow.length === 0) {
+        tableBody.innerHTML = '<tr><td colspan="8" class="text-center">No hay pedidos para mostrar</td></tr>';
+        return;
+    }
     
     pedidosToShow.forEach(pedido => {
         const row = document.createElement('tr');
@@ -141,7 +217,7 @@ function renderPedidosTable() {
             <td>${pedido.nombre}</td>
             <td>${pedido.email}</td>
             <td>${pedido.cantidad}</td>
-            <td>${pedido.precio.toFixed(2)}€</td>
+            <td>${pedido.precio ? pedido.precio.toFixed(2) : '0.00'}€</td>
             <td>
                 <select onchange="updatePedidoStatus('${pedido.id}', this.value)">
                     <option value="Nuevo" ${pedido.estado === 'Nuevo' ? 'selected' : ''}>Nuevo</option>
@@ -158,57 +234,90 @@ function renderPedidosTable() {
     });
     
     renderPagination();
+    console.log('✅ Tabla de pedidos renderizada');
 }
 
 // Renderizar tabla de clientes
 function renderClientesTable() {
+    console.log('🔄 Renderizando tabla de clientes...');
+    
     const clientsGrid = document.getElementById('clients-grid');
-    if (!clientsGrid) return;
+    if (!clientsGrid) {
+        console.error('❌ Elemento clients-grid no encontrado');
+        return;
+    }
     
     clientsGrid.innerHTML = '';
+    
+    if (clientes.length === 0) {
+        clientsGrid.innerHTML = '<p class="text-center">No hay clientes para mostrar</p>';
+        return;
+    }
     
     clientes.forEach(cliente => {
         const clientCard = document.createElement('div');
         clientCard.className = 'client-card';
         clientCard.innerHTML = `
-            <h4>${cliente.nombre}</h4>
-            <p><strong>Email:</strong> ${cliente.email}</p>
-            <p><strong>Teléfono:</strong> ${cliente.telefono}</p>
-            <p><strong>Ciudad:</strong> ${cliente.ciudad}</p>
+            <h4>${cliente.nombre || 'Sin nombre'}</h4>
+            <p><strong>Email:</strong> ${cliente.email || 'Sin email'}</p>
+            <p><strong>Teléfono:</strong> ${cliente.telefono || 'Sin teléfono'}</p>
+            <p><strong>Ciudad:</strong> ${cliente.ciudad || 'Sin ciudad'}</p>
             <p><strong>Total Pedidos:</strong> ${cliente.totalPedidos || 0}</p>
             <p><strong>Total Gastado:</strong> ${(cliente.totalGastado || 0).toFixed(2)}€</p>
         `;
         clientsGrid.appendChild(clientCard);
     });
+    
+    console.log('✅ Tabla de clientes renderizada');
 }
 
 // Renderizar reportes
 function renderReports() {
+    console.log('🔄 Renderizando reportes...');
+    
     const topProducts = document.getElementById('top-products');
     const recurringClients = document.getElementById('recurring-clients');
     
     if (topProducts) {
         topProducts.innerHTML = getTopProducts();
+        console.log('✅ Top productos actualizado');
+    } else {
+        console.error('❌ Elemento top-products no encontrado');
     }
     
     if (recurringClients) {
         recurringClients.innerHTML = getRecurringClients();
+        console.log('✅ Clientes recurrentes actualizado');
+    } else {
+        console.error('❌ Elemento recurring-clients no encontrado');
     }
+    
+    console.log('✅ Reportes renderizados');
 }
 
 // Funciones auxiliares
 function updatePedidoStatus(pedidoId, newStatus) {
+    console.log(`🔄 Actualizando estado del pedido ${pedidoId} a ${newStatus}`);
+    
     const pedido = pedidos.find(p => p.id === pedidoId);
     if (pedido) {
         pedido.estado = newStatus;
         localStorage.setItem('llavero3d_pedidos', JSON.stringify(pedidos));
         updateDashboard();
+        console.log('✅ Estado del pedido actualizado');
+    } else {
+        console.error('❌ Pedido no encontrado:', pedidoId);
     }
 }
 
 function viewPedidoDetails(pedidoId) {
+    console.log(`🔄 Mostrando detalles del pedido ${pedidoId}`);
+    
     const pedido = pedidos.find(p => p.id === pedidoId);
-    if (!pedido) return;
+    if (!pedido) {
+        console.error('❌ Pedido no encontrado:', pedidoId);
+        return;
+    }
     
     const modal = document.createElement('div');
     modal.className = 'modal';
@@ -228,7 +337,7 @@ function viewPedidoDetails(pedidoId) {
                 <p><strong>Forma:</strong> ${pedido.forma}</p>
                 <p><strong>Color:</strong> ${pedido.color}</p>
                 <p><strong>Notas:</strong> ${pedido.notasPedido || 'Sin notas'}</p>
-                <p><strong>Precio:</strong> ${pedido.precio.toFixed(2)}€</p>
+                <p><strong>Precio:</strong> ${pedido.precio ? pedido.precio.toFixed(2) : '0.00'}€</p>
                 <p><strong>Estado:</strong> ${pedido.estado}</p>
             </div>
         </div>
@@ -240,15 +349,25 @@ function viewPedidoDetails(pedidoId) {
     modal.onclick = (e) => {
         if (e.target === modal) modal.remove();
     };
+    
+    console.log('✅ Modal de detalles mostrado');
 }
 
 function renderRecentOrders() {
     const recentOrdersContainer = document.getElementById('recent-pedidos');
-    if (!recentOrdersContainer) return;
+    if (!recentOrdersContainer) {
+        console.error('❌ Elemento recent-pedidos no encontrado');
+        return;
+    }
     
     const recentOrders = pedidos
         .sort((a, b) => new Date(b.fecha) - new Date(a.fecha))
         .slice(0, 5);
+    
+    if (recentOrders.length === 0) {
+        recentOrdersContainer.innerHTML = '<p class="text-center">No hay pedidos recientes</p>';
+        return;
+    }
     
     recentOrdersContainer.innerHTML = recentOrders.map(pedido => `
         <div class="recent-order">
@@ -261,12 +380,22 @@ function renderRecentOrders() {
             </div>
         </div>
     `).join('');
+    
+    console.log('✅ Pedidos recientes actualizados');
 }
 
 function renderPagination() {
     const totalPages = Math.ceil(pedidos.length / itemsPerPage);
     const paginationContainer = document.getElementById('pagination');
-    if (!paginationContainer) return;
+    if (!paginationContainer) {
+        console.error('❌ Elemento pagination no encontrado');
+        return;
+    }
+    
+    if (totalPages <= 1) {
+        paginationContainer.innerHTML = '';
+        return;
+    }
     
     let paginationHTML = '';
     
@@ -286,19 +415,9 @@ function renderPagination() {
 }
 
 function changePage(page) {
+    console.log(`🔄 Cambiando a página ${page}`);
     currentPage = page;
     renderPedidosTable();
-}
-
-function getMonthlyStats() {
-    const now = new Date();
-    const currentMonth = now.getMonth();
-    const currentYear = now.getFullYear();
-    
-    return pedidos.filter(pedido => {
-        const pedidoDate = new Date(pedido.fecha);
-        return pedidoDate.getMonth() === currentMonth && pedidoDate.getFullYear() === currentYear;
-    });
 }
 
 function getTopProducts() {
@@ -307,6 +426,10 @@ function getTopProducts() {
         const key = `${pedido.forma}-${pedido.tamaño}`;
         productStats[key] = (productStats[key] || 0) + pedido.cantidad;
     });
+    
+    if (Object.keys(productStats).length === 0) {
+        return '<p class="text-center">No hay datos de productos</p>';
+    }
     
     return Object.entries(productStats)
         .sort(([,a], [,b]) => b - a)
@@ -329,44 +452,53 @@ function getRecurringClients() {
         clientStats[pedido.email].totalGastado += pedido.precio || 0;
     });
     
-    return Object.entries(clientStats)
+    const recurringClients = Object.entries(clientStats)
         .filter(([, stats]) => stats.totalPedidos > 1)
         .sort(([,a], [,b]) => b.totalPedidos - a.totalPedidos)
-        .slice(0, 5)
-        .map(([email, stats]) => `
-            <div class="client-stat">
-                <strong>${stats.nombre}</strong><br>
-                ${stats.totalPedidos} pedidos - ${stats.totalGastado.toFixed(2)}€
-            </div>
-        `).join('');
+        .slice(0, 5);
+    
+    if (recurringClients.length === 0) {
+        return '<p class="text-center">No hay clientes recurrentes</p>';
+    }
+    
+    return recurringClients.map(([email, stats]) => `
+        <div class="client-stat">
+            <strong>${stats.nombre}</strong><br>
+            ${stats.totalPedidos} pedidos - ${stats.totalGastado.toFixed(2)}€
+        </div>
+    `).join('');
 }
 
 // Inicialización
 function initializeAdmin() {
-    console.log('Backoffice inicializado');
+    console.log('🚀 Backoffice inicializando...');
     
     // Configurar navegación
     document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             const section = link.getAttribute('data-section');
+            console.log('🖱️ Click en navegación:', section);
             showSection(section);
         });
     });
     
     // Mostrar dashboard por defecto
     showSection('dashboard');
+    console.log('✅ Backoffice inicializado correctamente');
 }
 
 // Manejo de navegación por hash
 function handleHashNavigation() {
     const hash = window.location.hash.substring(1);
     const sectionToActivate = hash || 'dashboard';
+    console.log('🔗 Navegación por hash:', sectionToActivate);
     showSection(sectionToActivate);
 }
 
 // Event listeners
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('📄 DOM cargado, inicializando backoffice...');
     initializeAdmin();
     loadDataFromLocalStorage();
     handleHashNavigation();
