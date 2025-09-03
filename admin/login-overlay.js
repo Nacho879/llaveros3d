@@ -68,10 +68,13 @@ function showBackoffice() {
     // Ocultar login
     loginOverlay.style.display = 'none';
     
-    // Mostrar contenido del backoffice
-    const backofficeContent = document.querySelector('.admin-content');
+    // Mostrar contenido del backoffice (usar .admin-main en lugar de .admin-content)
+    const backofficeContent = document.querySelector('.admin-main');
     if (backofficeContent) {
         backofficeContent.style.display = 'block';
+        console.log('✅ Contenido del backoffice mostrado');
+    } else {
+        console.error('❌ Elemento .admin-main no encontrado');
     }
     
     // Mostrar información del usuario
