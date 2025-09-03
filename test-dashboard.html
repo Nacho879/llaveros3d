@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Dashboard - Crear Pedidos de Prueba</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ccc; }
+        button { padding: 10px 20px; margin: 5px; background: #007bff; color: white; border: none; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        .success { background: #28a745; }
+        .info { background: #17a2b8; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 5px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Test Dashboard - Crear Pedidos de Prueba</h1>
+    
+    <div class="test-section">
+        <h2>1. Crear Pedidos de Prueba</h2>
+        <p>Estos pedidos aparecerán en el dashboard del backoffice.</p>
+        
+        <button onclick="createTestPedidos()" class="success">Crear 3 Pedidos de Prueba</button>
+        <button onclick="createSinglePedido()" class="info">Crear 1 Pedido</button>
+        <button onclick="clearAllPedidos()">Limpiar Todos los Pedidos</button>
+    </div>
+    
+    <div class="test-section">
+        <h2>2. Ver Pedidos en localStorage</h2>
+        <button onclick="showLocalStorage()">Mostrar Contenido de localStorage</button>
+        <div id="localStorageContent"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>3. Ir al Backoffice</h2>
+        <p>Después de crear pedidos, ve al backoffice para verlos:</p>
+        <button onclick="goToBackoffice()" class="success">Ir al Backoffice</button>
+    </div>
+    
+    <div class="test-section">
+        <h2>4. Estado del Sistema</h2>
+        <div id="systemStatus"></div>
+    </div>
+    
+    <script>
+        // Función para crear pedidos de prueba
+        function createTestPedidos() {
+            const pedidos = [
+                {
+                    id: 'P' + Date.now() + '001',
+                    fecha: new Date().toISOString(),
+                    nombre: 'Empresa Test 1',
+                    email: 'test1@empresa.com',
+                    telefono: '+34 600 001 001',
+                    ciudad: 'Madrid',
+                    direccion: 'Calle Test 1, 123',
+                    cantidad: 50,
+                    tamaño: 'Mediano',
+                    estilo: 'Realista',
+                    forma: 'round',
+                    color: 'Negro',
+                    notasPedido: 'Pedido de prueba para testing',
+                    newsletter: true,
+                    imagen: null,
+                    precio: 72.60,
+                    estado: 'Nuevo'
+                },
+                {
+                    id: 'P' + Date.now() + '002',
+                    fecha: new Date().toISOString(),
+                    nombre: 'Empresa Test 2',
+                    email: 'test2@empresa.com',
+                    telefono: '+34 600 002 002',
+                    ciudad: 'Barcelona',
+                    direccion: 'Avenida Test 2, 456',
+                    cantidad: 100,
+                    tamaño: 'Grande',
+                    estilo: 'Estilizado',
+                    forma: 'rectangular',
+                    color: 'Blanco',
+                    notasPedido: 'Segundo pedido de prueba',
+                    newsletter: false,
+                    imagen: null,
+                    precio: 145.20,
+                    estado: 'En Proceso'
+                },
+                {
+                    id: 'P' + Date.now() + '003',
+                    fecha: new Date().toISOString(),
+                    nombre: 'Empresa Test 3',
+                    email: 'test3@empresa.com',
+                    telefono: '+34 600 003 003',
+                    ciudad: 'Valencia',
+                    direccion: 'Plaza Test 3, 789',
+                    cantidad: 75,
+                    tamaño: 'Pequeño',
+                    estilo: 'Minimalista',
+                    forma: 'pill',
+                    color: 'Gris',
+                    notasPedido: 'Tercer pedido de prueba',
+                    newsletter: true,
+                    imagen: null,
+                    precio: 108.90,
+                    estado: 'Completado'
+                }
+            ];
+            
+            // Guardar en localStorage
+            localStorage.setItem('llavero3d_pedidos', JSON.stringify(pedidos));
+            
+            showMessage('✅ 3 pedidos de prueba creados exitosamente', 'success');
+            updateSystemStatus();
+        }
+        
+        // Función para crear un solo pedido
+        function createSinglePedido() {
+            const pedido = {
+                id: 'P' + Date.now() + '004',
+                fecha: new Date().toISOString(),
+                nombre: 'Empresa Individual',
+                email: 'individual@empresa.com',
+                telefono: '+34 600 004 004',
+                ciudad: 'Sevilla',
+                direccion: 'Calle Individual 4, 101',
+                cantidad: 30,
+                tamaño: 'Mediano',
+                estilo: 'Realista',
+                forma: 'silhouette',
+                color: 'Negro',
+                notasPedido: 'Pedido individual de prueba',
+                newsletter: true,
+                imagen: null,
+                precio: 43.56,
+                estado: 'Nuevo'
+            };
+            
+            // Obtener pedidos existentes
+            let pedidos = JSON.parse(localStorage.getItem('llavero3d_pedidos') || '[]');
+            pedidos.push(pedido);
+            
+            // Guardar en localStorage
+            localStorage.setItem('llavero3d_pedidos', JSON.stringify(pedidos));
+            
+            showMessage('✅ 1 pedido adicional creado', 'success');
+            updateSystemStatus();
+        }
+        
+        // Función para limpiar todos los pedidos
+        function clearAllPedidos() {
+            localStorage.removeItem('llavero3d_pedidos');
+            showMessage('🗑️ Todos los pedidos eliminados', 'info');
+            updateSystemStatus();
+        }
+        
+        // Función para mostrar contenido de localStorage
+        function showLocalStorage() {
+            const pedidos = JSON.parse(localStorage.getItem('llavero3d_pedidos') || '[]');
+            const content = document.getElementById('localStorageContent');
+            
+            if (pedidos.length === 0) {
+                content.innerHTML = '<p>No hay pedidos en localStorage</p>';
+            } else {
+                content.innerHTML = `
+                    <h3>Pedidos en localStorage (${pedidos.length}):</h3>
+                    <pre>${JSON.stringify(pedidos, null, 2)}</pre>
+                `;
+            }
+        }
+        
+        // Función para ir al backoffice
+        function goToBackoffice() {
+            window.open('/admin/', '_blank');
+        }
+        
+        // Función para mostrar mensajes
+        function showMessage(text, type) {
+            const message = document.createElement('div');
+            message.textContent = text;
+            message.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 20px;
+                background: ${type === 'success' ? '#28a745' : '#17a2b8'};
+                color: white;
+                border-radius: 5px;
+                z-index: 1000;
+                animation: slideIn 0.3s ease-out;
+            `;
+            
+            document.body.appendChild(message);
+            
+            setTimeout(() => {
+                message.remove();
+            }, 3000);
+        }
+        
+        // Función para actualizar estado del sistema
+        function updateSystemStatus() {
+            const pedidos = JSON.parse(localStorage.getItem('llavero3d_pedidos') || '[]');
+            const status = document.getElementById('systemStatus');
+            
+            status.innerHTML = `
+                <h3>Estado Actual:</h3>
+                <p><strong>Total de pedidos:</strong> ${pedidos.length}</p>
+                <p><strong>Pedidos por estado:</strong></p>
+                <ul>
+                    <li>Nuevo: ${pedidos.filter(p => p.estado === 'Nuevo').length}</li>
+                    <li>En Proceso: ${pedidos.filter(p => p.estado === 'En Proceso').length}</li>
+                    <li>Completado: ${pedidos.filter(p => p.estado === 'Completado').length}</li>
+                    <li>Cancelado: ${pedidos.filter(p => p.estado === 'Cancelado').length}</li>
+                </ul>
+                <p><strong>Total ingresos:</strong> ${pedidos.reduce((sum, p) => sum + (p.precio || 0), 0).toFixed(2)}€</p>
+            `;
+        }
+        
+        // Actualizar estado al cargar la página
+        window.addEventListener('load', updateSystemStatus);
+        
+        // Añadir estilos de animación
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
