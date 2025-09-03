@@ -25,7 +25,7 @@
         
         <div class="test-section info">
             <h2>📊 Estado de la Base de Datos</h2>
-            <p>Esta página prueba la conexión a la base de datos Postgres de Neon.</p>
+            <p>Esta página prueba la conexión a la base de datos Postgres de Neon usando APIs simples.</p>
             <button onclick="testDatabase()">🧪 Probar Conexión a Postgres</button>
             <div id="dbStatus"></div>
         </div>
@@ -46,8 +46,8 @@
         
         <div class="test-section">
             <h2>🔗 Enlaces del Sistema</h2>
-            <p><strong>Sitio Principal:</strong> <a href="https://llaveros3d-nz4z267hn-nachos-projects-9e724aa3.vercel.app/" target="_blank">Abrir Sitio</a></p>
-            <p><strong>Backoffice:</strong> <a href="https://llaveros3d-nz4z267hn-nachos-projects-9e724aa3.vercel.app/admin" target="_blank">Abrir Backoffice</a></p>
+            <p><strong>Sitio Principal:</strong> <a href="/" target="_blank">Abrir Sitio</a></p>
+            <p><strong>Backoffice:</strong> <a href="/admin" target="_blank">Abrir Backoffice</a></p>
             <p><strong>Credenciales:</strong> admin@llavero3d.com / Nacho1992!</p>
         </div>
     </div>
@@ -59,14 +59,14 @@
             statusDiv.innerHTML = '<div class="loading">🔄 Probando conexión a Postgres...</div>';
             
             try {
-                const response = await fetch('/api/test-db');
+                const response = await fetch('/api/test-simple');
                 const result = await response.json();
                 
                 if (result.success) {
                     statusDiv.innerHTML = `
                         <div class="success">
                             <div class="success-text">✅ Conexión exitosa a Postgres</div>
-                            <div class="result">${JSON.stringify(result, null, 2)}</div>
+                            <div class="result">Timestamp: ${result.timestamp}<br>Versión: ${result.postgres_version}<br>Estado: ${result.connection_status}</div>
                         </div>
                     `;
                 } else {
@@ -113,7 +113,7 @@
             };
             
             try {
-                const response = await fetch('/api/pedidos/create', {
+                const response = await fetch('/api/pedidos/create-simple', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -154,7 +154,7 @@
             statusDiv.innerHTML = '<div class="loading">🔄 Obteniendo lista de pedidos...</div>';
             
             try {
-                const response = await fetch('/api/pedidos/list');
+                const response = await fetch('/api/pedidos/list-simple');
                 const result = await response.json();
                 
                 if (response.ok && result.success) {
