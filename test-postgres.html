@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Postgres - Llaveros 3D</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { background: #d4edda; border-color: #c3e6cb; }
+        .error { background: #f8d7da; border-color: #f5c6cb; }
+        .info { background: #d1ecf1; border-color: #bee5eb; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; background: #007bff; color: white; border: none; border-radius: 5px; }
+        button:hover { background: #0056b3; }
+        .result { margin-top: 10px; padding: 10px; background: #f8f9fa; border-radius: 5px; font-family: monospace; }
+        .loading { color: #007bff; }
+        .success-text { color: #28a745; }
+        .error-text { color: #dc3545; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test de Postgres - Llaveros 3D</h1>
+        
+        <div class="test-section info">
+            <h2>📊 Estado de la Base de Datos</h2>
+            <p>Esta página prueba la conexión a la base de datos Postgres de Neon.</p>
+            <button onclick="testDatabase()">🧪 Probar Conexión a Postgres</button>
+            <div id="dbStatus"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>📝 Crear Pedido de Prueba</h2>
+            <p>Crea un pedido de prueba para verificar que se guarde en Postgres.</p>
+            <button onclick="createTestPedido()">📝 Crear Pedido de Prueba</button>
+            <div id="createStatus"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>📋 Listar Pedidos</h2>
+            <p>Lista todos los pedidos almacenados en la base de datos.</p>
+            <button onclick="listPedidos()">📋 Listar Pedidos</button>
+            <div id="listStatus"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>🔗 Enlaces del Sistema</h2>
+            <p><strong>Sitio Principal:</strong> <a href="https://llaveros3d-nz4z267hn-nachos-projects-9e724aa3.vercel.app/" target="_blank">Abrir Sitio</a></p>
+            <p><strong>Backoffice:</strong> <a href="https://llaveros3d-nz4z267hn-nachos-projects-9e724aa3.vercel.app/admin" target="_blank">Abrir Backoffice</a></p>
+            <p><strong>Credenciales:</strong> admin@llavero3d.com / Nacho1992!</p>
+        </div>
+    </div>
+
+    <script>
+        // Función para probar la conexión a la base de datos
+        async function testDatabase() {
+            const statusDiv = document.getElementById('dbStatus');
+            statusDiv.innerHTML = '<div class="loading">🔄 Probando conexión a Postgres...</div>';
+            
+            try {
+                const response = await fetch('/api/test-db');
+                const result = await response.json();
+                
+                if (result.success) {
+                    statusDiv.innerHTML = `
+                        <div class="success">
+                            <div class="success-text">✅ Conexión exitosa a Postgres</div>
+                            <div class="result">${JSON.stringify(result, null, 2)}</div>
+                        </div>
+                    `;
+                } else {
+                    statusDiv.innerHTML = `
+                        <div class="error">
+                            <div class="error-text">❌ Error en la conexión</div>
+                            <div class="result">${JSON.stringify(result, null, 2)}</div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                statusDiv.innerHTML = `
+                    <div class="error">
+                        <div class="error-text">❌ Error de conexión: ${error.message}</div>
+                        <div class="result">Verifica que la API esté funcionando</div>
+                    </div>
+                `;
+            }
+        }
+        
+        // Función para crear un pedido de prueba
+        async function createTestPedido() {
+            const statusDiv = document.getElementById('createStatus');
+            statusDiv.innerHTML = '<div class="loading">🔄 Creando pedido de prueba...</div>';
+            
+            const testPedido = {
+                id: 'TEST_' + Date.now(),
+                fecha: new Date().toISOString(),
+                nombre: 'Cliente de Prueba Postgres',
+                email: 'test-postgres@example.com',
+                telefono: '123456789',
+                ciudad: 'Ciudad de Prueba',
+                direccion: 'Dirección de Prueba 123',
+                cantidad: 50,
+                tamaño: 'Mediano',
+                estilo: 'Realista',
+                forma: 'Redondo',
+                color: 'Negro',
+                notasPedido: 'Pedido de prueba para verificar Postgres',
+                newsletter: false,
+                imagen: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==',
+                precio: 72.60,
+                estado: 'Nuevo'
+            };
+            
+            try {
+                const response = await fetch('/api/pedidos/create', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(testPedido)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok && result.success) {
+                    statusDiv.innerHTML = `
+                        <div class="success">
+                            <div class="success-text">✅ Pedido creado exitosamente en Postgres</div>
+                            <div class="result">ID: ${result.pedido.id}<br>Cliente: ${result.pedido.nombre}</div>
+                        </div>
+                    `;
+                } else {
+                    statusDiv.innerHTML = `
+                        <div class="error">
+                            <div class="error-text">❌ Error creando pedido</div>
+                            <div class="result">${JSON.stringify(result, null, 2)}</div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                statusDiv.innerHTML = `
+                    <div class="error">
+                        <div class="error-text">❌ Error de conexión: ${error.message}</div>
+                        <div class="result">Verifica que la API esté funcionando</div>
+                    </div>
+                `;
+            }
+        }
+        
+        // Función para listar pedidos
+        async function listPedidos() {
+            const statusDiv = document.getElementById('listStatus');
+            statusDiv.innerHTML = '<div class="loading">🔄 Obteniendo lista de pedidos...</div>';
+            
+            try {
+                const response = await fetch('/api/pedidos/list');
+                const result = await response.json();
+                
+                if (response.ok && result.success) {
+                    statusDiv.innerHTML = `
+                        <div class="success">
+                            <div class="success-text">✅ ${result.count} pedidos obtenidos de Postgres</div>
+                            <div class="result">${JSON.stringify(result.pedidos.slice(0, 3), null, 2)}${result.count > 3 ? '\n... (mostrando solo los primeros 3)' : ''}</div>
+                        </div>
+                    `;
+                } else {
+                    statusDiv.innerHTML = `
+                        <div class="error">
+                            <div class="error-text">❌ Error obteniendo pedidos</div>
+                            <div class="result">${JSON.stringify(result, null, 2)}</div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                statusDiv.innerHTML = `
+                    <div class="error">
+                        <div class="error-text">❌ Error de conexión: ${error.message}</div>
+                        <div class="result">Verifica que la API esté funcionando</div>
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
