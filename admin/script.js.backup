@@ -107,16 +107,13 @@ function updateDashboard() {
     const totalClientes = clientes.length;
     const totalIngresos = pedidos.reduce((sum, p) => sum + (p.precio || 0), 0);
     
-    // Actualizar estadísticas usando los IDs correctos del HTML
-    const totalPedidosElement = document.getElementById('total-pedidos');
-    const pedidosPendientesElement = document.getElementById('pedidos-pendientes');
-    const pedidosCompletadosElement = document.getElementById('pedidos-completados');
-    const ingresosTotalesElement = document.getElementById('ingresos-totales');
-    
-    if (totalPedidosElement) totalPedidosElement.textContent = totalPedidos;
-    if (pedidosPendientesElement) pedidosPendientesElement.textContent = pedidosNuevos;
-    if (pedidosCompletadosElement) pedidosCompletadosElement.textContent = pedidosCompletados;
-    if (ingresosTotalesElement) ingresosTotalesElement.textContent = totalIngresos.toFixed(2) + '€';
+    // Actualizar estadísticas
+    document.getElementById('totalPedidos').textContent = totalPedidos;
+    document.getElementById('pedidosNuevos').textContent = pedidosNuevos;
+    document.getElementById('pedidosEnProceso').textContent = pedidosEnProceso;
+    document.getElementById('pedidosCompletados').textContent = pedidosCompletados;
+    document.getElementById('totalClientes').textContent = totalClientes;
+    document.getElementById('totalIngresos').textContent = totalIngresos.toFixed(2) + '€';
     
     // Actualizar gráfico de pedidos recientes
     renderRecentOrders();
@@ -124,7 +121,7 @@ function updateDashboard() {
 
 // Renderizar tabla de pedidos
 function renderPedidosTable() {
-    const tableBody = document.getElementById('pedidos-tbody');
+    const tableBody = document.getElementById('pedidosTableBody');
     if (!tableBody) return;
     
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -162,38 +159,49 @@ function renderPedidosTable() {
 
 // Renderizar tabla de clientes
 function renderClientesTable() {
-    const clientsGrid = document.getElementById('clients-grid');
-    if (!clientsGrid) return;
+    const tableBody = document.getElementById('clientesTableBody');
+    if (!tableBody) return;
     
-    clientsGrid.innerHTML = '';
+    tableBody.innerHTML = '';
     
     clientes.forEach(cliente => {
-        const clientCard = document.createElement('div');
-        clientCard.className = 'client-card';
-        clientCard.innerHTML = `
-            <h4>${cliente.nombre}</h4>
-            <p><strong>Email:</strong> ${cliente.email}</p>
-            <p><strong>Teléfono:</strong> ${cliente.telefono}</p>
-            <p><strong>Ciudad:</strong> ${cliente.ciudad}</p>
-            <p><strong>Total Pedidos:</strong> ${cliente.totalPedidos || 0}</p>
-            <p><strong>Total Gastado:</strong> ${(cliente.totalGastado || 0).toFixed(2)}€</p>
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${cliente.id}</td>
+            <td>${cliente.nombre}</td>
+            <td>${cliente.email}</td>
+            <td>${cliente.telefono}</td>
+            <td>${cliente.ciudad}</td>
+            <td>${cliente.totalPedidos}</td>
+            <td>${cliente.totalGastado.toFixed(2)}€</td>
         `;
-        clientsGrid.appendChild(clientCard);
+        tableBody.appendChild(row);
     });
 }
 
 // Renderizar reportes
 function renderReports() {
-    const topProducts = document.getElementById('top-products');
-    const recurringClients = document.getElementById('recurring-clients');
+    const reportsContainer = document.getElementById('reportsContainer');
+    if (!reportsContainer) return;
     
-    if (topProducts) {
-        topProducts.innerHTML = getTopProducts();
-    }
+    // Estadísticas por mes
+    const monthlyStats = getMonthlyStats();
     
-    if (recurringClients) {
-        recurringClients.innerHTML = getRecurringClients();
-    }
+    reportsContainer.innerHTML = `
+        <div class="report-card">
+            <h3>Estadísticas Mensuales</h3>
+            <div class="chart-container">
+                <canvas id="monthlyChart"></canvas>
+            </div>
+        </div>
+        
+        <div class="report-card">
+            <h3>Top Productos</h3>
+            <div class="top-products">
+                ${getTopProducts()}
+            </div>
+        </div>
+    `;
 }
 
 // Funciones auxiliares
@@ -243,7 +251,7 @@ function viewPedidoDetails(pedidoId) {
 }
 
 function renderRecentOrders() {
-    const recentOrdersContainer = document.getElementById('recent-pedidos');
+    const recentOrdersContainer = document.getElementById('recentOrders');
     if (!recentOrdersContainer) return;
     
     const recentOrders = pedidos
