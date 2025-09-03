@@ -66,14 +66,14 @@
             statusDiv.innerHTML = '<div class="loading">🔄 Probando API básica...</div>';
             
             try {
-                const response = await fetch('/api/ping');
+                const response = await fetch('/api/test-simple');
                 const result = await response.json();
                 
                 if (result.success) {
                     statusDiv.innerHTML = `
                         <div class="success">
                             <div class="success-text">✅ API básica funcionando</div>
-                            <div class="result">Mensaje: ${result.message}<br>Timestamp: ${result.time}</div>
+                            <div class="result">Mensaje: ${result.message}<br>Timestamp: ${result.timestamp}</div>
                         </div>
                     `;
                 } else {
