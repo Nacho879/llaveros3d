@@ -7,34 +7,9 @@ const itemsPerPage = 10;
 
 // Verificar autenticación antes de inicializar
 function checkAuth() {
-    const isAuthenticated = localStorage.getItem("llaveros3d_authenticated");
-    const sessionExpiry = localStorage.getItem("llaveros3d_session_expiry");
-    
-    if (isAuthenticated !== "true" || !sessionExpiry) {
-        redirectToLogin();
-        return false;
-    }
-    
-    const now = Date.now();
-    if (now >= parseInt(sessionExpiry)) {
-        clearSession();
-        redirectToLogin();
-        return false;
-    }
-    
+    // Por ahora, permitir acceso directo para testing
+    // TODO: Implementar autenticación real con Vercel
     return true;
-}
-
-// Redirigir al login
-function redirectToLogin() {
-    window.location.href = "login.html";
-}
-
-// Limpiar sesión
-function clearSession() {
-    localStorage.removeItem("llaveros3d_authenticated");
-    localStorage.removeItem("llaveros3d_user_email");
-    localStorage.removeItem("llaveros3d_session_expiry");
 }
 
 // Función para cargar datos de la base de datos
@@ -68,47 +43,12 @@ async function loadDataFromDatabase() {
     } catch (error) {
         console.error('❌ Error cargando de base de datos:', error);
         
-        // Fallback a localStorage
-        console.log('🔄 Fallback a localStorage...');
-        loadDataFromLocalStorage();
+        // Si no hay datos, inicializar arrays vacíos
+        pedidos = [];
+        clientes = [];
+        updateDashboard();
         return false;
     }
-}
-
-// Función para cargar datos del localStorage
-function loadDataFromLocalStorage() {
-    console.log('🔄 Cargando datos del localStorage...');
-    
-    // Cargar pedidos del localStorage
-    const savedPedidos = localStorage.getItem('llavero3d_pedidos');
-    if (savedPedidos) {
-        try {
-            pedidos = JSON.parse(savedPedidos);
-            console.log('✅ Pedidos cargados:', pedidos.length);
-        } catch (error) {
-            console.error('❌ Error al cargar pedidos:', error);
-            pedidos = [];
-        }
-    } else {
-        console.log('ℹ️ No hay pedidos guardados');
-    }
-    
-    // Cargar clientes del localStorage
-    const savedClientes = localStorage.getItem('llavero3d_clientes');
-    if (savedClientes) {
-        try {
-            clientes = JSON.parse(savedClientes);
-            console.log('✅ Clientes cargados:', clientes.length);
-        } catch (error) {
-            console.error('❌ Error al cargar clientes:', error);
-            clientes = [];
-        }
-    } else {
-        console.log('ℹ️ No hay clientes guardados');
-    }
-    
-    // Actualizar dashboard con los datos cargados
-    updateDashboard();
 }
 
 // Función para mostrar secciones
@@ -334,17 +274,34 @@ function renderReports() {
 }
 
 // Funciones auxiliares
-function updatePedidoStatus(pedidoId, newStatus) {
+async function updatePedidoStatus(pedidoId, newStatus) {
     console.log(`🔄 Actualizando estado del pedido ${pedidoId} a ${newStatus}`);
     
-    const pedido = pedidos.find(p => p.id === pedidoId);
-    if (pedido) {
-        pedido.estado = newStatus;
-        localStorage.setItem('llavero3d_pedidos', JSON.stringify(pedidos));
-        updateDashboard();
-        console.log('✅ Estado del pedido actualizado');
-    } else {
-        console.error('❌ Pedido no encontrado:', pedidoId);
+    try {
+        const response = await fetch('/api/pedidos/update', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id: pedidoId,
+                estado: newStatus
+            })
+        });
+
+        if (response.ok) {
+            const pedido = pedidos.find(p => p.id === pedidoId);
+            if (pedido) {
+                pedido.estado = newStatus;
+                updateDashboard();
+                console.log('✅ Estado del pedido actualizado en base de datos');
+            }
+        } else {
+            throw new Error('Error al actualizar pedido');
+        }
+    } catch (error) {
+        console.error('❌ Error actualizando pedido:', error);
+        alert('Error al actualizar el estado del pedido');
     }
 }
 

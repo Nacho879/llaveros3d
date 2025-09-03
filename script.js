@@ -486,21 +486,18 @@ function handleFormSubmit(e) {
                     submitBtn.classList.remove('success');
                     form.classList.remove('loading');
                 }, 3000);
-            } else {
-                // Fallback a localStorage si falla la API
-                console.log('❌ Fallback a localStorage después de simulación exitosa.');
-                savePedidoToLocalStorage(pedidoData);
-                submitBtn.textContent = '¡Pedido enviado!';
-                submitBtn.classList.add('success');
-                showSuccessMessage(pedidoData);
-                setTimeout(() => {
-                    form.reset();
-                    submitBtn.textContent = originalText;
-                    submitBtn.disabled = false;
-                    submitBtn.classList.remove('success');
-                    form.classList.remove('loading');
-                }, 3000);
-            }
+                                } else {
+                        // Fallback si falla la API
+                        console.log('❌ Error en la API después de simulación exitosa.');
+                        submitBtn.textContent = 'Error en la API';
+                        submitBtn.classList.add('error');
+                        setTimeout(() => {
+                            submitBtn.textContent = originalText;
+                            submitBtn.disabled = false;
+                            submitBtn.classList.remove('error');
+                            form.classList.remove('loading');
+                        }, 3000);
+                    }
         });
         
     }).catch(() => {
@@ -644,33 +641,14 @@ async function savePedidoToDatabase(pedidoData) {
         const result = await response.json();
         console.log('✅ Pedido guardado en base de datos:', result);
         
-        // También guardar en localStorage como backup
-        savePedidoToLocalStorage(pedidoData);
-        
         return true;
-    } catch (error) {
-        console.error('❌ Error guardando en base de datos:', error);
-        
-        // Fallback a localStorage si falla la API
-        console.log('🔄 Fallback a localStorage...');
-        savePedidoToLocalStorage(pedidoData);
-        return false;
-    }
+            } catch (error) {
+            console.error('❌ Error guardando en base de datos:', error);
+            return false;
+        }
 }
 
-// Función para guardar pedido en localStorage (mantener como backup)
-function savePedidoToLocalStorage(pedidoData) {
-    // Obtener pedidos existentes
-    let pedidos = JSON.parse(localStorage.getItem('llaveros3d_pedidos') || '[]');
-    
-    // Añadir nuevo pedido
-    pedidos.push(pedidoData);
-    
-    // Guardar en localStorage
-    localStorage.setItem('llaveros3d_pedidos', JSON.stringify(pedidos));
-    
-    console.log('✅ Pedido guardado en localStorage como backup:', pedidoData);
-}
+
 
 function showSuccessMessage(pedidoData) {
     // Crear mensaje de éxito
