@@ -24,9 +24,9 @@
         <h1>🧪 Test de Postgres - Llaveros 3D</h1>
         
         <div class="test-section info">
-            <h2>🔧 Test de API Básica</h2>
-            <p>Primero prueba que la API básica esté funcionando.</p>
-            <button onclick="testBasicAPI()">🔧 Probar API Básica</button>
+            <h2>🔐 Test de API con Autenticación</h2>
+            <p>Prueba que la API funcione con autenticación de Vercel.</p>
+            <button onclick="testBasicAPI()">🔐 Probar API con Auth</button>
             <div id="basicAPIStatus"></div>
         </div>
         
@@ -63,23 +63,38 @@
         // Función para probar la API básica
         async function testBasicAPI() {
             const statusDiv = document.getElementById('basicAPIStatus');
-            statusDiv.innerHTML = '<div class="loading">🔄 Probando API básica...</div>';
+            statusDiv.innerHTML = '<div class="loading">🔄 Probando API con autenticación...</div>';
             
             try {
-                const response = await fetch('/api/test-simple');
+                const response = await fetch('/api/auth-bypass', {
+                    headers: {
+                        'Authorization': 'Bearer test-bypass-12345'
+                    }
+                });
+                
+                if (response.status === 401) {
+                    statusDiv.innerHTML = `
+                        <div class="error">
+                            <div class="error-text">❌ API protegida por autenticación</div>
+                            <div class="result">Necesitamos configurar Vercel para permitir acceso público a las APIs</div>
+                        </div>
+                    `;
+                    return;
+                }
+                
                 const result = await response.json();
                 
                 if (result.success) {
                     statusDiv.innerHTML = `
                         <div class="success">
-                            <div class="success-text">✅ API básica funcionando</div>
+                            <div class="success-text">✅ API con autenticación funcionando</div>
                             <div class="result">Mensaje: ${result.message}<br>Timestamp: ${result.timestamp}</div>
                         </div>
                     `;
                 } else {
                     statusDiv.innerHTML = `
                         <div class="error">
-                            <div class="error-text">❌ Error en API básica</div>
+                            <div class="error-text">❌ Error en API</div>
                             <div class="result">${JSON.stringify(result, null, 2)}</div>
                         </div>
                     `;
