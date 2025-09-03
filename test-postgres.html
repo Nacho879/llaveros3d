@@ -45,6 +45,13 @@
         </div>
         
         <div class="test-section info">
+            <h2>🐛 Debug de Variables en Runtime</h2>
+            <p>Verifica qué variables están disponibles cuando se ejecuta la API.</p>
+            <button onclick="debugEnvironment()">🐛 Debug Variables</button>
+            <div id="debugStatus"></div>
+        </div>
+        
+        <div class="test-section info">
             <h2>🗄️ Inicializar Base de Datos (Simulado)</h2>
             <p>Prueba la inicialización sin Postgres para verificar que funciona.</p>
             <button onclick="initDatabaseSimple()">🗄️ Inicializar Base de Datos</button>
@@ -270,6 +277,49 @@
                         <div class="error">
                             <div class="error-text">❌ Error en API Fallback</div>
                             <div class="result">${JSON.stringify({init: initResult, list: listResult}, null, 2)}</div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                statusDiv.innerHTML = `
+                    <div class="error">
+                        <div class="error-text">❌ Error de conexión: ${error.message}</div>
+                        <div class="result">Verifica que la API esté funcionando</div>
+                    </div>
+                `;
+            }
+        }
+
+        // Función para debug de variables en runtime
+        async function debugEnvironment() {
+            const statusDiv = document.getElementById('debugStatus');
+            statusDiv.innerHTML = '<div class="loading">🐛 Debug de variables en runtime...</div>';
+            
+            try {
+                const response = await fetch('/api/debug-env');
+                const result = await response.json();
+                
+                if (result.success) {
+                    let variablesHtml = '';
+                    for (const [key, value] of Object.entries(result.variables)) {
+                        variablesHtml += `<div>${key}: ${value}</div>`;
+                    }
+                    
+                    statusDiv.innerHTML = `
+                        <div class="${result.hasMainVariables || result.hasAlternativeVariables ? 'success' : 'error'}">
+                            <div class="${result.hasMainVariables || result.hasAlternativeVariables ? 'success-text' : 'error-text'}">${result.message}</div>
+                            <div class="result">
+                                ${variablesHtml}
+                                <br><strong>Variables principales:</strong> ${result.hasMainVariables ? '✅' : '❌'}<br>
+                                <strong>Variables alternativas:</strong> ${result.hasAlternativeVariables ? '✅' : '❌'}
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    statusDiv.innerHTML = `
+                        <div class="error">
+                            <div class="error-text">❌ Error en debug</div>
+                            <div class="result">${JSON.stringify(result, null, 2)}</div>
                         </div>
                     `;
                 }
