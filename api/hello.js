@@ -9,18 +9,14 @@ export default function handler(req, res) {
         return res.status(200).end();
     }
 
-    // Solo permitir GET para este test
-    if (req.method !== 'GET') {
-        return res.status(405).json({ error: 'Método no permitido' });
-    }
-
-    console.log('🧪 API de test simple funcionando...');
+    console.log('🧪 API hello funcionando...');
 
     res.status(200).json({
         success: true,
-        message: 'API de test funcionando correctamente',
+        message: '¡Hola! API funcionando correctamente',
         timestamp: new Date().toISOString(),
         method: req.method,
-        url: req.url
+        url: req.url,
+        path: req.url
     });
 }
