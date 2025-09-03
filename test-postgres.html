@@ -31,9 +31,16 @@
         </div>
         
         <div class="test-section info">
-            <h2>🗄️ Inicializar Base de Datos</h2>
-            <p>Primero inicializa la base de datos para crear las tablas necesarias.</p>
-            <button onclick="initDatabase()">🗄️ Inicializar Base de Datos</button>
+            <h2>🧪 Test de API Simple</h2>
+            <p>Prueba que la API simple funcione sin Postgres.</p>
+            <button onclick="testSimpleAPI()">🧪 Probar API Simple</button>
+            <div id="simpleStatus"></div>
+        </div>
+        
+        <div class="test-section info">
+            <h2>🗄️ Inicializar Base de Datos (Simulado)</h2>
+            <p>Prueba la inicialización sin Postgres para verificar que funciona.</p>
+            <button onclick="initDatabaseSimple()">🗄️ Inicializar Base de Datos</button>
             <div id="initStatus"></div>
         </div>
         
@@ -108,6 +115,74 @@
                     statusDiv.innerHTML = `
                         <div class="error">
                             <div class="error-text">❌ Error en API</div>
+                            <div class="result">${JSON.stringify(result, null, 2)}</div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                statusDiv.innerHTML = `
+                    <div class="error">
+                        <div class="error-text">❌ Error de conexión: ${error.message}</div>
+                        <div class="result">Verifica que la API esté funcionando</div>
+                    </div>
+                `;
+            }
+        }
+
+        // Función para probar API simple
+        async function testSimpleAPI() {
+            const statusDiv = document.getElementById('simpleStatus');
+            statusDiv.innerHTML = '<div class="loading">🔄 Probando API Simple...</div>';
+            
+            try {
+                const response = await fetch('/api/simple');
+                const result = await response.json();
+                
+                if (result.success) {
+                    statusDiv.innerHTML = `
+                        <div class="success">
+                            <div class="success-text">✅ API Simple funcionando</div>
+                            <div class="result">${result.message}</div>
+                        </div>
+                    `;
+                } else {
+                    statusDiv.innerHTML = `
+                        <div class="error">
+                            <div class="error-text">❌ Error en API Simple</div>
+                            <div class="result">${JSON.stringify(result, null, 2)}</div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                statusDiv.innerHTML = `
+                    <div class="error">
+                        <div class="error-text">❌ Error de conexión: ${error.message}</div>
+                        <div class="result">Verifica que la API esté funcionando</div>
+                    </div>
+                `;
+            }
+        }
+
+        // Función para inicializar la base de datos (simulado)
+        async function initDatabaseSimple() {
+            const statusDiv = document.getElementById('initStatus');
+            statusDiv.innerHTML = '<div class="loading">🔄 Inicializando base de datos (simulado)...</div>';
+            
+            try {
+                const response = await fetch('/api/init-simple');
+                const result = await response.json();
+                
+                if (result.success) {
+                    statusDiv.innerHTML = `
+                        <div class="success">
+                            <div class="success-text">✅ Base de datos inicializada (simulado)</div>
+                            <div class="result">${result.message}<br>Nota: ${result.note}</div>
+                        </div>
+                    `;
+                } else {
+                    statusDiv.innerHTML = `
+                        <div class="error">
+                            <div class="error-text">❌ Error en inicialización</div>
                             <div class="result">${JSON.stringify(result, null, 2)}</div>
                         </div>
                     `;
