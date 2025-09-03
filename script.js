@@ -420,10 +420,15 @@ function setupForm() {
 function handleFormSubmit(e) {
     e.preventDefault();
     
+    console.log('🔄 Formulario enviado - Iniciando validación...');
+    
     // Validar pedido mínimo
     if (!validateOrder()) {
+        console.log('❌ Validación falló');
         return;
     }
+    
+    console.log('✅ Validación exitosa - Creando objeto del pedido...');
     
     const form = e.target;
     const submitBtn = form.querySelector('button[type="submit"]');
@@ -455,8 +460,14 @@ function handleFormSubmit(e) {
         estado: 'Nuevo'
     };
     
+    console.log('📦 Objeto del pedido creado:', pedidoData);
+    
     // Simular envío (reemplazar con Formspree real)
+    console.log('⏳ Iniciando simulación de envío...');
+    
     fakeNetwork(2000).then(() => {
+        console.log('✅ Simulación exitosa - Guardando en localStorage...');
+        
         // Guardar en localStorage
         savePedidoToLocalStorage(pedidoData);
         
@@ -477,6 +488,8 @@ function handleFormSubmit(e) {
         }, 3000);
         
     }).catch(() => {
+        console.log('❌ Simulación falló');
+        
         // Error
         submitBtn.textContent = 'Error al enviar';
         submitBtn.classList.add('error');
