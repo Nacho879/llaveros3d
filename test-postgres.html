@@ -31,6 +31,13 @@
         </div>
         
         <div class="test-section info">
+            <h2>🗄️ Inicializar Base de Datos</h2>
+            <p>Primero inicializa la base de datos para crear las tablas necesarias.</p>
+            <button onclick="initDatabase()">🗄️ Inicializar Base de Datos</button>
+            <div id="initStatus"></div>
+        </div>
+        
+        <div class="test-section info">
             <h2>📊 Estado de la Base de Datos</h2>
             <p>Esta página prueba la conexión a la base de datos Postgres de Neon usando API consolidada.</p>
             <button onclick="testDatabase()">🧪 Probar Conexión a Postgres</button>
@@ -101,6 +108,52 @@
                     statusDiv.innerHTML = `
                         <div class="error">
                             <div class="error-text">❌ Error en API</div>
+                            <div class="result">${JSON.stringify(result, null, 2)}</div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                statusDiv.innerHTML = `
+                    <div class="error">
+                        <div class="error-text">❌ Error de conexión: ${error.message}</div>
+                        <div class="result">Verifica que la API esté funcionando</div>
+                    </div>
+                `;
+            }
+        }
+
+        // Función para inicializar la base de datos
+        async function initDatabase() {
+            const statusDiv = document.getElementById('initStatus');
+            statusDiv.innerHTML = '<div class="loading">🔄 Inicializando base de datos...</div>';
+            
+            try {
+                const response = await fetch('/api/init-db');
+                
+                if (response.status === 500) {
+                    const errorData = await response.json();
+                    statusDiv.innerHTML = `
+                        <div class="error">
+                            <div class="error-text">❌ Error inicializando base de datos</div>
+                            <div class="result">${errorData.message}<br>Detalles: ${errorData.details}</div>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    statusDiv.innerHTML = `
+                        <div class="success">
+                            <div class="success-text">✅ Base de datos inicializada</div>
+                            <div class="result">Tablas: ${result.tables.join(', ')}<br>Índices: ${result.indexes.join(', ')}</div>
+                        </div>
+                    `;
+                } else {
+                    statusDiv.innerHTML = `
+                        <div class="error">
+                            <div class="error-text">❌ Error en inicialización</div>
                             <div class="result">${JSON.stringify(result, null, 2)}</div>
                         </div>
                     `;
