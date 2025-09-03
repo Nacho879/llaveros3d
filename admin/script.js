@@ -19,8 +19,8 @@ async function loadDataFromDatabase() {
     try {
         // Cargar pedidos y clientes en paralelo
         const [pedidosResponse, clientesResponse] = await Promise.all([
-            fetch('/api/pedidos/list'),
-            fetch('/api/clientes/list')
+            fetch('/api/llaveros?action=list'),
+            fetch('/api/llaveros?action=list')
         ]);
 
         if (pedidosResponse.ok && clientesResponse.ok) {
@@ -278,7 +278,7 @@ async function updatePedidoStatus(pedidoId, newStatus) {
     console.log(`🔄 Actualizando estado del pedido ${pedidoId} a ${newStatus}`);
     
     try {
-        const response = await fetch('/api/pedidos/update', {
+        const response = await fetch('/api/llaveros?action=update', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'

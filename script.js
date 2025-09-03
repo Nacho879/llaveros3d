@@ -625,7 +625,7 @@ async function savePedidoToDatabase(pedidoData) {
     try {
         console.log('🔄 Guardando pedido en base de datos...');
         
-        const response = await fetch('/api/pedidos/create', {
+        const response = await fetch('/api/llaveros?action=create', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
