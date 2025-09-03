@@ -24,9 +24,9 @@
         <h1>🧪 Test de Postgres - Llaveros 3D</h1>
         
         <div class="test-section info">
-            <h2>🌐 Test de API Pública</h2>
-            <p>Prueba que la API funcione sin autenticación de Vercel.</p>
-            <button onclick="testBasicAPI()">🌐 Probar API Pública</button>
+            <h2>🧪 Test de API Test</h2>
+            <p>Prueba que la API básica funcione en la raíz de /api/.</p>
+            <button onclick="testBasicAPI()">🧪 Probar API Test</button>
             <div id="basicAPIStatus"></div>
         </div>
         
@@ -63,10 +63,10 @@
         // Función para probar la API básica
         async function testBasicAPI() {
             const statusDiv = document.getElementById('basicAPIStatus');
-            statusDiv.innerHTML = '<div class="loading">🔄 Probando API pública...</div>';
+            statusDiv.innerHTML = '<div class="loading">🔄 Probando API test...</div>';
             
             try {
-                const response = await fetch('/api/public-test');
+                const response = await fetch('/api/test');
                 
                 if (response.status === 401) {
                     statusDiv.innerHTML = `
@@ -93,7 +93,7 @@
                 if (result.success) {
                     statusDiv.innerHTML = `
                         <div class="success">
-                            <div class="success-text">✅ API pública funcionando</div>
+                            <div class="success-text">✅ API test funcionando</div>
                             <div class="result">Mensaje: ${result.message}<br>Timestamp: ${result.timestamp}</div>
                         </div>
                     `;

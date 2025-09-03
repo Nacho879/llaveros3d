@@ -9,14 +9,13 @@ export default function handler(req, res) {
         return res.status(200).end();
     }
 
-    console.log('🌐 API pública funcionando...');
+    console.log('🧪 API test funcionando...');
 
     res.status(200).json({
         success: true,
-        message: '¡API pública funcionando sin autenticación!',
+        message: '¡API test funcionando correctamente!',
         timestamp: new Date().toISOString(),
         method: req.method,
-        url: req.url,
-        note: 'Esta API debería ser accesible públicamente'
+        url: req.url
     });
 }
