@@ -38,6 +38,13 @@
         </div>
         
         <div class="test-section info">
+            <h2>🔍 Verificar Variables de Entorno</h2>
+            <p>Verifica si las variables de Postgres están configuradas en Vercel.</p>
+            <button onclick="checkEnvironment()">🔍 Verificar Variables</button>
+            <div id="envStatus"></div>
+        </div>
+        
+        <div class="test-section info">
             <h2>🗄️ Inicializar Base de Datos (Simulado)</h2>
             <p>Prueba la inicialización sin Postgres para verificar que funciona.</p>
             <button onclick="initDatabaseSimple()">🗄️ Inicializar Base de Datos</button>
@@ -115,6 +122,45 @@
                     statusDiv.innerHTML = `
                         <div class="error">
                             <div class="error-text">❌ Error en API</div>
+                            <div class="result">${JSON.stringify(result, null, 2)}</div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                statusDiv.innerHTML = `
+                    <div class="error">
+                        <div class="error-text">❌ Error de conexión: ${error.message}</div>
+                        <div class="result">Verifica que la API esté funcionando</div>
+                    </div>
+                `;
+            }
+        }
+
+        // Función para verificar variables de entorno
+        async function checkEnvironment() {
+            const statusDiv = document.getElementById('envStatus');
+            statusDiv.innerHTML = '<div class="loading">🔍 Verificando variables de entorno...</div>';
+            
+            try {
+                const response = await fetch('/api/check-env');
+                const result = await response.json();
+                
+                if (result.success) {
+                    let variablesHtml = '';
+                    for (const [key, value] of Object.entries(result.variables)) {
+                        variablesHtml += `<div>${key}: ${value}</div>`;
+                    }
+                    
+                    statusDiv.innerHTML = `
+                        <div class="${result.hasAllVariables ? 'success' : 'error'}">
+                            <div class="${result.hasAllVariables ? 'success-text' : 'error-text'}">${result.message}</div>
+                            <div class="result">${variablesHtml}</div>
+                        </div>
+                    `;
+                } else {
+                    statusDiv.innerHTML = `
+                        <div class="error">
+                            <div class="error-text">❌ Error verificando variables</div>
                             <div class="result">${JSON.stringify(result, null, 2)}</div>
                         </div>
                     `;
