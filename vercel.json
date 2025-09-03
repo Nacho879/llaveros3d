@@ -4,7 +4,7 @@
   "builds": [
     {
       "src": "api/**/*.js",
-      "use": "@vercel/node@18"
+      "use": "@vercel/node"
     }
   ],
   "routes": [
