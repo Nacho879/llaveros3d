@@ -52,6 +52,13 @@
         </div>
         
         <div class="test-section info">
+            <h2>🧪 Test Ultra-Simple de Postgres</h2>
+            <p>Prueba solo la importación de @vercel/postgres.</p>
+            <button onclick="testPostgresUltra()">🧪 Probar Importación</button>
+            <div id="postgresUltraStatus"></div>
+        </div>
+        
+        <div class="test-section info">
             <h2>🧪 Test de Conexión Simple a Postgres</h2>
             <p>Prueba solo la conexión básica sin crear tablas.</p>
             <button onclick="testPostgresSimple()">🧪 Probar Conexión Simple</button>
@@ -137,6 +144,47 @@
                         <div class="error">
                             <div class="error-text">❌ Error en API</div>
                             <div class="result">${JSON.stringify(result, null, 2)}</div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                statusDiv.innerHTML = `
+                    <div class="error">
+                        <div class="error-text">❌ Error de conexión: ${error.message}</div>
+                        <div class="result">Verifica que la API esté funcionando</div>
+                    </div>
+                `;
+            }
+        }
+
+        // Función para probar importación ultra-simple de Postgres
+        async function testPostgresUltra() {
+            const statusDiv = document.getElementById('postgresUltraStatus');
+            statusDiv.innerHTML = '<div class="loading">🧪 Probando importación de @vercel/postgres...</div>';
+            
+            try {
+                const response = await fetch('/api/test-postgres-ultra');
+                const result = await response.json();
+                
+                if (result.success) {
+                    statusDiv.innerHTML = `
+                        <div class="success">
+                            <div class="success-text">✅ Importación exitosa</div>
+                            <div class="result">
+                                Test: ${result.test}<br>
+                                Mensaje: ${result.message}
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    statusDiv.innerHTML = `
+                        <div class="error">
+                            <div class="error-text">❌ Error en importación</div>
+                            <div class="result">
+                                Error: ${result.error}<br>
+                                Mensaje: ${result.message}<br>
+                                Tipo: ${result.type}
+                            </div>
                         </div>
                     `;
                 }
