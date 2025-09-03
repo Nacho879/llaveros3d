@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Sincronización - Llaveros 3D</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ccc; }
+        .success { background: #d4edda; border-color: #c3e6cb; }
+        .error { background: #f8d7da; border-color: #f5c6cb; }
+        .info { background: #d1ecf1; border-color: #bee5eb; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+        pre { background: #f8f9fa; padding: 10px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Test de Sincronización - Formulario ↔ Backoffice</h1>
+    
+    <div class="test-section info">
+        <h2>📊 Estado Actual del localStorage</h2>
+        <button onclick="checkLocalStorage()">Verificar localStorage</button>
+        <button onclick="clearLocalStorage()">Limpiar localStorage</button>
+        <div id="localStorageStatus"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>📝 Crear Pedido de Prueba</h2>
+        <button onclick="createTestPedido()">Crear Pedido de Prueba</button>
+        <button onclick="createMultiplePedidos()">Crear 5 Pedidos de Prueba</button>
+        <div id="testPedidoStatus"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>🔗 Verificar Sincronización</h2>
+        <button onclick="verifySync()">Verificar Sincronización</button>
+        <div id="syncStatus"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>📋 Lista de Pedidos en localStorage</h2>
+        <button onclick="listPedidos()">Mostrar Pedidos</button>
+        <div id="pedidosList"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>🌐 Acceso al Backoffice</h2>
+        <a href="/admin" target="_blank" class="btn">Abrir Backoffice</a>
+        <p><strong>URL:</strong> <code>/admin</code></p>
+        <p><strong>Credenciales:</strong> admin@llavero3d.com / Nacho1992!</p>
+    </div>
+
+    <script>
+        // Función para verificar localStorage
+        function checkLocalStorage() {
+            const statusDiv = document.getElementById('localStorageStatus');
+            const pedidos = localStorage.getItem('llaveros3d_pedidos');
+            const clientes = localStorage.getItem('llavero3d_clientes');
+            
+            let html = '<h3>Estado del localStorage:</h3>';
+            html += '<p><strong>Clave llaveros3d_pedidos:</strong> ';
+            if (pedidos) {
+                try {
+                    const pedidosArray = JSON.parse(pedidos);
+                    html += `<span class="success">✅ ${pedidosArray.length} pedidos encontrados</span>`;
+                } catch (e) {
+                    html += `<span class="error">❌ Error al parsear: ${e.message}</span>`;
+                }
+            } else {
+                html += '<span class="error">❌ No encontrado</span>';
+            }
+            html += '</p>';
+            
+            html += '<p><strong>Clave llavero3d_clientes:</strong> ';
+            if (clientes) {
+                try {
+                    const clientesArray = JSON.parse(clientes);
+                    html += `<span class="success">✅ ${clientesArray.length} clientes encontrados</span>`;
+                } catch (e) {
+                    html += `<span class="error">❌ Error al parsear: ${e.message}</span>`;
+                }
+            } else {
+                html += '<span class="error">❌ No encontrado</span>';
+            }
+            html += '</p>';
+            
+            statusDiv.innerHTML = html;
+        }
+        
+        // Función para crear pedido de prueba
+        function createTestPedido() {
+            const testPedido = {
+                id: 'TEST_' + Date.now(),
+                fecha: new Date().toISOString(),
+                nombre: 'Cliente de Prueba',
+                email: 'test@example.com',
+                telefono: '123456789',
+                ciudad: 'Ciudad de Prueba',
+                direccion: 'Dirección de Prueba 123',
+                cantidad: 50,
+                tamaño: 'Mediano',
+                estilo: 'Realista',
+                forma: 'Redondo',
+                color: 'Negro',
+                notasPedido: 'Pedido de prueba para sincronización',
+                newsletter: false,
+                imagen: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==',
+                precio: 72.60,
+                estado: 'Nuevo'
+            };
+            
+            // Guardar en localStorage
+            let pedidos = JSON.parse(localStorage.getItem('llaveros3d_pedidos') || '[]');
+            pedidos.push(testPedido);
+            localStorage.setItem('llaveros3d_pedidos', JSON.stringify(pedidos));
+            
+            // Crear cliente si no existe
+            let clientes = JSON.parse(localStorage.getItem('llavero3d_clientes') || '[]');
+            if (!clientes.find(c => c.email === testPedido.email)) {
+                clientes.push({
+                    email: testPedido.email,
+                    nombre: testPedido.nombre,
+                    telefono: testPedido.telefono,
+                    ciudad: testPedido.ciudad,
+                    direccion: testPedido.direccion,
+                    totalPedidos: 1,
+                    totalGastado: testPedido.precio
+                });
+                localStorage.setItem('llavero3d_clientes', JSON.stringify(clientes));
+            }
+            
+            document.getElementById('testPedidoStatus').innerHTML = 
+                `<div class="success">✅ Pedido de prueba creado: ${testPedido.id}</div>`;
+            
+            // Actualizar estado
+            checkLocalStorage();
+        }
+        
+        // Función para crear múltiples pedidos
+        function createMultiplePedidos() {
+            for (let i = 1; i <= 5; i++) {
+                const testPedido = {
+                    id: 'TEST_MULTI_' + Date.now() + '_' + i,
+                    fecha: new Date().toISOString(),
+                    nombre: `Cliente de Prueba ${i}`,
+                    email: `test${i}@example.com`,
+                    telefono: `12345678${i}`,
+                    ciudad: `Ciudad de Prueba ${i}`,
+                    direccion: `Dirección de Prueba ${i}23`,
+                    cantidad: 30 + (i * 10),
+                    tamaño: ['Pequeño', 'Mediano', 'Grande'][i % 3],
+                    estilo: ['Realista', 'Estilizado', 'Minimalista'][i % 3],
+                    forma: ['Redondo', 'Rectangular', 'Píldora'][i % 3],
+                    color: ['Negro', 'Blanco', 'Gris'][i % 3],
+                    notasPedido: `Pedido múltiple de prueba ${i}`,
+                    newsletter: i % 2 === 0,
+                    imagen: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==',
+                    precio: (30 + (i * 10)) * 1.20 * 1.21,
+                    estado: 'Nuevo'
+                };
+                
+                let pedidos = JSON.parse(localStorage.getItem('llaveros3d_pedidos') || '[]');
+                pedidos.push(testPedido);
+                localStorage.setItem('llaveros3d_pedidos', JSON.stringify(pedidos));
+            }
+            
+            document.getElementById('testPedidoStatus').innerHTML = 
+                '<div class="success">✅ 5 pedidos de prueba creados</div>';
+            
+            checkLocalStorage();
+        }
+        
+        // Función para verificar sincronización
+        function verifySync() {
+            const statusDiv = document.getElementById('syncStatus');
+            const pedidos = localStorage.getItem('llaveros3d_pedidos');
+            
+            if (!pedidos) {
+                statusDiv.innerHTML = '<div class="error">❌ No hay pedidos en localStorage</div>';
+                return;
+            }
+            
+            try {
+                const pedidosArray = JSON.parse(pedidos);
+                if (pedidosArray.length > 0) {
+                    statusDiv.innerHTML = `
+                        <div class="success">
+                            ✅ Sincronización verificada<br>
+                            <strong>${pedidosArray.length} pedidos</strong> disponibles en localStorage<br>
+                            <strong>Clave:</strong> llaveros3d_pedidos<br>
+                            <strong>Último pedido:</strong> ${pedidosArray[pedidosArray.length - 1].id}
+                        </div>
+                    `;
+                } else {
+                    statusDiv.innerHTML = '<div class="error">❌ Array de pedidos vacío</div>';
+                }
+            } catch (e) {
+                statusDiv.innerHTML = `<div class="error">❌ Error al parsear pedidos: ${e.message}</div>`;
+            }
+        }
+        
+        // Función para listar pedidos
+        function listPedidos() {
+            const listDiv = document.getElementById('pedidosList');
+            const pedidos = localStorage.getItem('llaveros3d_pedidos');
+            
+            if (!pedidos) {
+                listDiv.innerHTML = '<p>No hay pedidos en localStorage</p>';
+                return;
+            }
+            
+            try {
+                const pedidosArray = JSON.parse(pedidos);
+                if (pedidosArray.length === 0) {
+                    listDiv.innerHTML = '<p>Array de pedidos vacío</p>';
+                    return;
+                }
+                
+                let html = `<h3>Pedidos encontrados (${pedidosArray.length}):</h3>`;
+                html += '<div style="max-height: 300px; overflow-y: auto;">';
+                
+                pedidosArray.forEach((pedido, index) => {
+                    html += `
+                        <div style="border: 1px solid #ddd; margin: 5px; padding: 10px; background: #f9f9f9;">
+                            <strong>${index + 1}. ${pedido.id}</strong><br>
+                            Cliente: ${pedido.nombre} (${pedido.email})<br>
+                            Cantidad: ${pedido.cantidad} - Precio: ${pedido.precio}€<br>
+                            Estado: ${pedido.estado} - Fecha: ${new Date(pedido.fecha).toLocaleString()}
+                        </div>
+                    `;
+                });
+                
+                html += '</div>';
+                listDiv.innerHTML = html;
+                
+            } catch (e) {
+                listDiv.innerHTML = `<div class="error">❌ Error al parsear pedidos: ${e.message}</div>`;
+            }
+        }
+        
+        // Función para limpiar localStorage
+        function clearLocalStorage() {
+            if (confirm('¿Estás seguro de que quieres limpiar todo el localStorage?')) {
+                localStorage.removeItem('llaveros3d_pedidos');
+                localStorage.removeItem('llavero3d_clientes');
+                document.getElementById('localStorageStatus').innerHTML = 
+                    '<div class="info">🧹 localStorage limpiado</div>';
+                document.getElementById('pedidosList').innerHTML = '';
+                document.getElementById('testPedidoStatus').innerHTML = '';
+                document.getElementById('syncStatus').innerHTML = '';
+            }
+        }
+        
+        // Verificar estado al cargar la página
+        window.onload = function() {
+            checkLocalStorage();
+        };
+    </script>
+</body>
+</html>

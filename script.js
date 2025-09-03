@@ -466,26 +466,42 @@ function handleFormSubmit(e) {
     console.log('⏳ Iniciando simulación de envío...');
     
     fakeNetwork(2000).then(() => {
-        console.log('✅ Simulación exitosa - Guardando en localStorage...');
+        console.log('✅ Simulación exitosa - Guardando en base de datos...');
         
-        // Guardar en localStorage
-        savePedidoToLocalStorage(pedidoData);
-        
-        // Éxito
-        submitBtn.textContent = '¡Pedido enviado!';
-        submitBtn.classList.add('success');
-        
-        // Mostrar mensaje de éxito
-        showSuccessMessage(pedidoData);
-        
-        // Limpiar formulario
-        setTimeout(() => {
-            form.reset();
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-            submitBtn.classList.remove('success');
-            form.classList.remove('loading');
-        }, 3000);
+        // Guardar en base de datos
+        savePedidoToDatabase(pedidoData).then(success => {
+            if (success) {
+                // Éxito
+                submitBtn.textContent = '¡Pedido enviado!';
+                submitBtn.classList.add('success');
+                
+                // Mostrar mensaje de éxito
+                showSuccessMessage(pedidoData);
+                
+                // Limpiar formulario
+                setTimeout(() => {
+                    form.reset();
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('success');
+                    form.classList.remove('loading');
+                }, 3000);
+            } else {
+                // Fallback a localStorage si falla la API
+                console.log('❌ Fallback a localStorage después de simulación exitosa.');
+                savePedidoToLocalStorage(pedidoData);
+                submitBtn.textContent = '¡Pedido enviado!';
+                submitBtn.classList.add('success');
+                showSuccessMessage(pedidoData);
+                setTimeout(() => {
+                    form.reset();
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                    submitBtn.classList.remove('success');
+                    form.classList.remove('loading');
+                }, 3000);
+            }
+        });
         
     }).catch(() => {
         console.log('❌ Simulación falló');
@@ -607,6 +623,42 @@ function getImageData() {
     return canvas.toDataURL('image/png');
 }
 
+// Función para guardar pedido en la base de datos
+async function savePedidoToDatabase(pedidoData) {
+    try {
+        console.log('🔄 Guardando pedido en base de datos...');
+        
+        const response = await fetch('/api/pedidos/create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(pedidoData)
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'Error al guardar pedido');
+        }
+
+        const result = await response.json();
+        console.log('✅ Pedido guardado en base de datos:', result);
+        
+        // También guardar en localStorage como backup
+        savePedidoToLocalStorage(pedidoData);
+        
+        return true;
+    } catch (error) {
+        console.error('❌ Error guardando en base de datos:', error);
+        
+        // Fallback a localStorage si falla la API
+        console.log('🔄 Fallback a localStorage...');
+        savePedidoToLocalStorage(pedidoData);
+        return false;
+    }
+}
+
+// Función para guardar pedido en localStorage (mantener como backup)
 function savePedidoToLocalStorage(pedidoData) {
     // Obtener pedidos existentes
     let pedidos = JSON.parse(localStorage.getItem('llaveros3d_pedidos') || '[]');
@@ -617,7 +669,7 @@ function savePedidoToLocalStorage(pedidoData) {
     // Guardar en localStorage
     localStorage.setItem('llaveros3d_pedidos', JSON.stringify(pedidos));
     
-    console.log('Pedido guardado en localStorage:', pedidoData);
+    console.log('✅ Pedido guardado en localStorage como backup:', pedidoData);
 }
 
 function showSuccessMessage(pedidoData) {

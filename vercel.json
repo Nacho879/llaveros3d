@@ -1,7 +1,17 @@
 {
   "version": 2,
   "outputDirectory": ".",
+  "builds": [
+    {
+      "src": "api/**/*.js",
+      "use": "@vercel/node@18"
+    }
+  ],
   "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
     {
       "src": "/admin/(.*)",
       "dest": "/admin/$1"
@@ -10,5 +20,12 @@
       "src": "/(.*)",
       "dest": "/$1"
     }
-  ]
+  ],
+  "env": {
+    "POSTGRES_URL": "@postgres-url",
+    "POSTGRES_HOST": "@postgres-host",
+    "POSTGRES_DATABASE": "@postgres-database",
+    "POSTGRES_USERNAME": "@postgres-username",
+    "POSTGRES_PASSWORD": "@postgres-password"
+  }
 }

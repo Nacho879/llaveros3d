@@ -37,6 +37,44 @@ function clearSession() {
     localStorage.removeItem("llaveros3d_session_expiry");
 }
 
+// Función para cargar datos de la base de datos
+async function loadDataFromDatabase() {
+    console.log('🔄 Cargando datos de la base de datos...');
+    
+    try {
+        // Cargar pedidos y clientes en paralelo
+        const [pedidosResponse, clientesResponse] = await Promise.all([
+            fetch('/api/pedidos/list'),
+            fetch('/api/clientes/list')
+        ]);
+
+        if (pedidosResponse.ok && clientesResponse.ok) {
+            const pedidosData = await pedidosResponse.json();
+            const clientesData = await clientesResponse.json();
+            
+            pedidos = pedidosData.pedidos || [];
+            clientes = clientesData.clientes || [];
+            
+            console.log(`✅ ${pedidos.length} pedidos cargados de la base de datos`);
+            console.log(`✅ ${clientes.length} clientes cargados de la base de datos`);
+            
+            // Actualizar dashboard
+            updateDashboard();
+            
+            return true;
+        } else {
+            throw new Error('Error en las respuestas de la API');
+        }
+    } catch (error) {
+        console.error('❌ Error cargando de base de datos:', error);
+        
+        // Fallback a localStorage
+        console.log('🔄 Fallback a localStorage...');
+        loadDataFromLocalStorage();
+        return false;
+    }
+}
+
 // Función para cargar datos del localStorage
 function loadDataFromLocalStorage() {
     console.log('🔄 Cargando datos del localStorage...');
@@ -520,7 +558,7 @@ function handleHashNavigation() {
 document.addEventListener('DOMContentLoaded', function() {
     console.log('📄 DOM cargado, inicializando backoffice...');
     initializeAdmin();
-    loadDataFromLocalStorage();
+    loadDataFromDatabase(); // Cambiado para cargar de la API
     handleHashNavigation();
 });
 
