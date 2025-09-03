@@ -58,6 +58,13 @@
             <div id="dbStatus"></div>
         </div>
         
+        <div class="test-section info">
+            <h2>🔄 API Fallback (Sin Postgres)</h2>
+            <p>Prueba las funciones usando la API fallback que no requiere Postgres.</p>
+            <button onclick="testFallback()">🔄 Probar API Fallback</button>
+            <div id="fallbackStatus"></div>
+        </div>
+        
         <div class="test-section">
             <h2>📝 Crear Pedido de Prueba</h2>
             <p>Crea un pedido de prueba para verificar que se guarde en Postgres.</p>
@@ -123,6 +130,49 @@
                         <div class="error">
                             <div class="error-text">❌ Error en API</div>
                             <div class="result">${JSON.stringify(result, null, 2)}</div>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                statusDiv.innerHTML = `
+                    <div class="error">
+                        <div class="error-text">❌ Error de conexión: ${error.message}</div>
+                        <div class="result">Verifica que la API esté funcionando</div>
+                    </div>
+                `;
+            }
+        }
+
+        // Función para probar API fallback
+        async function testFallback() {
+            const statusDiv = document.getElementById('fallbackStatus');
+            statusDiv.innerHTML = '<div class="loading">🔄 Probando API Fallback...</div>';
+            
+            try {
+                // Probar inicialización
+                const initResponse = await fetch('/api/fallback?action=init');
+                const initResult = await initResponse.json();
+                
+                // Probar listado
+                const listResponse = await fetch('/api/fallback?action=list');
+                const listResult = await listResponse.json();
+                
+                if (initResult.success && listResult.success) {
+                    statusDiv.innerHTML = `
+                        <div class="success">
+                            <div class="success-text">✅ API Fallback funcionando</div>
+                            <div class="result">
+                                Inicialización: ${initResult.message}<br>
+                                Listado: ${listResult.total} pedidos<br>
+                                Nota: ${initResult.note}
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    statusDiv.innerHTML = `
+                        <div class="error">
+                            <div class="error-text">❌ Error en API Fallback</div>
+                            <div class="result">${JSON.stringify({init: initResult, list: listResult}, null, 2)}</div>
                         </div>
                     `;
                 }
