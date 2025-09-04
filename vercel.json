@@ -11,28 +11,6 @@
       ],
       "destination": "https://www.llavero3d.com/$1",
       "permanent": true
-    },
-    {
-      "source": "/(.*)",
-      "has": [
-        {
-          "type": "host",
-          "value": "www.llaveros3d.com"
-        }
-      ],
-      "destination": "https://www.llavero3d.com/$1",
-      "permanent": true
-    },
-    {
-      "source": "/(.*)",
-      "has": [
-        {
-          "type": "host",
-          "value": "llavero3d.com"
-        }
-      ],
-      "destination": "https://www.llavero3d.com/$1",
-      "permanent": true
     }
   ]
 }
