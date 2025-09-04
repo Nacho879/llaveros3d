@@ -1,15 +1,4 @@
 User-agent: *
 Allow: /
-
-# Sitemap
-Sitemap: https://llavero3d.com/sitemap.xml
-
-# Disallow admin panel
 Disallow: /admin/
-
-# Allow all other content
-Allow: /assets/
-Allow: /api/
-
-# Crawl delay (optional)
-Crawl-delay: 1
+Sitemap: https://llavero3d.com/sitemap.xml
