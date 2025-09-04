@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Placeholders para Blog</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .image-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .image-placeholder {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .image-info {
+            text-align: center;
+        }
+        .download-btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .download-btn:hover {
+            background: #2563eb;
+        }
+    </style>
+</head>
+<body>
+    <h1>Generador de Imágenes Placeholder para Blog</h1>
+    <p>Estas son las imágenes que necesitamos para el blog. Haz clic en "Descargar" para obtener cada imagen optimizada.</p>
+    
+    <div class="container">
+        <div class="image-card">
+            <div class="image-placeholder" id="featured-materiales">
+                <span>Materiales 3D</span>
+            </div>
+            <div class="image-info">
+                <h3>featured-materiales.jpg</h3>
+                <p>Imagen destacada para el artículo de materiales</p>
+                <button class="download-btn" onclick="downloadImage('featured-materiales', 'featured-materiales.jpg')">Descargar</button>
+            </div>
+        </div>
+
+        <div class="image-card">
+            <div class="image-placeholder" id="merchandising-2024">
+                <span>Merchandising 2024</span>
+            </div>
+            <div class="image-info">
+                <h3>merchandising-2024.jpg</h3>
+                <p>Imagen para tendencias de merchandising</p>
+                <button class="download-btn" onclick="downloadImage('merchandising-2024', 'merchandising-2024.jpg')">Descargar</button>
+            </div>
+        </div>
+
+        <div class="image-card">
+            <div class="image-placeholder" id="sector-gastronomico">
+                <span>Sector Gastronómico</span>
+            </div>
+            <div class="image-info">
+                <h3>sector-gastronomico.jpg</h3>
+                <p>Imagen para llaveros del sector gastronómico</p>
+                <button class="download-btn" onclick="downloadImage('sector-gastronomico', 'sector-gastronomico.jpg')">Descargar</button>
+            </div>
+        </div>
+
+        <div class="image-card">
+            <div class="image-placeholder" id="consejos-diseno">
+                <span>Consejos de Diseño</span>
+            </div>
+            <div class="image-info">
+                <h3>consejos-diseno.jpg</h3>
+                <p>Imagen para consejos de diseño</p>
+                <button class="download-btn" onclick="downloadImage('consejos-diseno', 'consejos-diseno.jpg')">Descargar</button>
+            </div>
+        </div>
+
+        <div class="image-card">
+            <div class="image-placeholder" id="sector-automocion">
+                <span>Sector Automoción</span>
+            </div>
+            <div class="image-info">
+                <h3>sector-automocion.jpg</h3>
+                <p>Imagen para llaveros del sector automoción</p>
+                <button class="download-btn" onclick="downloadImage('sector-automocion', 'sector-automocion.jpg')">Descargar</button>
+            </div>
+        </div>
+
+        <div class="image-card">
+            <div class="image-placeholder" id="eventos-corporativos">
+                <span>Eventos Corporativos</span>
+            </div>
+            <div class="image-info">
+                <h3>eventos-corporativos.jpg</h3>
+                <p>Imagen para eventos corporativos</p>
+                <button class="download-btn" onclick="downloadImage('eventos-corporativos', 'eventos-corporativos.jpg')">Descargar</button>
+            </div>
+        </div>
+
+        <div class="image-card">
+            <div class="image-placeholder" id="roi-merchandising">
+                <span>ROI Merchandising</span>
+            </div>
+            <div class="image-info">
+                <h3>roi-merchandising.jpg</h3>
+                <p>Imagen para medir ROI del merchandising</p>
+                <button class="download-btn" onclick="downloadImage('roi-merchandising', 'roi-merchandising.jpg')">Descargar</button>
+            </div>
+        </div>
+
+        <div class="image-card">
+            <div class="image-placeholder" id="guia-materiales-3d">
+                <span>Guía Materiales 3D</span>
+            </div>
+            <div class="image-info">
+                <h3>guia-materiales-3d.jpg</h3>
+                <p>Imagen principal del artículo de materiales</p>
+                <button class="download-btn" onclick="downloadImage('guia-materiales-3d', 'guia-materiales-3d.jpg')">Descargar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function downloadImage(elementId, filename) {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const element = document.getElementById(elementId);
+            
+            canvas.width = 800;
+            canvas.height = 400;
+            
+            // Crear gradiente
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            gradient.addColorStop(0, '#3b82f6');
+            gradient.addColorStop(1, '#8b5cf6');
+            
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Añadir texto
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 48px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(element.textContent, canvas.width/2, canvas.height/2);
+            
+            // Descargar
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL('image/jpeg', 0.9);
+            link.click();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,314 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Placeholders para Blog</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .image-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .image-placeholder {
+            width: 100%;
+            height: 200px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        .image-placeholder:hover {
+            transform: scale(1.05);
+        }
+        .image-info {
+            margin-bottom: 10px;
+        }
+        .download-btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .download-btn:hover {
+            background: #2563eb;
+        }
+        .download-all {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 20px auto;
+            display: block;
+        }
+        .download-all:hover {
+            background: #059669;
+        }
+    </style>
+</head>
+<body>
+    <h1>🖼️ Generador de Imágenes Placeholder para Blog</h1>
+    <p>Haz clic en "Descargar" para obtener cada imagen optimizada para el blog.</p>
+    
+    <div class="container">
+
+        <div class="image-card">
+            <div class="image-placeholder" id="img-0" style="background: linear-gradient(135deg, #3b82f6, #3b82f6dd);">
+                <span>Materiales 3D</span>
+            </div>
+            <div class="image-info">
+                <h3>featured-materiales.jpg</h3>
+                <p>Imagen placeholder para el blog</p>
+            </div>
+            <button class="download-btn" onclick="downloadImage('img-0', 'featured-materiales.jpg')">
+                📥 Descargar
+            </button>
+        </div>
+        
+        <div class="image-card">
+            <div class="image-placeholder" id="img-1" style="background: linear-gradient(135deg, #8b5cf6, #8b5cf6dd);">
+                <span>Merchandising 2024</span>
+            </div>
+            <div class="image-info">
+                <h3>merchandising-2024.jpg</h3>
+                <p>Imagen placeholder para el blog</p>
+            </div>
+            <button class="download-btn" onclick="downloadImage('img-1', 'merchandising-2024.jpg')">
+                📥 Descargar
+            </button>
+        </div>
+        
+        <div class="image-card">
+            <div class="image-placeholder" id="img-2" style="background: linear-gradient(135deg, #10b981, #10b981dd);">
+                <span>Sector Gastronómico</span>
+            </div>
+            <div class="image-info">
+                <h3>sector-gastronomico.jpg</h3>
+                <p>Imagen placeholder para el blog</p>
+            </div>
+            <button class="download-btn" onclick="downloadImage('img-2', 'sector-gastronomico.jpg')">
+                📥 Descargar
+            </button>
+        </div>
+        
+        <div class="image-card">
+            <div class="image-placeholder" id="img-3" style="background: linear-gradient(135deg, #f59e0b, #f59e0bdd);">
+                <span>Consejos de Diseño</span>
+            </div>
+            <div class="image-info">
+                <h3>consejos-diseno.jpg</h3>
+                <p>Imagen placeholder para el blog</p>
+            </div>
+            <button class="download-btn" onclick="downloadImage('img-3', 'consejos-diseno.jpg')">
+                📥 Descargar
+            </button>
+        </div>
+        
+        <div class="image-card">
+            <div class="image-placeholder" id="img-4" style="background: linear-gradient(135deg, #ef4444, #ef4444dd);">
+                <span>Sector Automoción</span>
+            </div>
+            <div class="image-info">
+                <h3>sector-automocion.jpg</h3>
+                <p>Imagen placeholder para el blog</p>
+            </div>
+            <button class="download-btn" onclick="downloadImage('img-4', 'sector-automocion.jpg')">
+                📥 Descargar
+            </button>
+        </div>
+        
+        <div class="image-card">
+            <div class="image-placeholder" id="img-5" style="background: linear-gradient(135deg, #06b6d4, #06b6d4dd);">
+                <span>Eventos Corporativos</span>
+            </div>
+            <div class="image-info">
+                <h3>eventos-corporativos.jpg</h3>
+                <p>Imagen placeholder para el blog</p>
+            </div>
+            <button class="download-btn" onclick="downloadImage('img-5', 'eventos-corporativos.jpg')">
+                📥 Descargar
+            </button>
+        </div>
+        
+        <div class="image-card">
+            <div class="image-placeholder" id="img-6" style="background: linear-gradient(135deg, #84cc16, #84cc16dd);">
+                <span>ROI Merchandising</span>
+            </div>
+            <div class="image-info">
+                <h3>roi-merchandising.jpg</h3>
+                <p>Imagen placeholder para el blog</p>
+            </div>
+            <button class="download-btn" onclick="downloadImage('img-6', 'roi-merchandising.jpg')">
+                📥 Descargar
+            </button>
+        </div>
+        
+        <div class="image-card">
+            <div class="image-placeholder" id="img-7" style="background: linear-gradient(135deg, #f97316, #f97316dd);">
+                <span>Guía Materiales 3D</span>
+            </div>
+            <div class="image-info">
+                <h3>guia-materiales-3d.jpg</h3>
+                <p>Imagen placeholder para el blog</p>
+            </div>
+            <button class="download-btn" onclick="downloadImage('img-7', 'guia-materiales-3d.jpg')">
+                📥 Descargar
+            </button>
+        </div>
+        
+        <div class="image-card">
+            <div class="image-placeholder" id="img-8" style="background: linear-gradient(135deg, #6366f1, #6366f1dd);">
+                <span>Material PLA</span>
+            </div>
+            <div class="image-info">
+                <h3>materiales-pla.jpg</h3>
+                <p>Imagen placeholder para el blog</p>
+            </div>
+            <button class="download-btn" onclick="downloadImage('img-8', 'materiales-pla.jpg')">
+                📥 Descargar
+            </button>
+        </div>
+        
+        <div class="image-card">
+            <div class="image-placeholder" id="img-9" style="background: linear-gradient(135deg, #ec4899, #ec4899dd);">
+                <span>Material PETG</span>
+            </div>
+            <div class="image-info">
+                <h3>materiales-petg.jpg</h3>
+                <p>Imagen placeholder para el blog</p>
+            </div>
+            <button class="download-btn" onclick="downloadImage('img-9', 'materiales-petg.jpg')">
+                📥 Descargar
+            </button>
+        </div>
+        
+        <div class="image-card">
+            <div class="image-placeholder" id="img-10" style="background: linear-gradient(135deg, #14b8a6, #14b8a6dd);">
+                <span>Material ABS</span>
+            </div>
+            <div class="image-info">
+                <h3>materiales-abs.jpg</h3>
+                <p>Imagen placeholder para el blog</p>
+            </div>
+            <button class="download-btn" onclick="downloadImage('img-10', 'materiales-abs.jpg')">
+                📥 Descargar
+            </button>
+        </div>
+        
+        <div class="image-card">
+            <div class="image-placeholder" id="img-11" style="background: linear-gradient(135deg, #a855f7, #a855f7dd);">
+                <span>Proceso Impresión</span>
+            </div>
+            <div class="image-info">
+                <h3>proceso-impresion.jpg</h3>
+                <p>Imagen placeholder para el blog</p>
+            </div>
+            <button class="download-btn" onclick="downloadImage('img-11', 'proceso-impresion.jpg')">
+                📥 Descargar
+            </button>
+        </div>
+        
+        <div class="image-card">
+            <div class="image-placeholder" id="img-12" style="background: linear-gradient(135deg, #eab308, #eab308dd);">
+                <span>Llaveros Ejemplos</span>
+            </div>
+            <div class="image-info">
+                <h3>llaveros-ejemplos.jpg</h3>
+                <p>Imagen placeholder para el blog</p>
+            </div>
+            <button class="download-btn" onclick="downloadImage('img-12', 'llaveros-ejemplos.jpg')">
+                📥 Descargar
+            </button>
+        </div>
+        
+        <div class="image-card">
+            <div class="image-placeholder" id="img-13" style="background: linear-gradient(135deg, #22c55e, #22c55edd);">
+                <span>Sector Tecnológico</span>
+            </div>
+            <div class="image-info">
+                <h3>sector-tecnologico.jpg</h3>
+                <p>Imagen placeholder para el blog</p>
+            </div>
+            <button class="download-btn" onclick="downloadImage('img-13', 'sector-tecnologico.jpg')">
+                📥 Descargar
+            </button>
+        </div>
+        
+    </div>
+    
+    <button class="download-all" onclick="downloadAllImages()">
+        📥 Descargar Todas las Imágenes
+    </button>
+
+    <script>
+        function downloadImage(elementId, filename) {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const element = document.getElementById(elementId);
+            
+            canvas.width = 800;
+            canvas.height = 400;
+            
+            // Crear gradiente
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            const colors = element.style.background.match(/linear-gradient\(135deg, ([^,]+), ([^)]+)\)/);
+            if (colors) {
+                gradient.addColorStop(0, colors[1]);
+                gradient.addColorStop(1, colors[2]);
+            }
+            
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Añadir texto
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 48px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(element.textContent, canvas.width/2, canvas.height/2);
+            
+            // Descargar
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL('image/jpeg', 0.9);
+            link.click();
+        }
+        
+        function downloadAllImages() {
+            const images = [{"name":"featured-materiales.jpg","title":"Materiales 3D","color":"#3b82f6"},{"name":"merchandising-2024.jpg","title":"Merchandising 2024","color":"#8b5cf6"},{"name":"sector-gastronomico.jpg","title":"Sector Gastronómico","color":"#10b981"},{"name":"consejos-diseno.jpg","title":"Consejos de Diseño","color":"#f59e0b"},{"name":"sector-automocion.jpg","title":"Sector Automoción","color":"#ef4444"},{"name":"eventos-corporativos.jpg","title":"Eventos Corporativos","color":"#06b6d4"},{"name":"roi-merchandising.jpg","title":"ROI Merchandising","color":"#84cc16"},{"name":"guia-materiales-3d.jpg","title":"Guía Materiales 3D","color":"#f97316"},{"name":"materiales-pla.jpg","title":"Material PLA","color":"#6366f1"},{"name":"materiales-petg.jpg","title":"Material PETG","color":"#ec4899"},{"name":"materiales-abs.jpg","title":"Material ABS","color":"#14b8a6"},{"name":"proceso-impresion.jpg","title":"Proceso Impresión","color":"#a855f7"},{"name":"llaveros-ejemplos.jpg","title":"Llaveros Ejemplos","color":"#eab308"},{"name":"sector-tecnologico.jpg","title":"Sector Tecnológico","color":"#22c55e"}];
+            images.forEach((img, index) => {
+                setTimeout(() => {
+                    downloadImage('img-' + index, img.name);
+                }, index * 500);
+            });
+        }
+    </script>
+</body>
+</html>
