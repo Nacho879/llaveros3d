@@ -340,8 +340,37 @@
     transform: translateY(-2px);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
+/* ========================================
+   RESPONSIVE DESIGN - BLOG MAIN
+   ======================================== */
+
+/* Tablet (768px - 1023px) */
+@media (max-width: 1023px) {
+    .blog-layout {
+        grid-template-columns: 1fr 280px;
+        gap: 2.5rem;
+    }
+    
+    .blog-hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    .blog-hero p {
+        font-size: 1.1rem;
+    }
+    
+    .articles-grid {
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.75rem;
+    }
+    
+    .sidebar-section {
+        padding: 1.75rem;
+    }
+}
+
+/* Mobile Large (481px - 767px) */
+@media (max-width: 767px) {
     .blog-layout {
         grid-template-columns: 1fr;
         gap: 2rem;
@@ -356,16 +385,45 @@
         order: 1;
     }
     
+    .blog-hero {
+        padding: 3rem 0;
+    }
+    
     .blog-hero h1 {
         font-size: 2rem;
+        line-height: 1.2;
     }
     
     .blog-hero p {
         font-size: 1rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .blog-main {
+        padding: 3rem 0;
+    }
+    
+    .featured-article {
+        margin-bottom: 2rem;
+    }
+    
+    .featured-article .article-image {
+        height: 250px;
+    }
+    
+    .featured-article .article-content {
+        padding: 1.5rem;
     }
     
     .featured-article h2 {
         font-size: 1.5rem;
+        line-height: 1.3;
+    }
+    
+    .featured-article .article-meta {
+        flex-direction: column;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
     }
     
     .articles-grid {
@@ -373,25 +431,145 @@
         gap: 1.5rem;
     }
     
+    .article-card .article-image {
+        height: 180px;
+    }
+    
+    .article-card .article-content {
+        padding: 1.25rem;
+    }
+    
+    .article-card h3 {
+        font-size: 1.1rem;
+    }
+    
+    .article-card .article-meta {
+        flex-direction: column;
+        gap: 0.25rem;
+        margin-bottom: 0.75rem;
+    }
+    
     .sidebar-section {
         padding: 1.5rem;
     }
+    
+    .sidebar-section h3 {
+        font-size: 1.1rem;
+    }
+    
+    .newsletter-form {
+        gap: 0.75rem;
+    }
+    
+    .newsletter-form input,
+    .newsletter-form button {
+        padding: 0.75rem;
+        font-size: 0.9rem;
+    }
+    
+    .load-more-btn {
+        padding: 0.875rem 1.5rem;
+        font-size: 0.95rem;
+    }
 }
 
+/* Mobile Small (320px - 480px) */
 @media (max-width: 480px) {
     .blog-hero {
         padding: 2rem 0;
+    }
+    
+    .blog-hero h1 {
+        font-size: 1.75rem;
+        line-height: 1.3;
+    }
+    
+    .blog-hero p {
+        font-size: 0.95rem;
     }
     
     .blog-main {
         padding: 2rem 0;
     }
     
+    .featured-article .article-image {
+        height: 200px;
+    }
+    
     .featured-article .article-content {
-        padding: 1.5rem;
+        padding: 1.25rem;
+    }
+    
+    .featured-article h2 {
+        font-size: 1.3rem;
+    }
+    
+    .featured-article p {
+        font-size: 0.9rem;
+    }
+    
+    .articles-grid {
+        gap: 1.25rem;
+    }
+    
+    .article-card .article-image {
+        height: 160px;
     }
     
     .article-card .article-content {
         padding: 1rem;
+    }
+    
+    .article-card h3 {
+        font-size: 1rem;
+    }
+    
+    .article-card p {
+        font-size: 0.85rem;
+    }
+    
+    .sidebar-section {
+        padding: 1.25rem;
+    }
+    
+    .sidebar-section h3 {
+        font-size: 1rem;
+    }
+    
+    .category-list a,
+    .popular-posts a {
+        font-size: 0.85rem;
+    }
+    
+    .newsletter-form input,
+    .newsletter-form button {
+        padding: 0.625rem;
+        font-size: 0.85rem;
+    }
+    
+    .load-more-btn {
+        padding: 0.75rem 1.25rem;
+        font-size: 0.9rem;
+        width: 100%;
+        max-width: 280px;
+    }
+}
+
+/* Landscape Mobile */
+@media (max-width: 767px) and (orientation: landscape) {
+    .blog-hero {
+        padding: 1.5rem 0;
+    }
+    
+    .blog-hero h1 {
+        font-size: 1.8rem;
+    }
+    
+    .blog-main {
+        padding: 2rem 0;
+    }
+    
+    .featured-article .article-image {
+        height: 180px;
     }
 }
