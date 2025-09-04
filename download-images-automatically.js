@@ -8,7 +8,7 @@ const https = require('https');
 // Mapeo de imágenes con IDs reales (actualiza estos IDs)
 const imageMapping = {
     // Imágenes principales del blog
-    'featured-materiales': 'PLACEHOLDER_ID_1',
+    'featured-materiales': '19H3lvPGnK-ej1OHnO8rhYYugjlAFLoBN',
     'merchandising-2024': 'PLACEHOLDER_ID_2', 
     'sector-gastronomico': 'PLACEHOLDER_ID_3',
     'consejos-diseno': 'PLACEHOLDER_ID_4',
@@ -85,7 +85,7 @@ async function downloadAllImages() {
             continue;
         }
         
-        const url = `https://drive.google.com/uc?export=view&id=${id}`;
+        const url = `https://drive.google.com/uc?export=download&id=${id}`;
         const filePath = path.join(assetsDir, `${filename}.jpg`);
         
         try {
