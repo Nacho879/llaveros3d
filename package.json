@@ -1,47 +1,17 @@
 {
   "name": "llaveros3d",
   "version": "1.0.0",
-  "description": "Landing page profesional para llaveros 3D personalizados B2B con sistema de autenticación Vercel",
+  "description": "Llaveros 3D personalizados",
   "main": "index.html",
   "scripts": {
-    "start": "vercel dev",
-    "dev": "vercel dev",
-    "build": "echo 'Static site - no build required'",
-    "deploy": "vercel --prod",
-    "deploy:preview": "vercel"
-  },
-  "keywords": [
-    "llaveros",
-    "3d",
-    "personalizados",
-    "b2b",
-    "landing-page",
-    "html",
-    "css",
-    "javascript",
-    "vercel",
-    "authentication",
-    "api"
-  ],
-  "author": "Ignacio López",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Nacho879/llaveros3d.git"
-  },
-  "bugs": {
-    "url": "https://github.com/Nacho879/llaveros3d/issues"
-  },
-  "homepage": "https://llaveros3d.vercel.app",
-  "devDependencies": {
-    "vercel": "^32.0.0"
+    "dev": "http-server -p 3000 -c-1 --cors",
+    "deploy": "vercel --prod"
   },
   "dependencies": {
-    "@vercel/postgres": "^0.10.0",
-    "cookie": "^1.0.2",
-    "uuid": "^11.1.0"
+    "@supabase/supabase-js": "^2.57.0",
+    "@vercel/postgres": "^0.5.1"
   },
-  "engines": {
-    "node": ">=18.0.0"
+  "devDependencies": {
+    "http-server": "^14.1.1"
   }
 }

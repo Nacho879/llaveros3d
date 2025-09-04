@@ -1,6 +1,32 @@
 // Utilidades
 const $ = (id) => document.getElementById(id);
 
+// Función segura para acceder a elementos del DOM
+function safeGetElement(id, fallback = null) {
+    const element = document.getElementById(id);
+    if (!element) {
+        console.warn(`⚠️ Elemento con ID '${id}' no encontrado`);
+        return fallback;
+    }
+    return element;
+}
+
+// Función segura para establecer textContent
+function safeSetText(id, text, fallback = '') {
+    const element = safeGetElement(id);
+    if (element) {
+        element.textContent = text;
+    } else {
+        console.warn(`⚠️ No se pudo establecer textContent en '${id}': ${text}`);
+    }
+}
+
+// Función segura para obtener value
+function safeGetValue(id, fallback = '') {
+    const element = safeGetElement(id);
+    return element ? element.value : fallback;
+}
+
 // Configuración
 const PHONE = '34XXXXXXXXX'; // Reemplazar con número real
 const FORMSPREE_URL = 'https://formspree.io/f/XXXXXXX'; // Reemplazar con URL real
@@ -37,8 +63,8 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function initializeApp() {
-    // Configurar año en footer
-    $('currentYear').textContent = new Date().getFullYear();
+    // Configurar año en footer (solo si existe)
+    safeSetText('currentYear', new Date().getFullYear());
     
     // Configurar drag & drop
     setupDragAndDrop();
@@ -55,8 +81,13 @@ function initializeApp() {
 
 // Drag & Drop
 function setupDragAndDrop() {
-    const dropZone = $('dropZone');
-    const fileInput = $('fileInput');
+    const dropZone = safeGetElement('dropZone');
+    const fileInput = safeGetElement('fileInput');
+    
+    if (!dropZone || !fileInput) {
+        console.warn('⚠️ Elementos de drag & drop no encontrados');
+        return;
+    }
     
     // Prevenir comportamiento por defecto
     ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
@@ -87,11 +118,17 @@ function preventDefaults(e) {
 }
 
 function highlight(e) {
-    $('dropZone').classList.add('drag');
+    const dropZone = safeGetElement('dropZone');
+    if (dropZone) {
+        dropZone.classList.add('drag');
+    }
 }
 
 function unhighlight(e) {
-    $('dropZone').classList.remove('drag');
+    const dropZone = safeGetElement('dropZone');
+    if (dropZone) {
+        dropZone.classList.remove('drag');
+    }
 }
 
 function handleDrop(e) {
@@ -103,6 +140,12 @@ function handleDrop(e) {
 function handleFileSelect(e) {
     const files = e.target.files;
     handleFiles(files);
+    
+    // Limpiar el input para permitir seleccionar el mismo archivo
+    const fileInput = safeGetElement('fileInput');
+    if (fileInput) {
+        fileInput.value = '';
+    }
 }
 
 function handleFiles(files) {
@@ -122,7 +165,7 @@ function handleFiles(files) {
 }
 
 function validateOrder() {
-    const cantidad = parseInt($('cantidad').value);
+    const cantidad = parseInt(safeGetValue('cantidad', '0'));
     if (cantidad < 30) {
         showMessage('El pedido mínimo es de 30 unidades', 'error');
         return false;
@@ -159,7 +202,7 @@ function loadImage(file) {
 function setupEventListeners() {
     const elements = ['estilo', 'forma', 'tamaño', 'color', 'cantidad'];
     elements.forEach(id => {
-        const element = $(id);
+        const element = safeGetElement(id);
         if (element) {
             element.addEventListener('change', updatePreviews);
             element.addEventListener('input', updatePreviews);
@@ -177,22 +220,34 @@ function updatePreviews() {
 
 // Canvas functions
 function showImagePreview() {
-    $('dropContent').style.display = 'none';
-    $('imagePreview').style.display = 'flex';
+    const dropContent = safeGetElement('dropContent');
+    const imagePreview = safeGetElement('imagePreview');
+    
+    if (dropContent) dropContent.style.display = 'none';
+    if (imagePreview) imagePreview.style.display = 'flex';
+    
     drawImageCanvas();
 }
 
 function removeImage() {
     originalImage = null;
     imageData = null;
-    $('dropContent').style.display = 'block';
-    $('imagePreview').style.display = 'none';
-    $('fileInput').value = '';
+    
+    const dropContent = safeGetElement('dropContent');
+    const imagePreview = safeGetElement('imagePreview');
+    const fileInput = safeGetElement('fileInput');
+    
+    if (dropContent) dropContent.style.display = 'block';
+    if (imagePreview) imagePreview.style.display = 'none';
+    if (fileInput) fileInput.value = '';
+    
     showMessage('Logo eliminado', 'info');
 }
 
 function drawImageCanvas() {
-    const canvas = $('imgCanvas');
+    const canvas = safeGetElement('imgCanvas');
+    if (!canvas) return;
+    
     const ctx = canvas.getContext('2d');
     const width = canvas.width;
     const height = canvas.height;
@@ -205,7 +260,7 @@ function drawImageCanvas() {
     ctx.fillRect(0, 0, width, height);
     
     if (originalImage) {
-        const estilo = $('estilo').value;
+        const estilo = safeGetValue('estilo', '');
         
         if (estilo === 'silhouette') {
             drawSilhouette(ctx, width, height);
@@ -338,11 +393,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Resumen del pedido
 function updateOrderSummary() {
-    const cantidad = parseInt($('cantidad').value);
-    const tamaño = $('tamaño').value;
-    const estilo = $('estilo').value;
-    const color = $('color').value;
-    const forma = $('forma').value;
+    const cantidad = parseInt(safeGetValue('cantidad', '0'));
+    const tamaño = safeGetValue('tamaño', '');
+    const estilo = safeGetValue('estilo', '');
+    const color = safeGetValue('color', '');
+    const forma = safeGetValue('forma', '');
     
     // Calcular precio base (1,20€ + IVA)
     const precioBase = 1.20;
@@ -350,22 +405,22 @@ function updateOrderSummary() {
     const precioConIva = precioBase * (1 + iva);
     const precioTotal = precioConIva * cantidad;
     
-    $('summaryCantidad').textContent = `${cantidad} unidad${cantidad > 1 ? 'es' : ''}`;
-    $('summaryTamaño').textContent = `${tamaño}mm`;
-    $('summaryEstilo').textContent = estilo === 'photo' ? 'Foto completa' : 'Silueta';
-    $('summaryColor').textContent = getColorName(color);
-    $('summaryForma').textContent = getFormaName(forma);
-    $('summaryPrecio').textContent = `€${precioTotal.toFixed(2)} (sin envío)`;
+    safeSetText('summaryCantidad', `${cantidad} unidad${cantidad > 1 ? 'es' : ''}`);
+    safeSetText('summaryTamaño', `${tamaño}mm`);
+    safeSetText('summaryEstilo', estilo === 'photo' ? 'Foto completa' : 'Silueta');
+    safeSetText('summaryColor', getColorName(color));
+    safeSetText('summaryForma', getFormaName(forma));
+    safeSetText('summaryPrecio', `€${precioTotal.toFixed(2)} (sin envío)`);
 }
 
 // WhatsApp
 function updateWhatsAppLink() {
-    const nombre = $('nombre').value || 'Cliente';
-    const cantidad = $('cantidad').value;
-    const tamaño = $('tamaño').value;
-    const estilo = $('estilo').value;
-    const color = $('color').value;
-    const forma = $('forma').value;
+    const nombre = safeGetValue('nombre', 'Cliente');
+    const cantidad = safeGetValue('cantidad', '');
+    const tamaño = safeGetValue('tamaño', '');
+    const estilo = safeGetValue('estilo', '');
+    const color = safeGetValue('color', '');
+    const forma = safeGetValue('forma', '');
     
     const text = encodeURIComponent(
         `Hola! Quiero hacer un pedido de llavero personalizado:\n\n` +
@@ -379,7 +434,10 @@ function updateWhatsAppLink() {
     );
     
     const whatsappLink = `https://wa.me/${PHONE}?text=${text}`;
-    $('whatsappLink').href = whatsappLink;
+    const whatsappElement = safeGetElement('whatsappLink');
+    if (whatsappElement) {
+        whatsappElement.href = whatsappLink;
+    }
 }
 
 function getColorName(color) {
@@ -405,16 +463,18 @@ function getFormaName(forma) {
 
 // Formulario
 function setupForm() {
-    const form = $('pedidoForm');
-    form.addEventListener('submit', handleFormSubmit);
-    
-    // Actualizar WhatsApp cuando cambien los campos del formulario
-    ['nombre', 'email', 'ciudad', 'direccion', 'telefono'].forEach(id => {
-        const element = $(id);
-        if (element) {
-            element.addEventListener('input', updateWhatsAppLink);
-        }
-    });
+    const form = safeGetElement('pedidoForm');
+    if (form) {
+        form.addEventListener('submit', handleFormSubmit);
+        
+        // Actualizar WhatsApp cuando cambien los campos del formulario
+        ['nombre', 'email', 'ciudad', 'direccion', 'telefono'].forEach(id => {
+            const element = safeGetElement(id);
+            if (element) {
+                element.addEventListener('input', updateWhatsAppLink);
+            }
+        });
+    }
 }
 
 function handleFormSubmit(e) {
@@ -443,18 +503,18 @@ function handleFormSubmit(e) {
     const pedidoData = {
         id: generatePedidoId(),
         fecha: new Date().toISOString(),
-        nombre: $('nombre').value,
-        email: $('email').value,
-        telefono: $('telefono').value,
-        ciudad: $('ciudad').value,
-        direccion: $('direccion').value,
-        cantidad: parseInt($('cantidad').value),
-        tamaño: $('tamaño').value,
-        estilo: $('estilo').value,
-        forma: $('forma').value,
-        color: $('color').value,
-        notasPedido: $('notasPedido').value,
-        newsletter: $('newsletter').checked,
+        nombre: safeGetValue('nombre', ''),
+        email: safeGetValue('email', ''),
+        telefono: safeGetValue('telefono', ''),
+        ciudad: safeGetValue('ciudad', ''),
+        direccion: safeGetValue('direccion', ''),
+        cantidad: parseInt(safeGetValue('cantidad', '0')),
+        tamaño: safeGetValue('tamaño', ''),
+        estilo: safeGetValue('estilo', ''),
+        forma: safeGetValue('forma', ''),
+        color: safeGetValue('color', ''),
+        notasPedido: safeGetValue('notasPedido', ''),
+        newsletter: safeGetElement('newsletter')?.checked || false,
         imagen: getImageData(),
         precio: calculatePrice(),
         estado: 'Nuevo'
@@ -597,7 +657,7 @@ function generatePedidoId() {
 }
 
 function calculatePrice() {
-    const cantidad = parseInt($('cantidad').value);
+    const cantidad = parseInt(safeGetValue('cantidad', '0'));
     const precioBase = 1.20; // Precio base por unidad
     const iva = 0.21; // 21% IVA
     
@@ -625,7 +685,7 @@ async function savePedidoToDatabase(pedidoData) {
     try {
         console.log('🔄 Guardando pedido en base de datos...');
         
-        const response = await fetch('/api/llaveros?action=create', {
+        const response = await fetch('/api/supabase-orders?action=create', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

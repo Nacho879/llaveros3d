@@ -3,18 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Backoffice - Llaveros 3D</title>
-    <meta name="description" content="Panel de administración para gestionar pedidos de llaveros 3D personalizados">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/assets/logo.svg">
-    
-    <!-- CSS -->
+    <title>Admin Dashboard - Llaveros 3D</title>
     <link rel="stylesheet" href="/admin/styles.css">
-    <link rel="stylesheet" href="/admin/login-overlay.css">
-    
-    <!-- Font Awesome para iconos -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/admin/login.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Overlay de Login (visible por defecto) -->
@@ -23,9 +16,11 @@
             <div class="login-card">
                 <!-- Logo y título -->
                 <div class="login-header">
-                    <img src="/assets/logo.svg" alt="Logo Llaveros 3D" class="login-logo">
-                    <h1>Backoffice</h1>
-                    <p>Acceso seguro al panel de administración</p>
+                    <div class="logo-container">
+                        <i class="fas fa-cube"></i>
+                        <h1>Llaveros 3D</h1>
+                    </div>
+                    <p>Panel de Administración</p>
                 </div>
 
                 <!-- Formulario de login -->
@@ -60,17 +55,9 @@
                                 autocomplete="current-password"
                             >
                             <button type="button" class="toggle-password" onclick="togglePassword()">
-                                <i class="fas fa-eye" id="eyeIcon"></i>
+                                <i class="fas fa-eye"></i>
                             </button>
                         </div>
-                    </div>
-
-                    <div class="form-group checkbox-group">
-                        <label class="checkbox-label">
-                            <input type="checkbox" id="remember" name="remember">
-                            <span class="checkbox-mark"></span>
-                            Recordar sesión
-                        </label>
                     </div>
 
                     <button type="submit" class="login-btn">
@@ -98,228 +85,1983 @@
 
     <!-- Contenido del Backoffice (oculto hasta el login) -->
     <div id="backofficeContent" class="backoffice-content" style="display: none;">
-        <!-- Header del Backoffice -->
-        <header class="admin-header">
-            <div class="header-content">
-                <div class="logo-section">
-                    <img src="/assets/logo.svg" alt="Logo Llaveros 3D" class="logo">
-                    <h1>Backoffice</h1>
-                </div>
-                <nav class="admin-nav">
-                    <a href="#dashboard" class="nav-link active" data-section="dashboard">
-                        <i class="fas fa-chart-line"></i> Dashboard
-                    </a>
-                    <a href="#pedidos" class="nav-link" data-section="pedidos">
-                        <i class="fas fa-shopping-cart"></i> Pedidos
-                    </a>
-                    <a href="#clientes" class="nav-link" data-section="clientes">
-                        <i class="fas fa-users"></i> Clientes
-                    </a>
-                    <a href="#reportes" class="nav-link" data-section="reportes">
-                        <i class="fas fa-chart-bar"></i> Reportes
-                    </a>
-                </nav>
-                <div class="user-section">
-                    <span class="user-name" id="userEmail">Admin</span>
-                    <button class="btn-logout" onclick="logout()">
-                        <i class="fas fa-sign-out-alt"></i>
-                    </button>
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-cube"></i>
+                    <span>Llaveros 3D</span>
                 </div>
             </div>
-        </header>
-
-        <!-- Contenido principal -->
-        <main class="admin-main">
-            <!-- Dashboard -->
-            <section id="dashboard" class="admin-section active">
-                <div class="section-header">
-                    <h2><i class="fas fa-chart-line"></i> Dashboard</h2>
-                    <p>Resumen general del negocio</p>
-                </div>
-                
-                <!-- Estadísticas rápidas -->
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-icon">
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="#dashboard" class="nav-link active" data-section="dashboard">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#pedidos" class="nav-link" data-section="pedidos">
                             <i class="fas fa-shopping-cart"></i>
-                        </div>
-                        <div class="stat-content">
-                            <h3 id="total-pedidos">0</h3>
-                            <p>Total Pedidos</p>
-                        </div>
-                    </div>
-                    
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <div class="stat-content">
-                            <h3 id="pedidos-pendientes">0</h3>
-                            <p>Pendientes</p>
-                        </div>
-                    </div>
-                    
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-check-circle"></i>
-                        </div>
-                        <div class="stat-content">
-                            <h3 id="pedidos-completados">0</h3>
-                            <p>Completados</p>
-                        </div>
-                    </div>
-                    
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-euro-sign"></i>
-                        </div>
-                        <div class="stat-content">
-                            <h3 id="ingresos-totales">0€</h3>
-                            <p>Ingresos</p>
-                        </div>
-                    </div>
-                </div>
+                            <span>Pedidos</span>
+                            <span class="badge" id="pedidosBadge">0</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#clientes" class="nav-link" data-section="clientes">
+                            <i class="fas fa-users"></i>
+                            <span>Clientes</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#facturacion" class="nav-link" data-section="facturacion">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                            <span>Facturación</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#reportes" class="nav-link" data-section="reportes">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Reportes</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#configuracion" class="nav-link" data-section="configuracion">
+                            <i class="fas fa-cog"></i>
+                            <span>Configuración</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
 
-                <!-- Gráfico de pedidos por mes -->
-                <div class="chart-section">
-                    <h3>Pedidos por Mes</h3>
-                    <canvas id="pedidos-chart" width="400" height="200"></canvas>
-                </div>
-
-                <!-- Pedidos recientes -->
-                <div class="recent-section">
-                    <h3>Pedidos Recientes</h3>
-                    <div class="recent-pedidos" id="recent-pedidos">
-                        <!-- Se llena dinámicamente -->
-                    </div>
-                </div>
-            </section>
-
-            <!-- Gestión de Pedidos -->
-            <section id="pedidos" class="admin-section">
-                <div class="section-header">
-                    <h2><i class="fas fa-shopping-cart"></i> Gestión de Pedidos</h2>
-                    <p>Administra todos los pedidos recibidos</p>
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-left">
+                    <button class="sidebar-toggle" onclick="toggleSidebar()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 id="pageTitle">Dashboard</h1>
                 </div>
                 
-                <!-- Filtros y búsqueda -->
-                <div class="filters-section">
+                <div class="header-right">
                     <div class="search-box">
-                        <input type="text" id="search-pedidos" placeholder="Buscar por cliente, empresa o ID...">
                         <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Buscar pedidos, clientes..." id="globalSearch">
                     </div>
                     
-                    <div class="filter-controls">
-                        <select id="filter-status">
-                            <option value="">Todos los estados</option>
-                            <option value="nuevo">Nuevo</option>
-                            <option value="en-proceso">En Proceso</option>
-                            <option value="produccion">En Producción</option>
-                            <option value="completado">Completado</option>
-                            <option value="enviado">Enviado</option>
-                            <option value="cancelado">Cancelado</option>
-                        </select>
+                    <div class="notifications">
+                        <button class="notification-btn" onclick="showNotifications()">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-badge" id="notificationBadge">0</span>
+                        </button>
+                    </div>
+                    
+                    <div class="user-menu">
+                        <div class="user-info">
+                            <span class="user-name" id="userEmail">Admin</span>
+                            <span class="user-role">Administrador</span>
+                        </div>
+                        <button class="logout-btn" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Dashboard Section -->
+                <section id="dashboard" class="admin-section active">
+                    <div class="section-header">
+                        <h2>Dashboard</h2>
+                        <div class="header-actions">
+                            <button class="btn btn-primary" onclick="refreshDashboard()">
+                                <i class="fas fa-sync-alt"></i>
+                                Actualizar
+                            </button>
+                            <button class="btn btn-secondary" onclick="customizeDashboard()">
+                                <i class="fas fa-cog"></i>
+                                Personalizar
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Dashboard Controls -->
+                    <div class="dashboard-controls">
+                        <div class="control-group">
+                            <label for="dashboardPeriod">Período:</label>
+                            <select id="dashboardPeriod" onchange="updateDashboardPeriod()">
+                                <option value="today">Hoy</option>
+                                <option value="week">Esta Semana</option>
+                                <option value="month" selected>Este Mes</option>
+                                <option value="quarter">Este Trimestre</option>
+                                <option value="year">Este Año</option>
+                            </select>
+                        </div>
                         
-                        <select id="filter-date">
-                            <option value="">Todas las fechas</option>
-                            <option value="hoy">Hoy</option>
-                            <option value="semana">Esta semana</option>
-                            <option value="mes">Este mes</option>
-                            <option value="trimestre">Este trimestre</option>
+                        <div class="control-group">
+                            <label for="dashboardView">Vista:</label>
+                            <select id="dashboardView" onchange="updateDashboardView()">
+                                <option value="overview" selected>Resumen</option>
+                                <option value="detailed">Detallada</option>
+                                <option value="minimal">Minimalista</option>
+                            </select>
+                        </div>
+                        
+                        <div class="control-group">
+                            <button class="btn btn-info btn-sm" onclick="toggleAutoRefresh()">
+                                <i class="fas fa-play" id="autoRefreshIcon"></i>
+                                <span id="autoRefreshText">Auto-actualizar</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Main Stats Grid -->
+                    <div class="main-stats-grid">
+                        <div class="stat-card primary">
+                            <div class="stat-header">
+                                <div class="stat-icon">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </div>
+                                <div class="stat-menu">
+                                    <button class="stat-menu-btn" onclick="toggleStatMenu('totalOrders')">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="stat-content">
+                                <h3>Total Pedidos</h3>
+                                <div class="stat-value" id="totalPedidos">0</div>
+                                <div class="stat-change positive" id="totalChange">
+                                    <i class="fas fa-arrow-up"></i>
+                                    <span>+0%</span>
+                                </div>
+                            </div>
+                            <div class="stat-footer">
+                                <div class="stat-trend" id="totalTrend">
+                                    <i class="fas fa-chart-line"></i>
+                                    <span>Tendencia positiva</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card success">
+                            <div class="stat-header">
+                                <div class="stat-icon">
+                                    <i class="fas fa-euro-sign"></i>
+                                </div>
+                                <div class="stat-menu">
+                                    <button class="stat-menu-btn" onclick="toggleStatMenu('revenue')">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="stat-content">
+                                <h3>Ingresos Totales</h3>
+                                <div class="stat-value" id="totalIngresos">€0.00</div>
+                                <div class="stat-change positive" id="ingresosChange">
+                                    <i class="fas fa-arrow-up"></i>
+                                    <span>+0%</span>
+                                </div>
+                            </div>
+                            <div class="stat-footer">
+                                <div class="stat-trend" id="revenueTrend">
+                                    <i class="fas fa-chart-line"></i>
+                                    <span>Crecimiento estable</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card warning">
+                            <div class="stat-header">
+                                <div class="stat-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="stat-menu">
+                                    <button class="stat-menu-btn" onclick="toggleStatMenu('pending')">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="stat-content">
+                                <h3>Pendientes</h3>
+                                <div class="stat-value" id="pedidosPendientes">0</div>
+                                <div class="stat-change" id="pendientesChange">
+                                    <i class="fas fa-minus"></i>
+                                    <span>0%</span>
+                                </div>
+                            </div>
+                            <div class="stat-footer">
+                                <div class="stat-trend" id="pendingTrend">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    <span>Requiere atención</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card info">
+                            <div class="stat-header">
+                                <div class="stat-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="stat-menu">
+                                    <button class="stat-menu-btn" onclick="toggleStatMenu('clients')">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="stat-content">
+                                <h3>Clientes Activos</h3>
+                                <div class="stat-value" id="clientesActivos">0</div>
+                                <div class="stat-change positive" id="clientesChange">
+                                    <i class="fas fa-arrow-up"></i>
+                                    <span>+0%</span>
+                                </div>
+                            </div>
+                            <div class="stat-footer">
+                                <div class="stat-trend" id="clientsTrend">
+                                    <i class="fas fa-user-plus"></i>
+                                    <span>Nuevos clientes</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Secondary Stats -->
+                    <div class="secondary-stats-grid">
+                        <div class="stat-card compact">
+                            <div class="stat-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h4>Completados</h4>
+                                <div class="stat-value" id="pedidosCompletados">0</div>
+                                <div class="stat-change positive" id="completadosChange">+0%</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card compact">
+                            <div class="stat-icon">
+                                <i class="fas fa-chart-pie"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h4>Ticket Promedio</h4>
+                                <div class="stat-value" id="ticketPromedio">€0.00</div>
+                                <div class="stat-change positive" id="ticketChange">+0%</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card compact">
+                            <div class="stat-icon">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h4>Satisfacción</h4>
+                                <div class="stat-value" id="satisfaccion">4.8</div>
+                                <div class="stat-change positive" id="satisfaccionChange">+0.2</div>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card compact">
+                            <div class="stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h4>Tiempo Promedio</h4>
+                                <div class="stat-value" id="tiempoPromedio">2.5 días</div>
+                                <div class="stat-change negative" id="tiempoChange">-0.3 días</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dashboard Content Grid -->
+                    <div class="dashboard-content-grid">
+                        <!-- Charts Section -->
+                        <div class="charts-section">
+                            <div class="chart-container main-chart">
+                                <div class="chart-header">
+                                    <h3>Evolución de Pedidos</h3>
+                                    <div class="chart-controls">
+                                        <select id="chartPeriod" onchange="updateChartPeriod()">
+                                            <option value="7">Últimos 7 días</option>
+                                            <option value="30" selected>Últimos 30 días</option>
+                                            <option value="90">Últimos 90 días</option>
+                                            <option value="365">Último año</option>
+                                        </select>
+                                        <button class="btn-icon" onclick="exportChart()" title="Exportar gráfico">
+                                            <i class="fas fa-download"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="chart-placeholder" id="ordersChart">
+                                    <canvas id="ordersChartCanvas" width="600" height="300"></canvas>
+                                </div>
+                            </div>
+                            
+                            <div class="chart-container">
+                                <div class="chart-header">
+                                    <h3>Distribución por Estado</h3>
+                                    <div class="chart-controls">
+                                        <button class="btn-icon" onclick="refreshStatusChart()" title="Actualizar">
+                                            <i class="fas fa-sync-alt"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="chart-placeholder" id="statusChart">
+                                    <canvas id="statusChartCanvas" width="300" height="300"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Recent Activity Section -->
+                        <div class="activity-section">
+                            <div class="recent-orders">
+                                <div class="recent-header">
+                                    <h3>Pedidos Recientes</h3>
+                                    <div class="recent-controls">
+                                        <select id="recentOrdersFilter" onchange="filterRecentOrders()">
+                                            <option value="all">Todos</option>
+                                            <option value="pending">Pendientes</option>
+                                            <option value="processing">En Proceso</option>
+                                            <option value="completed">Completados</option>
+                                        </select>
+                                        <a href="#pedidos" class="view-all">Ver todos</a>
+                                    </div>
+                                </div>
+                                <div class="orders-list" id="pedidosRecientes">
+                                    <!-- Se llena dinámicamente -->
+                                </div>
+                            </div>
+                            
+                            <div class="quick-actions">
+                                <div class="quick-header">
+                                    <h3>Acciones Rápidas</h3>
+                                </div>
+                                <div class="actions-grid">
+                                    <button class="action-btn primary" onclick="createNewOrder()">
+                                        <i class="fas fa-plus"></i>
+                                        <span>Nuevo Pedido</span>
+                                    </button>
+                                    <button class="action-btn success" onclick="viewAllOrders()">
+                                        <i class="fas fa-list"></i>
+                                        <span>Ver Pedidos</span>
+                                    </button>
+                                    <button class="action-btn info" onclick="viewClients()">
+                                        <i class="fas fa-users"></i>
+                                        <span>Clientes</span>
+                                    </button>
+                                    <button class="action-btn warning" onclick="generateReport()">
+                                        <i class="fas fa-chart-bar"></i>
+                                        <span>Reportes</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Performance Metrics -->
+                    <div class="performance-section">
+                        <div class="performance-header">
+                            <h3>Métricas de Rendimiento</h3>
+                            <div class="performance-controls">
+                                <button class="btn btn-sm btn-secondary" onclick="togglePerformanceDetails()">
+                                    <i class="fas fa-info-circle"></i>
+                                    Detalles
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="performance-grid">
+                            <div class="performance-card">
+                                <div class="performance-icon">
+                                    <i class="fas fa-tachometer-alt"></i>
+                                </div>
+                                <div class="performance-content">
+                                    <h4>Eficiencia</h4>
+                                    <div class="performance-value">85%</div>
+                                    <div class="performance-bar">
+                                        <div class="performance-fill" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="performance-card">
+                                <div class="performance-icon">
+                                    <i class="fas fa-shipping-fast"></i>
+                                </div>
+                                <div class="performance-content">
+                                    <h4>Velocidad</h4>
+                                    <div class="performance-value">2.3 días</div>
+                                    <div class="performance-bar">
+                                        <div class="performance-fill" style="width: 76%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="performance-card">
+                                <div class="performance-icon">
+                                    <i class="fas fa-thumbs-up"></i>
+                                </div>
+                                <div class="performance-content">
+                                    <h4>Calidad</h4>
+                                    <div class="performance-value">94%</div>
+                                    <div class="performance-bar">
+                                        <div class="performance-fill" style="width: 94%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="performance-card">
+                                <div class="performance-icon">
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                                <div class="performance-content">
+                                    <h4>Satisfacción</h4>
+                                    <div class="performance-value">4.8/5</div>
+                                    <div class="performance-bar">
+                                        <div class="performance-fill" style="width: 96%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Alerts and Notifications -->
+                    <div class="alerts-section">
+                        <div class="alerts-header">
+                            <h3>Alertas y Notificaciones</h3>
+                            <div class="alerts-controls">
+                                <button class="btn btn-sm btn-secondary" onclick="markAllAsRead()">
+                                    <i class="fas fa-check-double"></i>
+                                    Marcar como leídas
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="alerts-list" id="alertsList">
+                            <!-- Se llena dinámicamente -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Pedidos Section -->
+                <section id="pedidos" class="admin-section">
+                    <div class="section-header">
+                        <h2>Gestión de Pedidos</h2>
+                        <div class="header-actions">
+                            <div class="order-filters">
+                                <div class="search-box">
+                                    <i class="fas fa-search"></i>
+                                    <input type="text" id="orderSearch" placeholder="Buscar pedidos...">
+                                </div>
+                                <select id="statusFilter">
+                                    <option value="">Todos los estados</option>
+                                    <option value="pendiente">Pendiente</option>
+                                    <option value="en_proceso">En Proceso</option>
+                                    <option value="completado">Completado</option>
+                                    <option value="cancelado">Cancelado</option>
+                                </select>
+                                <select id="orderSortBy">
+                                    <option value="fecha">Ordenar por fecha</option>
+                                    <option value="cliente">Ordenar por cliente</option>
+                                    <option value="total">Ordenar por total</option>
+                                    <option value="estado">Ordenar por estado</option>
+                                </select>
+                                <input type="date" id="dateFilter" placeholder="Filtrar por fecha">
+                                <select id="orderFilterBy">
+                                    <option value="todos">Todos los pedidos</option>
+                                    <option value="hoy">Hoy</option>
+                                    <option value="semana">Esta semana</option>
+                                    <option value="mes">Este mes</option>
+                                    <option value="urgentes">Urgentes</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-primary" onclick="exportPedidos()">
+                                <i class="fas fa-download"></i>
+                                Exportar
+                            </button>
+                            <button class="btn btn-secondary" onclick="refreshOrders()">
+                                <i class="fas fa-sync-alt"></i>
+                                Actualizar
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Stats de Pedidos -->
+                    <div class="order-stats-grid">
+                        <div class="order-stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>Total Pedidos</h3>
+                                <p class="stat-number" id="totalPedidosStats">0</p>
+                                <span class="stat-change positive" id="totalPedidosChange">+0%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="order-stat-card">
+                            <div class="stat-icon pending">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>Pendientes</h3>
+                                <p class="stat-number" id="pedidosPendientesStats">0</p>
+                                <span class="stat-change" id="pendientesStatsChange">0</span>
+                            </div>
+                        </div>
+                        
+                        <div class="order-stat-card">
+                            <div class="stat-icon processing">
+                                <i class="fas fa-cog"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>En Proceso</h3>
+                                <p class="stat-number" id="pedidosProcesoStats">0</p>
+                                <span class="stat-change" id="procesoStatsChange">0</span>
+                            </div>
+                        </div>
+                        
+                        <div class="order-stat-card">
+                            <div class="stat-icon completed">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>Completados</h3>
+                                <p class="stat-number" id="pedidosCompletadosStats">0</p>
+                                <span class="stat-change positive" id="completadosStatsChange">+0%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="order-stat-card">
+                            <div class="stat-icon revenue">
+                                <i class="fas fa-euro-sign"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>Ingresos</h3>
+                                <p class="stat-number" id="ingresosPedidosStats">€0</p>
+                                <span class="stat-change positive" id="ingresosPedidosChange">+0%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Vista de Pedidos -->
+                    <div class="orders-view-controls">
+                        <div class="view-toggle">
+                            <button class="view-btn active" data-view="table" onclick="setOrderView('table')">
+                                <i class="fas fa-table"></i>
+                                Vista de Tabla
+                            </button>
+                            <button class="view-btn" data-view="cards" onclick="setOrderView('cards')">
+                                <i class="fas fa-th-large"></i>
+                                Vista de Tarjetas
+                            </button>
+                            <button class="view-btn" data-view="kanban" onclick="setOrderView('kanban')">
+                                <i class="fas fa-columns"></i>
+                                Vista Kanban
+                            </button>
+                        </div>
+                        <div class="order-count">
+                            <span id="orderCount">0 pedidos encontrados</span>
+                        </div>
+                        <div class="bulk-actions">
+                            <select id="bulkActionSelect">
+                                <option value="">Acciones masivas</option>
+                                <option value="marcar_proceso">Marcar como En Proceso</option>
+                                <option value="marcar_completado">Marcar como Completado</option>
+                                <option value="exportar_seleccion">Exportar Seleccionados</option>
+                            </select>
+                            <button class="btn btn-sm btn-primary" onclick="executeBulkAction()">
+                                <i class="fas fa-play"></i>
+                                Ejecutar
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Vista de Tabla -->
+                    <div class="orders-table-container" id="ordersTableContainer">
+                        <div class="table-wrapper">
+                            <table class="orders-table" id="ordersTable">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <input type="checkbox" id="selectAllOrders" onchange="toggleSelectAll()">
+                                        </th>
+                                        <th>ID</th>
+                                        <th>Cliente</th>
+                                        <th>Producto</th>
+                                        <th>Fecha</th>
+                                        <th>Estado</th>
+                                        <th>Total</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ordersTableBody">
+                                    <!-- Se llena dinámicamente -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- Vista de Tarjetas -->
+                    <div class="orders-cards-container" id="ordersCardsContainer" style="display: none;">
+                        <div class="orders-cards-grid" id="ordersCardsGrid">
+                            <!-- Se llena dinámicamente -->
+                        </div>
+                    </div>
+                    
+                    <!-- Vista Kanban -->
+                    <div class="orders-kanban-container" id="ordersKanbanContainer" style="display: none;">
+                        <div class="kanban-board">
+                            <div class="kanban-column" data-status="pendiente"
+                                 ondragover="handleDragOver(event)"
+                                 ondrop="handleDrop(event, 'pendiente')"
+                                 ondragenter="handleDragEnter(event)"
+                                 ondragleave="handleDragLeave(event)">
+                                <div class="kanban-header">
+                                    <h3>Pendientes</h3>
+                                    <span class="kanban-count" id="kanbanPendientes">0</span>
+                                </div>
+                                <div class="kanban-cards" id="kanbanPendientesCards">
+                                    <!-- Se llena dinámicamente -->
+                                </div>
+                            </div>
+                            
+                            <div class="kanban-column" data-status="en_proceso"
+                                 ondragover="handleDragOver(event)"
+                                 ondrop="handleDrop(event, 'en_proceso')"
+                                 ondragenter="handleDragEnter(event)"
+                                 ondragleave="handleDragLeave(event)">
+                                <div class="kanban-header">
+                                    <h3>En Proceso</h3>
+                                    <span class="kanban-count" id="kanbanProceso">0</span>
+                                </div>
+                                <div class="kanban-cards" id="kanbanProcesoCards">
+                                    <!-- Se llena dinámicamente -->
+                                </div>
+                            </div>
+                            
+                            <div class="kanban-column" data-status="completado"
+                                 ondragover="handleDragOver(event)"
+                                 ondrop="handleDrop(event, 'completado')"
+                                 ondragenter="handleDragEnter(event)"
+                                 ondragleave="handleDragLeave(event)">
+                                <div class="kanban-header">
+                                    <h3>Completados</h3>
+                                    <span class="kanban-count" id="kanbanCompletados">0</span>
+                                </div>
+                                <div class="kanban-cards" id="kanbanCompletadosCards">
+                                    <!-- Se llena dinámicamente -->
+                                </div>
+                            </div>
+                            
+                            <div class="kanban-column" data-status="cancelado"
+                                 ondragover="handleDragOver(event)"
+                                 ondrop="handleDrop(event, 'cancelado')"
+                                 ondragenter="handleDragEnter(event)"
+                                 ondragleave="handleDragLeave(event)">
+                                <div class="kanban-header">
+                                    <h3>Cancelados</h3>
+                                    <span class="kanban-count" id="kanbanCancelados">0</span>
+                                </div>
+                                <div class="kanban-cards" id="kanbanCanceladosCards">
+                                    <!-- Se llena dinámicamente -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Clientes Section -->
+                <section id="clientes" class="admin-section">
+                    <div class="section-header">
+                        <h2>Gestión de Clientes</h2>
+                        <div class="header-actions">
+                            <div class="client-filters">
+                                <div class="search-box">
+                                    <i class="fas fa-search"></i>
+                                    <input type="text" id="clientSearch" placeholder="Buscar clientes...">
+                                </div>
+                                <select id="clientSortBy">
+                                    <option value="nombre">Ordenar por nombre</option>
+                                    <option value="pedidos">Ordenar por pedidos</option>
+                                    <option value="gastado">Ordenar por gastado</option>
+                                    <option value="fecha">Ordenar por último pedido</option>
+                                </select>
+                                <select id="clientFilterBy">
+                                    <option value="todos">Todos los clientes</option>
+                                    <option value="activos">Clientes activos</option>
+                                    <option value="nuevos">Clientes nuevos</option>
+                                    <option value="vip">Clientes VIP</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-primary" onclick="exportClientes()">
+                                <i class="fas fa-download"></i>
+                                Exportar
+                            </button>
+                            <button class="btn btn-secondary" onclick="refreshClients()">
+                                <i class="fas fa-sync-alt"></i>
+                                Actualizar
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Stats de Clientes -->
+                    <div class="client-stats-grid">
+                        <div class="client-stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>Total Clientes</h3>
+                                <p class="stat-number" id="totalClientes">0</p>
+                                <span class="stat-change positive" id="clientesChange">+0%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="client-stat-card">
+                            <div class="stat-icon active">
+                                <i class="fas fa-user-check"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>Clientes Activos</h3>
+                                <p class="stat-number" id="clientesActivos">0</p>
+                                <span class="stat-change" id="activosChange">0</span>
+                            </div>
+                        </div>
+                        
+                        <div class="client-stat-card">
+                            <div class="stat-icon vip">
+                                <i class="fas fa-crown"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>Clientes VIP</h3>
+                                <p class="stat-number" id="clientesVIP">0</p>
+                                <span class="stat-change positive" id="vipChange">+0%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="client-stat-card">
+                            <div class="stat-icon revenue">
+                                <i class="fas fa-euro-sign"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>Ingresos Clientes</h3>
+                                <p class="stat-number" id="ingresosClientes">€0</p>
+                                <span class="stat-change positive" id="ingresosClientesChange">+0%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Vista de Clientes -->
+                    <div class="clients-view-controls">
+                        <div class="view-toggle">
+                            <button class="view-btn active" data-view="grid" onclick="setClientView('grid')">
+                                <i class="fas fa-th"></i>
+                                Vista de Tarjetas
+                            </button>
+                            <button class="view-btn" data-view="table" onclick="setClientView('table')">
+                                <i class="fas fa-table"></i>
+                                Vista de Tabla
+                            </button>
+                        </div>
+                        <div class="client-count">
+                            <span id="clientCount">0 clientes encontrados</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Vista de Tarjetas -->
+                    <div class="clients-container" id="clientsGridContainer">
+                        <div class="clients-grid" id="clientsGrid">
+                            <!-- Se llena dinámicamente -->
+                        </div>
+                    </div>
+                    
+                    <!-- Vista de Tabla -->
+                    <div class="clients-table-container" id="clientsTableContainer" style="display: none;">
+                        <div class="table-wrapper">
+                            <table class="clients-table" id="clientsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Cliente</th>
+                                        <th>Contacto</th>
+                                        <th>Pedidos</th>
+                                        <th>Total Gastado</th>
+                                        <th>Último Pedido</th>
+                                        <th>Estado</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="clientsTableBody">
+                                    <!-- Se llena dinámicamente -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Facturación Section -->
+                <section id="facturacion" class="admin-section">
+                    <div class="section-header">
+                        <h2>Módulo de Facturación</h2>
+                        <div class="header-actions">
+                            <button class="btn btn-primary" onclick="createNewInvoice()">
+                                <i class="fas fa-plus"></i>
+                                Nueva Factura
+                            </button>
+                            <button class="btn btn-secondary" onclick="exportInvoices()">
+                                <i class="fas fa-download"></i>
+                                Exportar
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Stats de Facturación -->
+                    <div class="billing-stats-grid">
+                        <div class="billing-stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-file-invoice-dollar"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>Total Facturas</h3>
+                                <p class="stat-number" id="totalFacturas">0</p>
+                                <span class="stat-change positive" id="facturasChange">+0%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="billing-stat-card">
+                            <div class="stat-icon pending">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>Pendientes</h3>
+                                <p class="stat-number" id="facturasPendientes">0</p>
+                                <span class="stat-change" id="pendientesFacturasChange">0</span>
+                            </div>
+                        </div>
+                        
+                        <div class="billing-stat-card">
+                            <div class="stat-icon paid">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>Pagadas</h3>
+                                <p class="stat-number" id="facturasPagadas">0</p>
+                                <span class="stat-change positive" id="pagadasFacturasChange">+0%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="billing-stat-card">
+                            <div class="stat-icon revenue">
+                                <i class="fas fa-euro-sign"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3>Ingresos</h3>
+                                <p class="stat-number" id="ingresosFacturas">€0</p>
+                                <span class="stat-change positive" id="ingresosFacturasChange">+0%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Filtros de Facturación -->
+                    <div class="billing-filters">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="invoiceSearch" placeholder="Buscar facturas...">
+                        </div>
+                        <select id="invoiceStatusFilter">
+                            <option value="">Todos los estados</option>
+                            <option value="borrador">Borrador</option>
+                            <option value="enviada">Enviada</option>
+                            <option value="pagada">Pagada</option>
+                            <option value="vencida">Vencida</option>
+                            <option value="cancelada">Cancelada</option>
                         </select>
+                        <input type="date" id="invoiceDateFrom" placeholder="Desde">
+                        <input type="date" id="invoiceDateTo" placeholder="Hasta">
+                        <button class="btn btn-secondary" onclick="applyInvoiceFilters()">
+                            <i class="fas fa-filter"></i>
+                            Filtrar
+                        </button>
                     </div>
-                </div>
 
-                <!-- Tabla de pedidos -->
-                <div class="table-container">
-                    <table class="pedidos-table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Fecha</th>
-                                <th>Cliente</th>
-                                <th>Empresa</th>
-                                <th>Producto</th>
-                                <th>Cantidad</th>
-                                <th>Total</th>
-                                <th>Estado</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody id="pedidos-tbody">
-                            <!-- Se llena dinámicamente -->
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Paginación -->
-                <div class="pagination" id="pagination">
-                    <!-- Se genera dinámicamente -->
-                </div>
-            </section>
-
-            <!-- Gestión de Clientes -->
-            <section id="clientes" class="admin-section">
-                <div class="section-header">
-                    <h2><i class="fas fa-users"></i> Gestión de Clientes</h2>
-                    <p>Administra la base de datos de clientes</p>
-                </div>
-                
-                <div class="clients-grid" id="clients-grid">
-                    <!-- Se llena dinámicamente -->
-                </div>
-            </section>
-
-            <!-- Reportes -->
-            <section id="reportes" class="admin-section">
-                <div class="section-header">
-                    <h2><i class="fas fa-chart-bar"></i> Reportes</h2>
-                    <p>Análisis y estadísticas del negocio</p>
-                </div>
-                
-                <div class="reports-grid">
-                    <div class="report-card">
-                        <h3>Ventas por Período</h3>
-                        <canvas id="ventas-chart" width="300" height="200"></canvas>
-                    </div>
-                    
-                    <div class="report-card">
-                        <h3>Productos Más Vendidos</h3>
-                        <div id="top-products">
-                            <!-- Se llena dinámicamente -->
+                    <!-- Lista de Facturas -->
+                    <div class="invoices-container">
+                        <div class="invoices-table-container">
+                            <table class="invoices-table" id="invoicesTable">
+                                <thead>
+                                    <tr>
+                                        <th>Nº Factura</th>
+                                        <th>Cliente</th>
+                                        <th>Fecha</th>
+                                        <th>Vencimiento</th>
+                                        <th>Total</th>
+                                        <th>Estado</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="invoicesTableBody">
+                                    <!-- Se llena dinámicamente -->
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                    
-                    <div class="report-card">
-                        <h3>Clientes Recurrentes</h3>
-                        <div id="recurring-clients">
-                            <!-- Se llena dinámicamente -->
+                </section>
+
+                <!-- Reportes Section -->
+                <section id="reportes" class="admin-section">
+                    <div class="section-header">
+                        <h2>Reportes y Análisis</h2>
+                        <div class="header-actions">
+                            <button class="btn btn-primary" onclick="generateFullReport()">
+                                <i class="fas fa-file-pdf"></i>
+                                Reporte Completo
+                            </button>
+                            <button class="btn btn-success" onclick="exportToExcel()">
+                                <i class="fas fa-file-excel"></i>
+                                Exportar Excel
+                            </button>
+                            <button class="btn btn-info" onclick="refreshReports()">
+                                <i class="fas fa-sync-alt"></i>
+                                Actualizar
+                            </button>
                         </div>
                     </div>
-                </div>
-            </section>
+
+                    <!-- Filtros de Reportes -->
+                    <div class="reports-filters">
+                        <div class="filter-group">
+                            <label for="reportPeriod">Período:</label>
+                            <select id="reportPeriod" onchange="updateReportPeriod()">
+                                <option value="today">Hoy</option>
+                                <option value="week">Esta Semana</option>
+                                <option value="month" selected>Este Mes</option>
+                                <option value="quarter">Este Trimestre</option>
+                                <option value="year">Este Año</option>
+                                <option value="custom">Personalizado</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group" id="customDateRange" style="display: none;">
+                            <label for="reportDateFrom">Desde:</label>
+                            <input type="date" id="reportDateFrom">
+                            <label for="reportDateTo">Hasta:</label>
+                            <input type="date" id="reportDateTo">
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label for="reportType">Tipo de Reporte:</label>
+                            <select id="reportType" onchange="updateReportType()">
+                                <option value="sales">Ventas</option>
+                                <option value="orders">Pedidos</option>
+                                <option value="clients">Clientes</option>
+                                <option value="products">Productos</option>
+                                <option value="financial">Financiero</option>
+                            </select>
+                        </div>
+                        
+                        <button class="btn btn-secondary" onclick="applyReportFilters()">
+                            <i class="fas fa-filter"></i>
+                            Aplicar Filtros
+                        </button>
+                    </div>
+
+                    <!-- Navegación de Reportes -->
+                    <div class="reports-nav">
+                        <button class="reports-nav-btn active" data-report="overview" onclick="showReportSection('overview')">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Resumen</span>
+                        </button>
+                        <button class="reports-nav-btn" data-report="sales" onclick="showReportSection('sales')">
+                            <i class="fas fa-chart-bar"></i>
+                            <span>Ventas</span>
+                        </button>
+                        <button class="reports-nav-btn" data-report="orders" onclick="showReportSection('orders')">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span>Pedidos</span>
+                        </button>
+                        <button class="reports-nav-btn" data-report="clients" onclick="showReportSection('clients')">
+                            <i class="fas fa-users"></i>
+                            <span>Clientes</span>
+                        </button>
+                        <button class="reports-nav-btn" data-report="products" onclick="showReportSection('products')">
+                            <i class="fas fa-box"></i>
+                            <span>Productos</span>
+                        </button>
+                        <button class="reports-nav-btn" data-report="financial" onclick="showReportSection('financial')">
+                            <i class="fas fa-euro-sign"></i>
+                            <span>Financiero</span>
+                        </button>
+                    </div>
+
+                    <!-- Resumen General -->
+                    <div id="report-overview" class="report-section active">
+                        <div class="report-header">
+                            <h3><i class="fas fa-chart-line"></i> Resumen General</h3>
+                            <p>Vista general del rendimiento del negocio</p>
+                        </div>
+                        
+                        <div class="overview-stats">
+                            <div class="stat-card primary">
+                                <div class="stat-icon">
+                                    <i class="fas fa-euro-sign"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4>Ingresos Totales</h4>
+                                    <div class="stat-value" id="totalRevenue">€0.00</div>
+                                    <div class="stat-change positive" id="revenueChange">+0%</div>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card success">
+                                <div class="stat-icon">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4>Pedidos Totales</h4>
+                                    <div class="stat-value" id="totalOrders">0</div>
+                                    <div class="stat-change positive" id="ordersChange">+0%</div>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card info">
+                                <div class="stat-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4>Clientes Activos</h4>
+                                    <div class="stat-value" id="activeClients">0</div>
+                                    <div class="stat-change positive" id="clientsChange">+0%</div>
+                                </div>
+                            </div>
+                            
+                            <div class="stat-card warning">
+                                <div class="stat-icon">
+                                    <i class="fas fa-chart-pie"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h4>Ticket Promedio</h4>
+                                    <div class="stat-value" id="averageTicket">€0.00</div>
+                                    <div class="stat-change positive" id="ticketChange">+0%</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="overview-charts">
+                            <div class="chart-container">
+                                <h4>Evolución de Ventas</h4>
+                                <div class="chart-placeholder" id="salesEvolutionChart">
+                                    <canvas id="salesChart" width="400" height="200"></canvas>
+                                </div>
+                            </div>
+                            
+                            <div class="chart-container">
+                                <h4>Distribución por Estado</h4>
+                                <div class="chart-placeholder" id="statusDistributionChart">
+                                    <canvas id="statusChart" width="300" height="300"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Reporte de Ventas -->
+                    <div id="report-sales" class="report-section">
+                        <div class="report-header">
+                            <h3><i class="fas fa-chart-bar"></i> Análisis de Ventas</h3>
+                            <p>Análisis detallado del rendimiento de ventas</p>
+                        </div>
+                        
+                        <div class="sales-analysis">
+                            <div class="sales-metrics">
+                                <div class="metric-card">
+                                    <h4>Ventas por Día</h4>
+                                    <div class="metric-value" id="dailySales">€0.00</div>
+                                    <div class="metric-trend" id="dailySalesTrend">
+                                        <i class="fas fa-arrow-up"></i>
+                                        <span>+0%</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="metric-card">
+                                    <h4>Ventas por Semana</h4>
+                                    <div class="metric-value" id="weeklySales">€0.00</div>
+                                    <div class="metric-trend" id="weeklySalesTrend">
+                                        <i class="fas fa-arrow-up"></i>
+                                        <span>+0%</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="metric-card">
+                                    <h4>Ventas por Mes</h4>
+                                    <div class="metric-value" id="monthlySales">€0.00</div>
+                                    <div class="metric-trend" id="monthlySalesTrend">
+                                        <i class="fas fa-arrow-up"></i>
+                                        <span>+0%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="sales-chart-container">
+                                <h4>Gráfico de Ventas por Período</h4>
+                                <div class="chart-placeholder">
+                                    <canvas id="salesPeriodChart" width="600" height="300"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Reporte de Pedidos -->
+                    <div id="report-orders" class="report-section">
+                        <div class="report-header">
+                            <h3><i class="fas fa-shopping-cart"></i> Análisis de Pedidos</h3>
+                            <p>Estadísticas detalladas de pedidos y su procesamiento</p>
+                        </div>
+                        
+                        <div class="orders-analysis">
+                            <div class="orders-stats">
+                                <div class="stat-item">
+                                    <span class="stat-label">Pedidos Pendientes:</span>
+                                    <span class="stat-value pending" id="pendingOrders">0</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Pedidos en Proceso:</span>
+                                    <span class="stat-value processing" id="processingOrders">0</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Pedidos Completados:</span>
+                                    <span class="stat-value completed" id="completedOrders">0</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-label">Tiempo Promedio:</span>
+                                    <span class="stat-value" id="averageProcessingTime">0 días</span>
+                                </div>
+                            </div>
+                            
+                            <div class="orders-chart-container">
+                                <h4>Pedidos por Estado</h4>
+                                <div class="chart-placeholder">
+                                    <canvas id="ordersStatusChart" width="400" height="300"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Reporte de Clientes -->
+                    <div id="report-clients" class="report-section">
+                        <div class="report-header">
+                            <h3><i class="fas fa-users"></i> Análisis de Clientes</h3>
+                            <p>Comportamiento y segmentación de clientes</p>
+                        </div>
+                        
+                        <div class="clients-analysis">
+                            <div class="clients-segments">
+                                <div class="segment-card vip">
+                                    <h4>Clientes VIP</h4>
+                                    <div class="segment-count" id="vipClients">0</div>
+                                    <div class="segment-percentage" id="vipPercentage">0%</div>
+                                </div>
+                                
+                                <div class="segment-card active">
+                                    <h4>Clientes Activos</h4>
+                                    <div class="segment-count" id="activeClientsCount">0</div>
+                                    <div class="segment-percentage" id="activePercentage">0%</div>
+                                </div>
+                                
+                                <div class="segment-card new">
+                                    <h4>Clientes Nuevos</h4>
+                                    <div class="segment-count" id="newClients">0</div>
+                                    <div class="segment-percentage" id="newPercentage">0%</div>
+                                </div>
+                            </div>
+                            
+                            <div class="clients-chart-container">
+                                <h4>Distribución de Clientes</h4>
+                                <div class="chart-placeholder">
+                                    <canvas id="clientsDistributionChart" width="400" height="300"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Reporte de Productos -->
+                    <div id="report-products" class="report-section">
+                        <div class="report-header">
+                            <h3><i class="fas fa-box"></i> Análisis de Productos</h3>
+                            <p>Rendimiento y popularidad de productos</p>
+                        </div>
+                        
+                        <div class="products-analysis">
+                            <div class="top-products-list">
+                                <h4>Productos Más Vendidos</h4>
+                                <div class="products-ranking" id="topProductsList">
+                                    <!-- Se llena dinámicamente -->
+                                </div>
+                            </div>
+                            
+                            <div class="products-chart-container">
+                                <h4>Ventas por Producto</h4>
+                                <div class="chart-placeholder">
+                                    <canvas id="productsSalesChart" width="500" height="300"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Reporte Financiero -->
+                    <div id="report-financial" class="report-section">
+                        <div class="report-header">
+                            <h3><i class="fas fa-euro-sign"></i> Análisis Financiero</h3>
+                            <p>Métricas financieras y análisis de rentabilidad</p>
+                        </div>
+                        
+                        <div class="financial-analysis">
+                            <div class="financial-metrics">
+                                <div class="metric-card revenue">
+                                    <h4>Ingresos</h4>
+                                    <div class="metric-value" id="totalRevenueFinancial">€0.00</div>
+                                    <div class="metric-period">Este mes</div>
+                                </div>
+                                
+                                <div class="metric-card profit">
+                                    <h4>Beneficio</h4>
+                                    <div class="metric-value" id="totalProfit">€0.00</div>
+                                    <div class="metric-period">Margen: 0%</div>
+                                </div>
+                                
+                                <div class="metric-card expenses">
+                                    <h4>Gastos</h4>
+                                    <div class="metric-value" id="totalExpenses">€0.00</div>
+                                    <div class="metric-period">Operativos</div>
+                                </div>
+                            </div>
+                            
+                            <div class="financial-chart-container">
+                                <h4>Evolución Financiera</h4>
+                                <div class="chart-placeholder">
+                                    <canvas id="financialChart" width="600" height="300"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Configuración Section -->
+                <section id="configuracion" class="admin-section">
+                    <div class="section-header">
+                        <h2>Configuración del Sistema</h2>
+                        <div class="header-actions">
+                            <button class="btn btn-primary" onclick="saveAllConfigurations()">
+                                <i class="fas fa-save"></i>
+                                Guardar Todo
+                            </button>
+                            <button class="btn btn-secondary" onclick="resetConfigurations()">
+                                <i class="fas fa-undo"></i>
+                                Restaurar
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Navegación de Configuración -->
+                    <div class="config-nav">
+                        <button class="config-nav-btn active" data-config="empresa" onclick="showConfigSection('empresa')">
+                            <i class="fas fa-building"></i>
+                            <span>Empresa</span>
+                        </button>
+                        <button class="config-nav-btn" data-config="sistema" onclick="showConfigSection('sistema')">
+                            <i class="fas fa-cog"></i>
+                            <span>Sistema</span>
+                        </button>
+                        <button class="config-nav-btn" data-config="usuarios" onclick="showConfigSection('usuarios')">
+                            <i class="fas fa-users"></i>
+                            <span>Usuarios</span>
+                        </button>
+                        <button class="config-nav-btn" data-config="facturacion" onclick="showConfigSection('facturacion')">
+                            <i class="fas fa-file-invoice"></i>
+                            <span>Facturación</span>
+                        </button>
+                        <button class="config-nav-btn" data-config="notificaciones" onclick="showConfigSection('notificaciones')">
+                            <i class="fas fa-bell"></i>
+                            <span>Notificaciones</span>
+                        </button>
+                        <button class="config-nav-btn" data-config="base-datos" onclick="showConfigSection('base-datos')">
+                            <i class="fas fa-database"></i>
+                            <span>Base de Datos</span>
+                        </button>
+                    </div>
+
+                    <!-- Configuración de Empresa -->
+                    <div id="config-empresa" class="config-section active">
+                        <div class="config-header">
+                            <h3><i class="fas fa-building"></i> Información de la Empresa</h3>
+                            <p>Configura los datos básicos de tu empresa</p>
+                        </div>
+                        
+                        <div class="config-content">
+                            <div class="config-grid">
+                                <div class="config-card">
+                                    <h4>Datos Básicos</h4>
+                                    <div class="form-group">
+                                        <label for="companyName">Nombre de la Empresa</label>
+                                        <input type="text" id="companyName" value="Llaveros 3D" placeholder="Nombre de tu empresa">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="companyDescription">Descripción</label>
+                                        <textarea id="companyDescription" rows="3" placeholder="Descripción de tu empresa">Fabricación de llaveros personalizados en 3D</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="companyWebsite">Sitio Web</label>
+                                        <input type="url" id="companyWebsite" value="https://www.llavero3d.com" placeholder="https://tu-empresa.com">
+                                    </div>
+                                </div>
+                                
+                                <div class="config-card">
+                                    <h4>Información de Contacto</h4>
+                                    <div class="form-group">
+                                        <label for="contactEmail">Email Principal</label>
+                                        <input type="email" id="contactEmail" value="info@llavero3d.com" placeholder="email@empresa.com">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="contactPhone">Teléfono</label>
+                                        <input type="tel" id="contactPhone" value="+34 123 456 789" placeholder="+34 123 456 789">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="contactAddress">Dirección</label>
+                                        <textarea id="contactAddress" rows="2" placeholder="Dirección completa">Calle Ejemplo, 123<br>28001 Madrid, España</textarea>
+                                    </div>
+                                </div>
+                                
+                                <div class="config-card">
+                                    <h4>Datos Fiscales</h4>
+                                    <div class="form-group">
+                                        <label for="taxId">CIF/NIF</label>
+                                        <input type="text" id="taxId" placeholder="A12345678">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="taxRate">IVA (%)</label>
+                                        <input type="number" id="taxRate" value="21" min="0" max="100" step="0.1">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="currency">Moneda</label>
+                                        <select id="currency">
+                                            <option value="EUR" selected>Euro (€)</option>
+                                            <option value="USD">Dólar ($)</option>
+                                            <option value="GBP">Libra (£)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Configuración del Sistema -->
+                    <div id="config-sistema" class="config-section">
+                        <div class="config-header">
+                            <h3><i class="fas fa-cog"></i> Configuración del Sistema</h3>
+                            <p>Ajustes generales del sistema y comportamiento</p>
+                        </div>
+                        
+                        <div class="config-content">
+                            <div class="config-grid">
+                                <div class="config-card">
+                                    <h4>General</h4>
+                                    <div class="form-group">
+                                        <label for="timezone">Zona Horaria</label>
+                                        <select id="timezone">
+                                            <option value="Europe/Madrid" selected>Madrid (GMT+1)</option>
+                                            <option value="Europe/London">Londres (GMT+0)</option>
+                                            <option value="America/New_York">Nueva York (GMT-5)</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="language">Idioma</label>
+                                        <select id="language">
+                                            <option value="es" selected>Español</option>
+                                            <option value="en">English</option>
+                                            <option value="fr">Français</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="dateFormat">Formato de Fecha</label>
+                                        <select id="dateFormat">
+                                            <option value="DD/MM/YYYY" selected>DD/MM/YYYY</option>
+                                            <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                                            <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="config-card">
+                                    <h4>Interfaz</h4>
+                                    <div class="form-group">
+                                        <label for="theme">Tema</label>
+                                        <select id="theme">
+                                            <option value="light" selected>Claro</option>
+                                            <option value="dark">Oscuro</option>
+                                            <option value="auto">Automático</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="itemsPerPage">Elementos por Página</label>
+                                        <select id="itemsPerPage">
+                                            <option value="10">10</option>
+                                            <option value="25" selected>25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" id="autoRefresh" checked>
+                                            <span class="checkmark"></span>
+                                            Actualización Automática
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="config-card">
+                                    <h4>Seguridad</h4>
+                                    <div class="form-group">
+                                        <label for="sessionTimeout">Tiempo de Sesión (minutos)</label>
+                                        <input type="number" id="sessionTimeout" value="60" min="5" max="480">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" id="requireStrongPasswords" checked>
+                                            <span class="checkmark"></span>
+                                            Contraseñas Seguras
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" id="twoFactorAuth">
+                                            <span class="checkmark"></span>
+                                            Autenticación de Dos Factores
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Configuración de Usuarios -->
+                    <div id="config-usuarios" class="config-section">
+                        <div class="config-header">
+                            <h3><i class="fas fa-users"></i> Gestión de Usuarios</h3>
+                            <p>Administra usuarios y permisos del sistema</p>
+                        </div>
+                        
+                        <div class="config-content">
+                            <div class="users-management">
+                                <div class="users-list">
+                                    <div class="users-header">
+                                        <h4>Usuarios del Sistema</h4>
+                                        <button class="btn btn-primary btn-sm" onclick="addNewUser()">
+                                            <i class="fas fa-plus"></i>
+                                            Nuevo Usuario
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="users-table">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>Usuario</th>
+                                                    <th>Email</th>
+                                                    <th>Rol</th>
+                                                    <th>Estado</th>
+                                                    <th>Último Acceso</th>
+                                                    <th>Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="usersTableBody">
+                                                <tr>
+                                                    <td>
+                                                        <div class="user-info">
+                                                            <div class="user-avatar">A</div>
+                                                            <div class="user-details">
+                                                                <strong>Admin</strong>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>admin@llavero3d.com</td>
+                                                    <td><span class="role-badge admin">Administrador</span></td>
+                                                    <td><span class="status-badge active">Activo</span></td>
+                                                    <td>Hace 2 horas</td>
+                                                    <td>
+                                                        <div class="action-buttons">
+                                                            <button class="btn-icon" title="Editar">
+                                                                <i class="fas fa-edit"></i>
+                                                            </button>
+                                                            <button class="btn-icon danger" title="Eliminar">
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                
+                                <div class="roles-management">
+                                    <h4>Roles y Permisos</h4>
+                                    <div class="roles-list">
+                                        <div class="role-card">
+                                            <h5>Administrador</h5>
+                                            <p>Acceso completo al sistema</p>
+                                            <div class="permissions">
+                                                <span class="permission">Dashboard</span>
+                                                <span class="permission">Pedidos</span>
+                                                <span class="permission">Clientes</span>
+                                                <span class="permission">Facturación</span>
+                                                <span class="permission">Reportes</span>
+                                                <span class="permission">Configuración</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="role-card">
+                                            <h5>Operador</h5>
+                                            <p>Gestión de pedidos y clientes</p>
+                                            <div class="permissions">
+                                                <span class="permission">Dashboard</span>
+                                                <span class="permission">Pedidos</span>
+                                                <span class="permission">Clientes</span>
+                                                <span class="permission">Facturación</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="role-card">
+                                            <h5>Vendedor</h5>
+                                            <p>Solo visualización de datos</p>
+                                            <div class="permissions">
+                                                <span class="permission">Dashboard</span>
+                                                <span class="permission">Pedidos</span>
+                                                <span class="permission">Clientes</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Configuración de Facturación -->
+                    <div id="config-facturacion" class="config-section">
+                        <div class="config-header">
+                            <h3><i class="fas fa-file-invoice"></i> Configuración de Facturación</h3>
+                            <p>Ajustes específicos para la gestión de facturas</p>
+                        </div>
+                        
+                        <div class="config-content">
+                            <div class="config-grid">
+                                <div class="config-card">
+                                    <h4>Numeración</h4>
+                                    <div class="form-group">
+                                        <label for="invoicePrefix">Prefijo de Facturas</label>
+                                        <input type="text" id="invoicePrefix" value="FAC" placeholder="FAC">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="invoiceStartNumber">Número Inicial</label>
+                                        <input type="number" id="invoiceStartNumber" value="1" min="1">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="invoiceDigits">Dígitos del Número</label>
+                                        <input type="number" id="invoiceDigits" value="4" min="1" max="10">
+                                    </div>
+                                </div>
+                                
+                                <div class="config-card">
+                                    <h4>Plazos y Términos</h4>
+                                    <div class="form-group">
+                                        <label for="defaultPaymentTerms">Términos de Pago (días)</label>
+                                        <input type="number" id="defaultPaymentTerms" value="30" min="1" max="365">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="latePaymentFee">Recargo por Retraso (%)</label>
+                                        <input type="number" id="latePaymentFee" value="2" min="0" max="50" step="0.1">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="invoiceNotes">Notas por Defecto</label>
+                                        <textarea id="invoiceNotes" rows="3" placeholder="Notas que aparecerán en todas las facturas">Gracias por confiar en nuestros servicios.</textarea>
+                                    </div>
+                                </div>
+                                
+                                <div class="config-card">
+                                    <h4>Plantillas</h4>
+                                    <div class="form-group">
+                                        <label for="invoiceTemplate">Plantilla de Factura</label>
+                                        <select id="invoiceTemplate">
+                                            <option value="default" selected>Estándar</option>
+                                            <option value="modern">Moderna</option>
+                                            <option value="minimal">Minimalista</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" id="includeLogo" checked>
+                                            <span class="checkmark"></span>
+                                            Incluir Logo en Facturas
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" id="autoSendInvoices">
+                                            <span class="checkmark"></span>
+                                            Envío Automático por Email
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Configuración de Notificaciones -->
+                    <div id="config-notificaciones" class="config-section">
+                        <div class="config-header">
+                            <h3><i class="fas fa-bell"></i> Notificaciones</h3>
+                            <p>Configura cómo y cuándo recibir notificaciones</p>
+                        </div>
+                        
+                        <div class="config-content">
+                            <div class="config-grid">
+                                <div class="config-card">
+                                    <h4>Email</h4>
+                                    <div class="form-group">
+                                        <label for="smtpHost">Servidor SMTP</label>
+                                        <input type="text" id="smtpHost" placeholder="smtp.gmail.com">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="smtpPort">Puerto</label>
+                                        <input type="number" id="smtpPort" value="587" placeholder="587">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="smtpUser">Usuario</label>
+                                        <input type="email" id="smtpUser" placeholder="email@empresa.com">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="smtpPass">Contraseña</label>
+                                        <input type="password" id="smtpPass" placeholder="••••••••">
+                                    </div>
+                                </div>
+                                
+                                <div class="config-card">
+                                    <h4>Alertas del Sistema</h4>
+                                    <div class="form-group">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" id="newOrderAlert" checked>
+                                            <span class="checkmark"></span>
+                                            Nuevos Pedidos
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" id="paymentAlert" checked>
+                                            <span class="checkmark"></span>
+                                            Pagos Recibidos
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" id="overdueAlert" checked>
+                                            <span class="checkmark"></span>
+                                            Facturas Vencidas
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" id="systemAlert">
+                                            <span class="checkmark"></span>
+                                            Alertas del Sistema
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="config-card">
+                                    <h4>WhatsApp</h4>
+                                    <div class="form-group">
+                                        <label for="whatsappNumber">Número de WhatsApp</label>
+                                        <input type="tel" id="whatsappNumber" placeholder="+34 123 456 789">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" id="whatsappNotifications">
+                                            <span class="checkmark"></span>
+                                            Notificaciones por WhatsApp
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="whatsappTemplate">Plantilla de Mensaje</label>
+                                        <textarea id="whatsappTemplate" rows="3" placeholder="Hola {nombre}, tu pedido #{id} está listo.">Hola {nombre}, tu pedido #{id} está listo para recoger.</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Configuración de Base de Datos -->
+                    <div id="config-base-datos" class="config-section">
+                        <div class="config-header">
+                            <h3><i class="fas fa-database"></i> Base de Datos</h3>
+                            <p>Gestiona la conexión y estado de la base de datos</p>
+                        </div>
+                        
+                        <div class="config-content">
+                            <div class="config-grid">
+                                <div class="config-card">
+                                    <h4>Estado de la Base de Datos</h4>
+                                    <div class="db-status">
+                                        <div class="status-item">
+                                            <span class="status-label">Estado:</span>
+                                            <span class="status-value success" id="dbStatus">Conectado</span>
+                                        </div>
+                                        <div class="status-item">
+                                            <span class="status-label">Última Verificación:</span>
+                                            <span class="status-value" id="lastCheck">Hace 2 minutos</span>
+                                        </div>
+                                        <div class="status-item">
+                                            <span class="status-label">Pedidos:</span>
+                                            <span class="status-value" id="totalOrders">6 registros</span>
+                                        </div>
+                                    </div>
+                                    <div class="db-actions">
+                                        <button class="btn btn-primary" onclick="testDatabaseConnection()">
+                                            <i class="fas fa-plug"></i>
+                                            Probar Conexión
+                                        </button>
+                                        <button class="btn btn-warning" onclick="initDatabase()">
+                                            <i class="fas fa-database"></i>
+                                            Inicializar BD
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="config-card">
+                                    <h4>Respaldo y Restauración</h4>
+                                    <div class="backup-actions">
+                                        <button class="btn btn-success" onclick="createBackup()">
+                                            <i class="fas fa-download"></i>
+                                            Crear Respaldo
+                                        </button>
+                                        <button class="btn btn-info" onclick="restoreBackup()">
+                                            <i class="fas fa-upload"></i>
+                                            Restaurar Respaldo
+                                        </button>
+                                    </div>
+                                    <div class="backup-info">
+                                        <p><strong>Último Respaldo:</strong> <span id="lastBackup">Nunca</span></p>
+                                        <p><strong>Tamaño:</strong> <span id="backupSize">-</span></p>
+                                    </div>
+                                </div>
+                                
+                                <div class="config-card">
+                                    <h4>Mantenimiento</h4>
+                                    <div class="maintenance-actions">
+                                        <button class="btn btn-secondary" onclick="optimizeDatabase()">
+                                            <i class="fas fa-tools"></i>
+                                            Optimizar BD
+                                        </button>
+                                        <button class="btn btn-warning" onclick="clearCache()">
+                                            <i class="fas fa-broom"></i>
+                                            Limpiar Cache
+                                        </button>
+                                    </div>
+                                    <div class="maintenance-info">
+                                        <p><strong>Espacio Usado:</strong> <span id="dbSize">2.3 MB</span></p>
+                                        <p><strong>Cache:</strong> <span id="cacheSize">156 KB</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
         </main>
+    </div>
 
-        <!-- Modal para ver/editar pedido -->
-        <div id="pedido-modal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3>Detalles del Pedido</h3>
-                    <button class="close-modal" onclick="closeModal()">&times;</button>
-                </div>
-                <div class="modal-body" id="modal-body">
-                    <!-- Se llena dinámicamente -->
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" onclick="closeModal()">Cerrar</button>
-                    <button class="btn btn-primary" onclick="savePedido()">Guardar Cambios</button>
-                </div>
+    <!-- Modal para detalles del pedido -->
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Detalles del Pedido</h3>
+                <button class="modal-close" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="orderModalBody">
+                <!-- Se llena dinámicamente -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal()">Cerrar</button>
+                <button class="btn btn-primary" onclick="updateOrderStatus()">Actualizar Estado</button>
             </div>
         </div>
     </div>
 
-    <!-- JavaScript -->
+    <!-- Modal de Factura -->
+    <div id="invoiceModal" class="invoice-modal">
+        <div class="invoice-modal-content">
+            <div class="invoice-modal-header">
+                <h3 id="invoiceModalTitle">Nueva Factura</h3>
+                <button class="invoice-modal-close" onclick="closeInvoiceModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="invoice-modal-body">
+                <form id="invoiceForm" class="invoice-form">
+                    <!-- Información de la Factura -->
+                    <div class="invoice-form-section">
+                        <h4>Información de la Factura</h4>
+                        <div class="invoice-form-grid">
+                            <div class="invoice-form-group">
+                                <label for="invoiceNumber">Número de Factura</label>
+                                <input type="text" id="invoiceNumber" name="numero" readonly>
+                            </div>
+                            <div class="invoice-form-group">
+                                <label for="invoiceDate">Fecha</label>
+                                <input type="date" id="invoiceDate" name="fecha" required>
+                            </div>
+                            <div class="invoice-form-group">
+                                <label for="invoiceDueDate">Fecha de Vencimiento</label>
+                                <input type="date" id="invoiceDueDate" name="vencimiento" required>
+                            </div>
+                            <div class="invoice-form-group">
+                                <label for="invoiceStatus">Estado</label>
+                                <select id="invoiceStatus" name="estado" required>
+                                    <option value="borrador">Borrador</option>
+                                    <option value="enviada">Enviada</option>
+                                    <option value="pagada">Pagada</option>
+                                    <option value="vencida">Vencida</option>
+                                    <option value="cancelada">Cancelada</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Información del Cliente -->
+                    <div class="invoice-form-section">
+                        <h4>Información del Cliente</h4>
+                        <div class="invoice-form-grid">
+                            <div class="invoice-form-group">
+                                <label for="clientName">Nombre del Cliente</label>
+                                <input type="text" id="clientName" name="cliente_nombre" required>
+                            </div>
+                            <div class="invoice-form-group">
+                                <label for="clientEmail">Email</label>
+                                <input type="email" id="clientEmail" name="cliente_email" required>
+                            </div>
+                            <div class="invoice-form-group">
+                                <label for="clientPhone">Teléfono</label>
+                                <input type="tel" id="clientPhone" name="cliente_telefono">
+                            </div>
+                            <div class="invoice-form-group">
+                                <label for="orderReference">Referencia del Pedido</label>
+                                <select id="orderReference" name="pedido_id">
+                                    <option value="">Seleccionar pedido...</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Items de la Factura -->
+                    <div class="invoice-form-section">
+                        <h4>Items de la Factura</h4>
+                        <div id="invoiceItems">
+                            <div class="invoice-item">
+                                <div class="invoice-form-grid">
+                                    <div class="invoice-form-group">
+                                        <label>Descripción</label>
+                                        <input type="text" name="item_descripcion" placeholder="Descripción del producto" required>
+                                    </div>
+                                    <div class="invoice-form-group">
+                                        <label>Cantidad</label>
+                                        <input type="number" name="item_cantidad" min="1" value="1" required>
+                                    </div>
+                                    <div class="invoice-form-group">
+                                        <label>Precio Unitario (€)</label>
+                                        <input type="number" name="item_precio" step="0.01" min="0" required>
+                                    </div>
+                                    <div class="invoice-form-group">
+                                        <label>Total (€)</label>
+                                        <input type="number" name="item_total" step="0.01" readonly>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-danger btn-sm" onclick="removeInvoiceItem(this)" style="margin-top: 10px;">
+                                    <i class="fas fa-trash"></i> Eliminar Item
+                                </button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-secondary" onclick="addInvoiceItem()" style="margin-top: 15px;">
+                            <i class="fas fa-plus"></i> Añadir Item
+                        </button>
+                    </div>
+
+                    <!-- Totales -->
+                    <div class="invoice-form-section">
+                        <h4>Totales</h4>
+                        <div class="invoice-totals">
+                            <div class="total-row">
+                                <span>Subtotal:</span>
+                                <span id="subtotalAmount">€0.00</span>
+                            </div>
+                            <div class="total-row">
+                                <span>IVA (21%):</span>
+                                <span id="ivaAmount">€0.00</span>
+                            </div>
+                            <div class="total-row final">
+                                <span>Total:</span>
+                                <span id="totalAmount">€0.00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notas -->
+                    <div class="invoice-form-section">
+                        <h4>Notas Adicionales</h4>
+                        <div class="invoice-form-group">
+                            <textarea id="invoiceNotes" name="notas" rows="3" placeholder="Notas adicionales para la factura..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Acciones del Modal -->
+                    <div class="invoice-form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="closeInvoiceModal()">
+                            <i class="fas fa-times"></i>
+                            Cancelar
+                        </button>
+                        <button type="button" class="btn btn-primary" onclick="saveInvoice()">
+                            <i class="fas fa-save"></i>
+                            Guardar Factura
+                        </button>
+                        <button type="button" class="btn btn-success" onclick="saveAndSendInvoice()" style="display: none;" id="sendInvoiceBtn">
+                            <i class="fas fa-paper-plane"></i>
+                            Guardar y Enviar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notificaciones -->
+    <div id="notificationsPanel" class="notifications-panel">
+        <div class="notifications-header">
+            <h3>Notificaciones</h3>
+            <button onclick="closeNotifications()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="notifications-list" id="notificationsList">
+            <!-- Se llena dinámicamente -->
+        </div>
+    </div>
+
     <script src="/admin/script.js"></script>
-    <script src="/admin/login-overlay.js"></script>
+    <script src="/admin/login.js"></script>
 </body>
 </html>

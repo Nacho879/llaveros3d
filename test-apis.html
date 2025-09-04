@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test APIs - Llaveros 3D</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            margin: 0.5rem;
+            font-size: 1rem;
+        }
+        .btn:hover {
+            background: #1d4ed8;
+        }
+        .result {
+            background: #f8fafc;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 0.875rem;
+        }
+        .success { border-left: 4px solid #10b981; }
+        .error { border-left: 4px solid #ef4444; }
+        .info { border-left: 4px solid #3b82f6; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Test de APIs - Llaveros 3D</h1>
+    
+    <div class="test-section">
+        <h2>1. API Simple (Sin Postgres)</h2>
+        <p>Prueba que el routing de Vercel funciona correctamente.</p>
+        <button class="btn" onclick="testSimpleAPI()">Probar API Simple</button>
+        <div id="simpleResult" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>2. Test de Supabase</h2>
+        <p>Prueba la conexión básica a Supabase.</p>
+        <button class="btn" onclick="testSupabaseAPI()">Probar Conexión Supabase</button>
+        <div id="supabaseResult" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>3. Inicializar Base de Datos</h2>
+        <p>Verifica la conexión a Supabase.</p>
+        <button class="btn" onclick="initDatabase()">Inicializar Base de Datos</button>
+        <div id="initResult" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>4. Crear Pedido de Prueba</h2>
+        <p>Prueba la creación de un pedido en Supabase.</p>
+        <button class="btn" onclick="createTestOrder()">Crear Pedido de Prueba</button>
+        <div id="createResult" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>5. Listar Pedidos</h2>
+        <p>Lista todos los pedidos en Supabase.</p>
+        <button class="btn" onclick="listOrders()">Listar Pedidos</button>
+        <div id="listResult" class="result"></div>
+    </div>
+
+    <script>
+        const API_BASE = window.location.origin;
+        
+        async function testSimpleAPI() {
+            const result = document.getElementById('simpleResult');
+            result.textContent = '🔄 Probando...';
+            result.className = 'result info';
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/test-simple`);
+                const data = await response.json();
+                
+                result.textContent = `✅ ÉXITO:\n${JSON.stringify(data, null, 2)}`;
+                result.className = 'result success';
+            } catch (error) {
+                result.textContent = `❌ ERROR:\n${error.message}`;
+                result.className = 'result error';
+            }
+        }
+        
+        async function testSupabaseAPI() {
+            const result = document.getElementById('supabaseResult');
+            result.textContent = '🔄 Probando conexión a Supabase...';
+            result.className = 'result info';
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/supabase-init`, {
+                    method: 'POST'
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    result.textContent = `✅ CONEXIÓN EXITOSA:\n${JSON.stringify(data, null, 2)}`;
+                    result.className = 'result success';
+                } else {
+                    result.textContent = `❌ ERROR DE CONEXIÓN:\n${JSON.stringify(data, null, 2)}`;
+                    result.className = 'result error';
+                }
+            } catch (error) {
+                result.textContent = `❌ ERROR:\n${error.message}`;
+                result.className = 'result error';
+            }
+        }
+        
+        async function initDatabase() {
+            const result = document.getElementById('initResult');
+            result.textContent = '🔄 Inicializando base de datos...';
+            result.className = 'result info';
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/supabase-init`, {
+                    method: 'POST'
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    result.textContent = `✅ BASE DE DATOS INICIALIZADA:\n${JSON.stringify(data, null, 2)}`;
+                    result.className = 'result success';
+                } else {
+                    result.textContent = `❌ ERROR INICIALIZANDO:\n${JSON.stringify(data, null, 2)}`;
+                    result.className = 'result error';
+                }
+            } catch (error) {
+                result.textContent = `❌ ERROR:\n${error.message}`;
+                result.className = 'result error';
+            }
+        }
+        
+        async function createTestOrder() {
+            const result = document.getElementById('createResult');
+            result.textContent = '🔄 Creando pedido de prueba...';
+            result.className = 'result info';
+            
+            try {
+                const testOrder = {
+                    nombre: 'Cliente de Prueba',
+                    email: 'test@example.com',
+                    telefono: '+34600000000',
+                    logo: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==',
+                    forma: 'round',
+                    tamano: '30mm',
+                    color: '#000000',
+                    cantidad: 30,
+                    notas: 'Pedido de prueba'
+                };
+                
+                const response = await fetch(`${API_BASE}/api/supabase-orders?action=create`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(testOrder)
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    result.textContent = `✅ PEDIDO CREADO:\n${JSON.stringify(data, null, 2)}`;
+                    result.className = 'result success';
+                } else {
+                    result.textContent = `❌ ERROR CREANDO PEDIDO:\n${JSON.stringify(data, null, 2)}`;
+                    result.className = 'result error';
+                }
+            } catch (error) {
+                result.textContent = `❌ ERROR:\n${error.message}`;
+                result.className = 'result error';
+            }
+        }
+        
+        async function listOrders() {
+            const result = document.getElementById('listResult');
+            result.textContent = '🔄 Listando pedidos...';
+            result.className = 'result info';
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/supabase-orders?action=list`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    result.textContent = `✅ PEDIDOS LISTADOS:\n${JSON.stringify(data, null, 2)}`;
+                    result.className = 'result success';
+                } else {
+                    result.textContent = `❌ ERROR LISTANDO:\n${JSON.stringify(data, null, 2)}`;
+                    result.className = 'result error';
+                }
+            } catch (error) {
+                result.textContent = `❌ ERROR:\n${error.message}`;
+                result.className = 'result error';
+            }
+        }
+        
+        // Auto-test al cargar la página
+        window.addEventListener('load', () => {
+            console.log('🧪 Página de test cargada');
+            console.log('URL base:', API_BASE);
+        });
+    </script>
+</body>
+</html>
