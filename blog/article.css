@@ -1,0 +1,390 @@
+/* Article Styles */
+.article-header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    color: white;
+    padding: 3rem 0;
+}
+
+.breadcrumb {
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.breadcrumb a {
+    color: white;
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.article-meta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    flex-wrap: wrap;
+}
+
+.article-meta .category {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.article-meta .date,
+.article-meta .reading-time {
+    opacity: 0.8;
+}
+
+.article-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+    font-weight: 700;
+}
+
+.article-excerpt {
+    font-size: 1.125rem;
+    opacity: 0.9;
+    line-height: 1.6;
+    max-width: 800px;
+}
+
+.article-main {
+    padding: 4rem 0;
+    background: var(--bg);
+}
+
+.article-layout {
+    display: grid;
+    grid-template-columns: 1fr 250px;
+    gap: 3rem;
+    align-items: start;
+}
+
+/* Article Sidebar */
+.article-sidebar {
+    position: sticky;
+    top: 2rem;
+}
+
+.toc {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 2rem;
+    box-shadow: var(--shadow);
+}
+
+.toc h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: var(--text);
+    border-bottom: 2px solid var(--primary);
+    padding-bottom: 0.5rem;
+}
+
+.toc ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.toc li {
+    margin-bottom: 0.5rem;
+}
+
+.toc a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: var(--transition);
+    display: block;
+    padding: 0.5rem 0;
+    border-left: 3px solid transparent;
+    padding-left: 1rem;
+}
+
+.toc a:hover {
+    color: var(--primary);
+    border-left-color: var(--primary);
+}
+
+/* Article Content */
+.article-content {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 3rem;
+    box-shadow: var(--shadow);
+    line-height: 1.7;
+}
+
+.article-content .article-image {
+    margin-bottom: 2rem;
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+.article-content .article-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.article-content h2 {
+    font-size: 2rem;
+    margin: 2.5rem 0 1.5rem 0;
+    color: var(--text);
+    border-bottom: 2px solid var(--primary);
+    padding-bottom: 0.5rem;
+}
+
+.article-content h3 {
+    font-size: 1.5rem;
+    margin: 2rem 0 1rem 0;
+    color: var(--text);
+}
+
+.article-content h4 {
+    font-size: 1.25rem;
+    margin: 1.5rem 0 0.75rem 0;
+    color: var(--text);
+}
+
+.article-content p {
+    margin-bottom: 1.5rem;
+    color: var(--text-secondary);
+}
+
+.article-content ul,
+.article-content ol {
+    margin-bottom: 1.5rem;
+    padding-left: 2rem;
+}
+
+.article-content li {
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+}
+
+.article-content strong {
+    color: var(--text);
+    font-weight: 600;
+}
+
+/* Pros and Cons */
+.pros-cons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.pros,
+.cons {
+    background: var(--bg-secondary);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+}
+
+.pros h4 {
+    color: var(--success);
+    margin-bottom: 1rem;
+}
+
+.cons h4 {
+    color: var(--error);
+    margin-bottom: 1rem;
+}
+
+.pros ul,
+.cons ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.pros li,
+.cons li {
+    margin-bottom: 0.5rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.pros li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--success);
+    font-weight: bold;
+}
+
+.cons li::before {
+    content: "✗";
+    position: absolute;
+    left: 0;
+    color: var(--error);
+    font-weight: bold;
+}
+
+/* Comparison Table */
+.comparison-table {
+    margin: 2rem 0;
+    overflow-x: auto;
+}
+
+.comparison-table table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--card);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.comparison-table th,
+.comparison-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+.comparison-table th {
+    background: var(--primary);
+    color: white;
+    font-weight: 600;
+}
+
+.comparison-table td {
+    color: var(--text-secondary);
+}
+
+.comparison-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* CTA Section */
+.cta-section {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    color: white;
+    padding: 2rem;
+    border-radius: var(--radius);
+    text-align: center;
+    margin: 3rem 0;
+}
+
+.cta-section h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.cta-section p {
+    margin-bottom: 1.5rem;
+    opacity: 0.9;
+}
+
+.cta-button {
+    display: inline-block;
+    background: white;
+    color: var(--primary);
+    padding: 1rem 2rem;
+    border-radius: var(--radius);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Related Articles */
+.related-articles {
+    background: var(--bg-secondary);
+    padding: 4rem 0;
+}
+
+.related-articles h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 2rem;
+    color: var(--text);
+}
+
+.related-articles .articles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .article-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .article-sidebar {
+        position: static;
+        order: 2;
+    }
+    
+    .article-content {
+        order: 1;
+        padding: 2rem;
+    }
+    
+    .article-header h1 {
+        font-size: 2rem;
+    }
+    
+    .article-content h2 {
+        font-size: 1.5rem;
+    }
+    
+    .article-content h3 {
+        font-size: 1.25rem;
+    }
+    
+    .pros-cons {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .comparison-table {
+        font-size: 0.9rem;
+    }
+    
+    .comparison-table th,
+    .comparison-table td {
+        padding: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .article-header {
+        padding: 2rem 0;
+    }
+    
+    .article-main {
+        padding: 2rem 0;
+    }
+    
+    .article-content {
+        padding: 1.5rem;
+    }
+    
+    .article-meta {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .toc {
+        padding: 1.5rem;
+    }
+}

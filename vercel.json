@@ -1,16 +1,3 @@
 {
-  "version": 2,
-  "redirects": [
-    {
-      "source": "/(.*)",
-      "has": [
-        {
-          "type": "host",
-          "value": "llaveros3d.com"
-        }
-      ],
-      "destination": "https://www.llavero3d.com/$1",
-      "permanent": true
-    }
-  ]
+  "version": 2
 }
