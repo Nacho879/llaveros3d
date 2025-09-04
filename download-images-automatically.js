@@ -9,7 +9,7 @@ const https = require('https');
 const imageMapping = {
     // Imágenes principales del blog
     'featured-materiales': '19H3lvPGnK-ej1OHnO8rhYYugjlAFLoBN',
-    'merchandising-2024': 'PLACEHOLDER_ID_2', 
+    'merchandising-2024': '1njeKdlUXqeRjwz370YY9eqF1xEtqnC6b', 
     'sector-gastronomico': 'PLACEHOLDER_ID_3',
     'consejos-diseno': 'PLACEHOLDER_ID_4',
     'sector-automocion': 'PLACEHOLDER_ID_5',

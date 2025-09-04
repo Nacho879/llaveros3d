@@ -4,8 +4,8 @@ const fs = require('fs');
 const path = require('path');
 
 // ID de la imagen que quieres descargar
-const imageId = '19H3lvPGnK-ej1OHnO8rhYYugjlAFLoBN';
-const filename = 'featured-materiales.jpg';
+const imageId = '1njeKdlUXqeRjwz370YY9eqF1xEtqnC6b';
+const filename = 'merchandising-2024.jpg';
 
 // Función para descargar con manejo de redirecciones
 function downloadImageWithRedirects(url, filename) {
