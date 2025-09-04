@@ -1,3 +1,38 @@
 {
-  "version": 2
+  "version": 2,
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.llavero3d.com"
+        }
+      ],
+      "destination": "https://llavero3d.com/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "llaveros3d.com"
+        }
+      ],
+      "destination": "https://llavero3d.com/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.llaveros3d.com"
+        }
+      ],
+      "destination": "https://llavero3d.com/$1",
+      "permanent": true
+    }
+  ]
 }
