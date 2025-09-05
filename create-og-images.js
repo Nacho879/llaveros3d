@@ -1,0 +1,79 @@
+const fs = require('fs');
+const path = require('path');
+
+// Función para crear una imagen SVG simple
+function createOGImage(title, subtitle, features, bgColor1, bgColor2, filename) {
+    const svg = `<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:${bgColor1};stop-opacity:1" />
+      <stop offset="100%" style="stop-color:${bgColor2};stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Fondo -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  
+  <!-- Patrón de fondo sutil -->
+  <circle cx="200" cy="150" r="30" fill="rgba(255,255,255,0.1)"/>
+  <circle cx="1000" cy="200" r="40" fill="rgba(255,255,255,0.1)"/>
+  <circle cx="150" cy="500" r="25" fill="rgba(255,255,255,0.1)"/>
+  <circle cx="1050" cy="450" r="35" fill="rgba(255,255,255,0.1)"/>
+  <circle cx="300" cy="400" r="20" fill="rgba(255,255,255,0.1)"/>
+  <circle cx="900" cy="350" r="45" fill="rgba(255,255,255,0.1)"/>
+  
+  <!-- Logo/Icono -->
+  <rect x="50" y="50" width="100" height="100" fill="rgba(255,255,255,0.2)" rx="10"/>
+  <text x="100" y="110" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="24" font-weight="bold">3D</text>
+  
+  <!-- Título principal -->
+  <text x="600" y="200" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="72" font-weight="bold">${title}</text>
+  
+  <!-- Subtítulo -->
+  <text x="600" y="260" text-anchor="middle" fill="rgba(255,255,255,0.9)" font-family="Arial, sans-serif" font-size="36">${subtitle}</text>
+  
+  <!-- Características -->
+  ${features.map((feature, index) => 
+    `<text x="600" y="${350 + (index * 40)}" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-family="Arial, sans-serif" font-size="28">${feature}</text>`
+  ).join('')}
+  
+  <!-- URL -->
+  <text x="1150" y="600" text-anchor="end" fill="rgba(255,255,255,0.7)" font-family="Arial, sans-serif" font-size="24">llavero3d.com</text>
+</svg>`;
+
+    fs.writeFileSync(path.join(__dirname, 'assets', filename), svg);
+    console.log(`✅ Imagen creada: ${filename}`);
+}
+
+// Crear imagen principal
+createOGImage(
+    'Llaveros Personalizados 3D',
+    'Para Empresas | Desde 1,20€',
+    [
+        '✓ Impresión 3D de alta calidad',
+        '✓ Personalización completa',
+        '✓ Envíos rápidos a toda España'
+    ],
+    '#3b82f6',
+    '#8b5cf6',
+    'og-llaveros3d.svg'
+);
+
+// Crear imagen del blog
+createOGImage(
+    'Blog Llavero3D',
+    'Consejos y Guías sobre Llaveros 3D',
+    [
+        '📚 Materiales de Impresión 3D',
+        '💼 Merchandising Corporativo',
+        '🏢 Casos por Sectores',
+        '💡 Consejos y Tendencias'
+    ],
+    '#059669',
+    '#10b981',
+    'og-blog.svg'
+);
+
+console.log('🎉 Todas las imágenes Open Graph han sido creadas');
+console.log('📝 Nota: Estas son imágenes SVG. Para mejor compatibilidad, convierte a JPG/PNG con herramientas online.');

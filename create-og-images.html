@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Imágenes Open Graph</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        canvas {
+            border: 1px solid #ddd;
+            margin: 10px 0;
+        }
+        button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #2563eb;
+        }
+        .preview {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .preview-item {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Generador de Imágenes Open Graph</h1>
+        <p>Genera imágenes optimizadas para Open Graph (1200x630px) y Twitter Cards.</p>
+        
+        <div class="preview">
+            <div class="preview-item">
+                <h3>Página Principal</h3>
+                <canvas id="mainCanvas" width="1200" height="630"></canvas>
+                <br>
+                <button onclick="generateMainImage()">Generar Imagen Principal</button>
+                <button onclick="downloadImage('mainCanvas', 'og-llaveros3d.jpg')">Descargar</button>
+            </div>
+            
+            <div class="preview-item">
+                <h3>Blog</h3>
+                <canvas id="blogCanvas" width="1200" height="630"></canvas>
+                <br>
+                <button onclick="generateBlogImage()">Generar Imagen Blog</button>
+                <button onclick="downloadImage('blogCanvas', 'og-blog.jpg')">Descargar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function generateMainImage() {
+            const canvas = document.getElementById('mainCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Fondo degradado
+            const gradient = ctx.createLinearGradient(0, 0, 1200, 630);
+            gradient.addColorStop(0, '#3b82f6');
+            gradient.addColorStop(1, '#8b5cf6');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 1200, 630);
+            
+            // Patrón de fondo sutil
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+            for (let i = 0; i < 20; i++) {
+                ctx.beginPath();
+                ctx.arc(Math.random() * 1200, Math.random() * 630, Math.random() * 50 + 10, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            
+            // Título principal
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 72px Arial, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('Llaveros Personalizados 3D', 600, 200);
+            
+            // Subtítulo
+            ctx.font = '36px Arial, sans-serif';
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+            ctx.fillText('Para Empresas | Desde 1,20€', 600, 260);
+            
+            // Características
+            ctx.font = '28px Arial, sans-serif';
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+            ctx.fillText('✓ Impresión 3D de alta calidad', 600, 350);
+            ctx.fillText('✓ Personalización completa', 600, 390);
+            ctx.fillText('✓ Envíos rápidos a toda España', 600, 430);
+            
+            // Logo/icono simulado
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+            ctx.fillRect(50, 50, 100, 100);
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 24px Arial, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('3D', 100, 110);
+            
+            // URL
+            ctx.font = '24px Arial, sans-serif';
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+            ctx.textAlign = 'right';
+            ctx.fillText('llavero3d.com', 1150, 600);
+        }
+        
+        function generateBlogImage() {
+            const canvas = document.getElementById('blogCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Fondo degradado
+            const gradient = ctx.createLinearGradient(0, 0, 1200, 630);
+            gradient.addColorStop(0, '#059669');
+            gradient.addColorStop(1, '#10b981');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 1200, 630);
+            
+            // Patrón de fondo sutil
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+            for (let i = 0; i < 15; i++) {
+                ctx.beginPath();
+                ctx.arc(Math.random() * 1200, Math.random() * 630, Math.random() * 40 + 15, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            
+            // Título principal
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 64px Arial, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('Blog Llavero3D', 600, 180);
+            
+            // Subtítulo
+            ctx.font = '32px Arial, sans-serif';
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+            ctx.fillText('Consejos y Guías sobre Llaveros 3D', 600, 230);
+            
+            // Temas del blog
+            ctx.font = '24px Arial, sans-serif';
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+            ctx.fillText('📚 Materiales de Impresión 3D', 600, 320);
+            ctx.fillText('💼 Merchandising Corporativo', 600, 360);
+            ctx.fillText('🏢 Casos por Sectores', 600, 400);
+            ctx.fillText('💡 Consejos y Tendencias', 600, 440);
+            
+            // Icono de blog
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+            ctx.fillRect(50, 50, 80, 80);
+            ctx.fillStyle = 'white';
+            ctx.font = 'bold 20px Arial, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('📝', 90, 100);
+            
+            // URL
+            ctx.font = '20px Arial, sans-serif';
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+            ctx.textAlign = 'right';
+            ctx.fillText('llavero3d.com/blog', 1150, 600);
+        }
+        
+        function downloadImage(canvasId, filename) {
+            const canvas = document.getElementById(canvasId);
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL('image/jpeg', 0.9);
+            link.click();
+        }
+        
+        // Generar imágenes al cargar
+        window.onload = function() {
+            generateMainImage();
+            generateBlogImage();
+        };
+    </script>
+</body>
+</html>

@@ -1893,7 +1893,7 @@ function generateInvoiceHTML(invoice) {
         
         <div class="footer">
             <p>Gracias por confiar en Llaveros 3D</p>
-            <p>www.llavero3d.com | info@llavero3d.com</p>
+            <p>llavero3d.com | info@llavero3d.com</p>
         </div>
     `;
 }
@@ -2356,7 +2356,7 @@ function getDefaultConfigurations() {
         empresa: {
             companyName: 'Llaveros 3D',
             companyDescription: 'Fabricación de llaveros personalizados en 3D',
-            companyWebsite: 'https://www.llavero3d.com',
+            companyWebsite: 'https://llavero3d.com',
             contactEmail: 'info@llavero3d.com',
             contactPhone: '+34 123 456 789',
             contactAddress: 'Calle Ejemplo, 123\n28001 Madrid, España',
