@@ -63,38 +63,38 @@
 <body>
     <!-- Header -->
     <header class="blog-header">
-        <div class="header-content">
-            <div class="logo">
-                <a href="/">
-                    <img src="/assets/logo.svg" alt="Llavero3D.com" width="40" height="40">
-                    <span>Llavero3D</span>
+        <div class="wrap">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <img src="/assets/logo.svg" alt="Logo Llavero3D" width="40" height="40">
+                    <span>Llavero3D.com</span>
                 </a>
+                <nav class="nav">
+                    <a href="/">Inicio</a>
+                    <a href="/#creador">Crear Llavero</a>
+                    <a href="/#como-funciona">Cómo Funciona</a>
+                    <a href="/#faq">FAQ</a>
+                    <a href="/#contacto">Contacto</a>
+                    <a href="/blog/">Blog</a>
+                </nav>
+                
+                <!-- Menú hamburguesa para móvil -->
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Abrir menú">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                
+                <!-- Navegación móvil -->
+                <nav class="mobile-nav" id="mobileNav">
+                    <a href="/">Inicio</a>
+                    <a href="/#creador">Crear Llavero</a>
+                    <a href="/#como-funciona">Cómo Funciona</a>
+                    <a href="/#faq">FAQ</a>
+                    <a href="/#contacto">Contacto</a>
+                    <a href="/blog/">Blog</a>
+                </nav>
             </div>
-            
-            <!-- Mobile Menu Toggle -->
-            <button id="mobileMenuToggle" class="mobile-menu-toggle" aria-label="Abrir menú">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            
-            <!-- Navigation -->
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="/">Inicio</a></li>
-                    <li><a href="/blog/">Blog</a></li>
-                    <li><a href="/#contacto">Contacto</a></li>
-                </ul>
-            </nav>
-            
-            <!-- Mobile Navigation -->
-            <nav id="mobileNav" class="mobile-nav">
-                <ul>
-                    <li><a href="/">Inicio</a></li>
-                    <li><a href="/blog/">Blog</a></li>
-                    <li><a href="/#contacto">Contacto</a></li>
-                </ul>
-            </nav>
         </div>
     </header>
 
