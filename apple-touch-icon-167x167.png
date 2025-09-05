@@ -1,0 +1,11 @@
+
+<svg width="167" height="167" viewBox="0 0 167 167" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="167" height="167" rx="20.875" fill="#3b82f6"/>
+    <rect x="16.7" y="16.7" width="133.6" height="133.6" rx="8.35" fill="#ffffff"/>
+    <text x="83.5" y="66.8" font-family="Arial, sans-serif" font-size="33.4" font-weight="bold" fill="#3b82f6" text-anchor="middle">3D</text>
+    <text x="83.5" y="100.2" font-family="Arial, sans-serif" font-size="25.05" font-weight="bold" fill="#3b82f6" text-anchor="middle">LLAVERO</text>
+    <circle cx="33.4" cy="33.4" r="13.36" fill="#3b82f6"/>
+    <circle cx="133.6" cy="33.4" r="13.36" fill="#3b82f6"/>
+    <circle cx="33.4" cy="133.6" r="13.36" fill="#3b82f6"/>
+    <circle cx="133.6" cy="133.6" r="13.36" fill="#3b82f6"/>
+</svg>
