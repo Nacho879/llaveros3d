@@ -54,4 +54,28 @@
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
+    <url>
+        <loc>https://llavero3d.com/blog/llaveros-sector-automocion.html</loc>
+        <lastmod>2024-12-15</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://llavero3d.com/blog/llaveros-sector-tecnologico.html</loc>
+        <lastmod>2024-12-14</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://llavero3d.com/blog/llaveros-sostenibles.html</loc>
+        <lastmod>2024-12-13</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://llavero3d.com/blog/medir-roi-merchandising.html</loc>
+        <lastmod>2024-12-13</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
 </urlset>
