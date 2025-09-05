@@ -63,40 +63,56 @@
 <body>
     <!-- Header -->
     <header class="blog-header">
-        <div class="header-content">
-            <div class="logo">
-                <a href="/">
-                    <img src="/logo.svg" alt="Llavero3D.com" width="40" height="40">
-                    <span>Llavero3D</span>
+        <div class="wrap">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <img src="/assets/logo.svg" alt="Logo Llavero3D" width="40" height="40">
+                    <span>Llavero3D.com</span>
                 </a>
+                <nav class="nav">
+                    <a href="/">Inicio</a>
+                    <a href="/#creador">Crear Llavero</a>
+                    <a href="/#como-funciona">Cómo Funciona</a>
+                    <a href="/#faq">FAQ</a>
+                    <a href="/#contacto">Contacto</a>
+                    <a href="/blog/">Blog</a>
+                </nav>
+                
+                <!-- Menú hamburguesa para móvil -->
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Abrir menú">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                
+                <!-- Navegación móvil -->
+                <nav class="mobile-nav" id="mobileNav">
+                    <a href="/">Inicio</a>
+                    <a href="/#creador">Crear Llavero</a>
+                    <a href="/#como-funciona">Cómo Funciona</a>
+                    <a href="/#faq">FAQ</a>
+                    <a href="/#contacto">Contacto</a>
+                    <a href="/blog/">Blog</a>
+                </nav>
             </div>
-            
-            <!-- Mobile Menu Toggle -->
-            <button class="mobile-menu-toggle" aria-label="Abrir menú">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            
-            <!-- Navigation -->
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="/">Inicio</a></li>
-                    <li><a href="/blog/">Blog</a></li>
-                    <li><a href="/#contacto">Contacto</a></li>
-                </ul>
-            </nav>
-            
-            <!-- Mobile Navigation -->
-            <nav class="mobile-nav">
-                <ul>
-                    <li><a href="/">Inicio</a></li>
-                    <li><a href="/blog/">Blog</a></li>
-                    <li><a href="/#contacto">Contacto</a></li>
-                </ul>
-            </nav>
         </div>
     </header>
+
+    <!-- Article Header -->
+    <section class="article-header">
+        <div class="wrap">
+            <div class="breadcrumb">
+                <a href="/">Inicio</a> > <a href="/blog/">Blog</a> > Tendencias 2025
+            </div>
+            <div class="article-meta">
+                <span class="category">Tendencias</span>
+                <span class="date">23 Diciembre 2024</span>
+                <span class="reading-time">6 min lectura</span>
+            </div>
+            <h1>Tendencias de Merchandising 2025</h1>
+            <p class="article-excerpt">Descubre las tendencias más importantes del merchandising corporativo para 2025. Cómo los llaveros 3D personalizados se adaptan a las nuevas demandas del mercado y las expectativas de los consumidores.</p>
+        </div>
+    </section>
 
     <!-- Main Content -->
     <main class="article-layout">

@@ -63,40 +63,56 @@
 <body>
     <!-- Header -->
     <header class="blog-header">
-        <div class="header-content">
-            <div class="logo">
-                <a href="/">
-                    <img src="/logo.svg" alt="Llavero3D.com" width="40" height="40">
-                    <span>Llavero3D</span>
+        <div class="wrap">
+            <div class="header-content">
+                <a href="/" class="logo">
+                    <img src="/assets/logo.svg" alt="Logo Llavero3D" width="40" height="40">
+                    <span>Llavero3D.com</span>
                 </a>
+                <nav class="nav">
+                    <a href="/">Inicio</a>
+                    <a href="/#creador">Crear Llavero</a>
+                    <a href="/#como-funciona">Cómo Funciona</a>
+                    <a href="/#faq">FAQ</a>
+                    <a href="/#contacto">Contacto</a>
+                    <a href="/blog/">Blog</a>
+                </nav>
+                
+                <!-- Menú hamburguesa para móvil -->
+                <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Abrir menú">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                
+                <!-- Navegación móvil -->
+                <nav class="mobile-nav" id="mobileNav">
+                    <a href="/">Inicio</a>
+                    <a href="/#creador">Crear Llavero</a>
+                    <a href="/#como-funciona">Cómo Funciona</a>
+                    <a href="/#faq">FAQ</a>
+                    <a href="/#contacto">Contacto</a>
+                    <a href="/blog/">Blog</a>
+                </nav>
             </div>
-            
-            <!-- Mobile Menu Toggle -->
-            <button class="mobile-menu-toggle" aria-label="Abrir menú">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            
-            <!-- Navigation -->
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="/">Inicio</a></li>
-                    <li><a href="/blog/">Blog</a></li>
-                    <li><a href="/#contacto">Contacto</a></li>
-                </ul>
-            </nav>
-            
-            <!-- Mobile Navigation -->
-            <nav class="mobile-nav">
-                <ul>
-                    <li><a href="/">Inicio</a></li>
-                    <li><a href="/blog/">Blog</a></li>
-                    <li><a href="/#contacto">Contacto</a></li>
-                </ul>
-            </nav>
         </div>
     </header>
+
+    <!-- Article Header -->
+    <section class="article-header">
+        <div class="wrap">
+            <div class="breadcrumb">
+                <a href="/">Inicio</a> > <a href="/blog/">Blog</a> > Consejos de Diseño
+            </div>
+            <div class="article-meta">
+                <span class="category">Diseño</span>
+                <span class="date">20 Diciembre 2024</span>
+                <span class="reading-time">8 min lectura</span>
+            </div>
+            <h1>Consejos de Diseño para Llaveros 3D</h1>
+            <p class="article-excerpt">Descubre los secretos del diseño profesional para crear llaveros 3D únicos y atractivos que destaquen entre la competencia.</p>
+        </div>
+    </section>
 
     <!-- Main Content -->
     <main class="article-layout">
