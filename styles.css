@@ -262,15 +262,29 @@ body {
 }
 
 .btn-secondary {
-    background: rgba(255, 255, 255, 0.15);
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    border: 2px solid rgba(255, 255, 255, 0.4);
     backdrop-filter: blur(10px);
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.6);
+    color: #ffffff;
     transform: translateY(-2px);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.btn-secondary:focus {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #ffffff;
+    color: #ffffff;
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 
@@ -314,22 +328,52 @@ section h2 {
 
 .btn-primary {
     background: var(--brand);
-    color: white;
+    color: #ffffff;
+    border: 2px solid var(--brand);
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .btn-primary:hover {
     background: #1d4ed8;
+    border-color: #1d4ed8;
+    color: #ffffff;
     transform: translateY(-2px);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.btn-primary:focus {
+    background: var(--brand);
+    border-color: #ffffff;
+    color: #ffffff;
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .btn-whatsapp {
     background: #25d366;
-    color: white;
+    color: #ffffff;
+    border: 2px solid #25d366;
+    font-weight: 600;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .btn-whatsapp:hover {
     background: #128c7e;
+    border-color: #128c7e;
+    color: #ffffff;
     transform: translateY(-2px);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.btn-whatsapp:focus {
+    background: #25d366;
+    border-color: #ffffff;
+    color: #ffffff;
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .btn-large {
