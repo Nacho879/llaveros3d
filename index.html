@@ -351,10 +351,31 @@
                     <div class="sample-carousel">
                         <div class="carousel-container">
                             <div class="carousel-slide active">
-                                <img src="/assets/carousel/soraire-design-1.jpg" alt="Llaveros personalizados reales - Soraire Design" class="carousel-image" width="768" height="768" loading="lazy">
+                                <img src="/assets/carousel/soraire-design-1.jpg" 
+                                     srcset="/assets/carousel/soraire-design-1-small.jpg 400w,
+                                             /assets/carousel/soraire-design-1-medium.jpg 800w,
+                                             /assets/carousel/soraire-design-1-large.jpg 1200w"
+                                     sizes="(max-width: 480px) 400px,
+                                            (max-width: 768px) 800px,
+                                            1200px"
+                                     alt="Llaveros personalizados reales - Soraire Design" 
+                                     class="carousel-image" 
+                                     width="768" 
+                                     height="768" 
+                                     loading="eager"
+                                     fetchpriority="high">
                             </div>
                             <div class="carousel-slide">
-                                <img src="/assets/carousel/soraire-design-2.jpg" alt="Llaveros personalizados reales - Soraire Design 2" class="carousel-image" width="768" height="770" loading="lazy">
+                                <img src="/assets/carousel/soraire-design-2.jpg" 
+                                     srcset="/assets/carousel/soraire-design-2.jpg 768w,
+                                             /assets/carousel/soraire-design-2.jpg 1200w"
+                                     sizes="(max-width: 768px) 768px,
+                                            1200px"
+                                     alt="Llaveros personalizados reales - Soraire Design 2" 
+                                     class="carousel-image" 
+                                     width="768" 
+                                     height="770" 
+                                     loading="lazy">
                             </div>
                             <div class="carousel-slide">
                                 <img src="/assets/carousel/mercado-libre-1.jpg" alt="Llaveros personalizados 3D - Mercado Libre" class="carousel-image" width="500" height="500" loading="lazy">

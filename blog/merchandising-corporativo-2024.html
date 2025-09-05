@@ -116,7 +116,18 @@
                 <!-- Main Content -->
                 <article class="article-content">
                     <div class="article-image">
-                        <img src="/assets/blog-optimized/merchandising-2024.jpg" alt="Tendencias de merchandising corporativo 2024" width="800" height="600" loading="lazy">
+                        <img src="/assets/blog-optimized/merchandising-2024.jpg" 
+                             srcset="/assets/blog-optimized/merchandising-2024-small.jpg 400w,
+                                     /assets/blog-optimized/merchandising-2024-medium.jpg 800w,
+                                     /assets/blog-optimized/merchandising-2024-large.jpg 1200w"
+                             sizes="(max-width: 480px) 400px,
+                                    (max-width: 768px) 800px,
+                                    1200px"
+                             alt="Tendencias de merchandising corporativo 2024" 
+                             width="800" 
+                             height="600" 
+                             loading="eager"
+                             fetchpriority="high">
                     </div>
 
                     <section id="introduccion">

@@ -133,7 +133,18 @@
                 <!-- Main Content -->
                 <article class="article-content">
                     <div class="article-image">
-                        <img src="/assets/blog-optimized/featured-materiales.jpg" alt="Materiales de impresión 3D para llaveros" width="800" height="600" loading="lazy">
+                        <img src="/assets/blog-optimized/featured-materiales.jpg" 
+                             srcset="/assets/blog-optimized/featured-materiales-small.jpg 400w,
+                                     /assets/blog-optimized/featured-materiales-medium.jpg 800w,
+                                     /assets/blog-optimized/featured-materiales-large.jpg 1200w"
+                             sizes="(max-width: 480px) 400px,
+                                    (max-width: 768px) 800px,
+                                    1200px"
+                             alt="Materiales de impresión 3D para llaveros" 
+                             width="800" 
+                             height="600" 
+                             loading="eager"
+                             fetchpriority="high">
                     </div>
 
                     <section id="introduccion">
