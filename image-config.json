@@ -1,0 +1,69 @@
+{
+  "carousel": {
+    "soraireDesign1": {
+      "jpg": "/assets/carousel/soraire-design-1.jpg",
+      "webp": "/assets/carousel/soraire-design-1.webp",
+      "width": 768,
+      "height": 768,
+      "alt": "Llaveros personalizados reales - Soraire Design"
+    },
+    "soraireDesign2": {
+      "jpg": "/assets/carousel/soraire-design-2.jpg",
+      "webp": "/assets/carousel/soraire-design-2.webp",
+      "width": 768,
+      "height": 770,
+      "alt": "Llaveros personalizados reales - Soraire Design 2"
+    },
+    "mercadoLibre1": {
+      "jpg": "/assets/carousel/mercado-libre-1.jpg",
+      "webp": "/assets/carousel/mercado-libre-1.webp",
+      "width": 500,
+      "height": 500,
+      "alt": "Llaveros personalizados 3D - Mercado Libre"
+    },
+    "prinxLlavero": {
+      "jpg": "/assets/carousel/prinx-llavero.jpg",
+      "webp": "/assets/carousel/prinx-llavero.webp",
+      "width": 500,
+      "height": 500,
+      "alt": "Llavero personalizado 3D - Prinx"
+    },
+    "mercadoLibre2": {
+      "jpg": "/assets/carousel/mercado-libre-2.jpg",
+      "webp": "/assets/carousel/mercado-libre-2.webp",
+      "width": 500,
+      "height": 500,
+      "alt": "Llaveros 3D adicionales - Mercado Libre"
+    },
+    "pockymLlaveros": {
+      "jpg": "/assets/carousel/pockym-llaveros.jpg",
+      "webp": "/assets/carousel/pockym-llaveros.webp",
+      "width": 500,
+      "height": 500,
+      "alt": "Llaveros personalizados - Pockym"
+    }
+  },
+  "blog": {
+    "featuredMateriales": {
+      "jpg": "/assets/blog-optimized/featured-materiales.jpg",
+      "webp": "/assets/blog-optimized/featured-materiales.webp",
+      "width": 800,
+      "height": 600,
+      "alt": "Materiales de impresión 3D para llaveros"
+    },
+    "merchandising2024": {
+      "jpg": "/assets/blog-optimized/merchandising-2024.jpg",
+      "webp": "/assets/blog-optimized/merchandising-2024.webp",
+      "width": 800,
+      "height": 600,
+      "alt": "Tendencias de merchandising corporativo 2024"
+    },
+    "sectorGastronomico": {
+      "jpg": "/assets/blog/caroline-eymond-laritz--PgJiJQeQGM-unsplash.jpg",
+      "webp": "/assets/blog/caroline-eymond-laritz--PgJiJQeQGM-unsplash.webp",
+      "width": 800,
+      "height": 600,
+      "alt": "Llaveros para el sector gastronómico"
+    }
+  }
+}
