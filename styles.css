@@ -18,6 +18,11 @@
     --shadow-lg: 0 10px 25px rgba(0,0,0,.15);
     --shadow-xl: 0 20px 40px rgba(0,0,0,.2);
     --transition: all 0.3s ease;
+    --transition-fast: all 0.2s ease;
+    --transition-slow: all 0.5s ease;
+    --bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-out: cubic-bezier(0, 0, 0.2, 1);
 }
 
 /* Reset y base */
@@ -25,6 +30,66 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+/* Animaciones de entrada */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+/* Clases de animación */
+.animate-fade-in-up {
+    animation: fadeInUp 0.6s var(--smooth) forwards;
+}
+
+.animate-fade-in-left {
+    animation: fadeInLeft 0.6s var(--smooth) forwards;
+}
+
+.animate-fade-in-right {
+    animation: fadeInRight 0.6s var(--smooth) forwards;
+}
+
+.animate-pulse {
+    animation: pulse 2s infinite;
 }
 
 body {
@@ -308,6 +373,14 @@ section h2 {
     padding: 2rem;
     box-shadow: var(--shadow);
     border: 1px solid rgba(0,0,0,0.05);
+    transition: var(--transition);
+    transform: translateY(0);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    transition: var(--transition-fast);
 }
 
 /* Botones */
@@ -321,9 +394,26 @@ section h2 {
     font-weight: 600;
     text-decoration: none;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: var(--transition-fast);
     font-size: 1rem;
     gap: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn:hover::before {
+    left: 100%;
 }
 
 .btn-primary {
@@ -338,8 +428,10 @@ section h2 {
     background: #1d4ed8;
     border-color: #1d4ed8;
     color: #ffffff;
-    transform: translateY(-2px);
+    transform: translateY(-3px) scale(1.02);
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+    transition: var(--transition-fast);
 }
 
 .btn-primary:focus {
@@ -363,8 +455,10 @@ section h2 {
     background: #128c7e;
     border-color: #128c7e;
     color: #ffffff;
-    transform: translateY(-2px);
+    transform: translateY(-3px) scale(1.02);
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.3);
+    transition: var(--transition-fast);
 }
 
 .btn-whatsapp:focus {
@@ -501,6 +595,7 @@ section h2 {
     border-radius: var(--radius);
     font-size: 1rem;
     background: white;
+    transition: var(--transition-fast);
 }
 
 .option-group select:focus,
@@ -508,6 +603,8 @@ section h2 {
     outline: none;
     border-color: var(--brand);
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    transform: translateY(-1px);
+    transition: var(--transition-fast);
 }
 
 
@@ -715,11 +812,13 @@ section h2 {
     width: 100%;
     height: 100%;
     opacity: 0;
-    transition: opacity 0.5s ease-in-out;
+    transform: scale(1.1);
+    transition: all 0.6s var(--smooth);
 }
 
 .carousel-slide.active {
     opacity: 1;
+    transform: scale(1);
 }
 
 .carousel-image {

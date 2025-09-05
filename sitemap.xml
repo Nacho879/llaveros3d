@@ -30,4 +30,28 @@
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
+    <url>
+        <loc>https://llavero3d.com/blog/consejos-diseno-llaveros-3d.html</loc>
+        <lastmod>2024-12-20</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://llavero3d.com/blog/proceso-fabricacion-llaveros-3d.html</loc>
+        <lastmod>2024-12-21</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://llavero3d.com/blog/llaveros-eventos-corporativos.html</loc>
+        <lastmod>2024-12-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://llavero3d.com/blog/tendencias-merchandising-2025.html</loc>
+        <lastmod>2024-12-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
 </urlset>

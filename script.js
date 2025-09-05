@@ -1,6 +1,37 @@
 // Utilidades
 const $ = (id) => document.getElementById(id);
 
+// Función para agregar animaciones de entrada
+function addEntranceAnimations() {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const element = entry.target;
+                const animationType = element.dataset.animation || 'fade-in-up';
+                element.classList.add(`animate-${animationType}`);
+                observer.unobserve(element);
+            }
+        });
+    }, observerOptions);
+
+    // Observar elementos con data-animation
+    document.querySelectorAll('[data-animation]').forEach(el => {
+        observer.observe(el);
+    });
+
+    // Observar secciones principales
+    document.querySelectorAll('section').forEach((section, index) => {
+        section.setAttribute('data-animation', 'fade-in-up');
+        section.style.opacity = '0';
+        observer.observe(section);
+    });
+}
+
 // Función segura para acceder a elementos del DOM
 function safeGetElement(id, fallback = null) {
     const element = document.getElementById(id);
@@ -68,6 +99,9 @@ function initializeApp() {
     
     // Configurar menú móvil
     setupMobileMenu();
+    
+    // Agregar animaciones de entrada
+    addEntranceAnimations();
     
     // Configurar drag & drop
     setupDragAndDrop();
