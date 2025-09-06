@@ -1,19 +1,13 @@
-/* Variables CSS */
+/* Variables CSS - Solo las no críticas */
 :root {
-    --bg: #ffffff;
     --bg-secondary: #f8fafc;
     --card: #f9fafb;
     --muted: #4b5563;
-    --text: #0f172a;
     --text-secondary: #64748b;
-    --brand: #2563eb;
-    --brand-2: #7dd3fc;
-    --primary: #2563eb;
     --accent: #059669;
     --ok: #059669;
     --warn: #f59e0b;
     --error: #dc2626;
-    --radius: 18px;
     --shadow: 0 6px 18px rgba(0,0,0,.08);
     --shadow-lg: 0 10px 25px rgba(0,0,0,.15);
     --shadow-xl: 0 20px 40px rgba(0,0,0,.2);
@@ -23,13 +17,6 @@
     --bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
     --smooth: cubic-bezier(0.4, 0, 0.2, 1);
     --ease-out: cubic-bezier(0, 0, 0.2, 1);
-}
-
-/* Reset y base */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
 }
 
 /* Animaciones de entrada */
@@ -92,51 +79,9 @@
     animation: pulse 2s infinite;
 }
 
-body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    line-height: 1.6;
-    color: var(--text);
-    background: var(--bg);
-}
+/* Utilidades - Solo las no críticas */
 
-/* Utilidades */
-.wrap {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-/* Header */
-.header {
-    position: sticky;
-    top: 0;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(0,0,0,0.08);
-    z-index: 100;
-    padding: 1rem 0;
-}
-
-.header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-weight: 700;
-    font-size: 1.25rem;
-    color: var(--brand);
-}
-
-.nav {
-    display: flex;
-    gap: 2rem;
-    align-items: center;
-}
+/* Navegación - Solo estilos no críticos */
 
 /* Menú hamburguesa */
 .mobile-menu-toggle {
@@ -203,19 +148,7 @@ body {
     border-bottom: none;
 }
 
-.nav-link {
-    color: var(--text);
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 0.95rem;
-    transition: all 0.2s ease;
-    position: relative;
-}
-
-.nav-link:hover {
-    color: var(--brand);
-}
-
+/* Navegación - Solo estilos no críticos */
 .nav-link::after {
     content: '';
     position: absolute;
@@ -229,127 +162,6 @@ body {
 
 .nav-link:hover::after {
     width: 100%;
-}
-
-/* Hero */
-.hero {
-    position: relative;
-    padding: 6rem 0 4rem;
-    background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%);
-    color: white;
-    overflow: hidden;
-}
-
-.hero-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 1;
-}
-
-.hero-pattern {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: 
-        radial-gradient(circle at 20% 80%, rgba(255,255,255,0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(255,255,255,0.1) 0%, transparent 50%),
-        radial-gradient(circle at 40% 40%, rgba(255,255,255,0.05) 0%, transparent 50%);
-}
-
-.hero-content {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-.hero-text h1 {
-    font-size: 3.5rem;
-    margin-bottom: 1.5rem;
-    font-weight: 800;
-    line-height: 1.1;
-}
-
-.highlight {
-    background: linear-gradient(45deg, #ffffff, #e0f2fe);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.hero-subtitle {
-    font-size: 1.25rem;
-    margin-bottom: 2rem;
-    opacity: 0.95;
-    line-height: 1.6;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.hero-features {
-    display: flex;
-    gap: 2rem;
-    margin-bottom: 3rem;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.feature {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-weight: 500;
-    font-size: 0.95rem;
-    opacity: 0.9;
-    padding: 8px 16px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.feature-icon {
-    font-size: 1.2rem;
-}
-
-.hero-cta {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.btn-secondary {
-    background: rgba(255, 255, 255, 0.2);
-    color: #ffffff;
-    border: 2px solid rgba(255, 255, 255, 0.4);
-    backdrop-filter: blur(10px);
-    font-weight: 600;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-}
-
-.btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.3);
-    border-color: rgba(255, 255, 255, 0.6);
-    color: #ffffff;
-    transform: translateY(-2px);
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
-}
-
-.btn-secondary:focus {
-    background: rgba(255, 255, 255, 0.2);
-    border-color: #ffffff;
-    color: #ffffff;
-    outline: 2px solid #ffffff;
-    outline-offset: 2px;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 
@@ -383,24 +195,7 @@ section h2 {
     transition: var(--transition-fast);
 }
 
-/* Botones */
-.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 12px 24px;
-    border: none;
-    border-radius: var(--radius);
-    font-weight: 600;
-    text-decoration: none;
-    cursor: pointer;
-    transition: var(--transition-fast);
-    font-size: 1rem;
-    gap: 8px;
-    position: relative;
-    overflow: hidden;
-}
-
+/* Botones - Solo estilos no críticos */
 .btn::before {
     content: '';
     position: absolute;
@@ -414,24 +209,6 @@ section h2 {
 
 .btn:hover::before {
     left: 100%;
-}
-
-.btn-primary {
-    background: var(--brand);
-    color: #ffffff;
-    border: 2px solid var(--brand);
-    font-weight: 600;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-}
-
-.btn-primary:hover {
-    background: #1d4ed8;
-    border-color: #1d4ed8;
-    color: #ffffff;
-    transform: translateY(-3px) scale(1.02);
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-    box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
-    transition: var(--transition-fast);
 }
 
 .btn-primary:focus {
@@ -470,10 +247,7 @@ section h2 {
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-.btn-large {
-    padding: 16px 32px;
-    font-size: 1.1rem;
-}
+/* Tamaños de botones - Solo estilos no críticos */
 
 .btn-link {
     background: none;
