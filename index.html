@@ -62,7 +62,7 @@
 
     /* Utilidades críticas */
     .wrap {
-        max-width: 1100px;
+        max-width: 1060px;
         margin: 0 auto;
         padding: 0 20px;
     }
@@ -387,11 +387,23 @@
     
     /* Sección de precios integrada */
     .pricing-section {
-        margin-top: 3rem;
-        padding: 2rem;
+        margin-top: 0;
+        padding: 2rem 0 0.5rem 0;
         background: var(--bg-secondary);
-        border-radius: var(--radius);
+        border-radius: 0;
+        border: none;
+        width: 100%;
+        max-width: none;
+    }
+    
+    .pricing-section .wrap {
+        background: white;
+        border-radius: 16px;
+        padding: 2rem;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         border: 1px solid rgba(0,0,0,0.05);
+        max-width: 1060px;
+        margin: 0 auto;
     }
     
     .pricing-header h3 {
@@ -457,131 +469,651 @@
     
     /* Sección del formulario integrada */
     .order-form-section {
-        margin-top: 3rem;
-        padding: 2rem;
-        background: white;
-        border-radius: var(--radius);
-        border: 1px solid rgba(0,0,0,0.05);
-        box-shadow: var(--shadow);
+        margin-top: 0;
+        padding: 2rem 0;
+        background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        border-radius: 16px;
+        border: none;
+        box-shadow: none;
+        overflow: visible;
+        width: 100%;
+        max-width: 1060px;
+        margin: 0 auto;
     }
     
-    .order-form-section .order-header h4 {
-        font-size: 1.3rem;
+    
+    .order-header {
+        background: white;
+        padding: 2rem;
+        text-align: center;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+        border-radius: 16px;
+    }
+    
+    .order-header h4 {
+        font-size: 1.5rem;
         margin-bottom: 0.5rem;
         color: var(--text);
-        text-align: center;
-        border-bottom: 2px solid var(--brand);
-        padding-bottom: 0.5rem;
+        font-weight: 700;
     }
     
-    .order-form-section .order-header p {
-        text-align: center;
+    .order-header p {
         color: var(--text-secondary);
-        margin-bottom: 2rem;
+        margin: 0;
     }
     
-    .order-summary {
-        margin-bottom: 2rem;
-        padding: 1.5rem;
-        background: var(--bg-secondary);
-        border-radius: var(--radius);
-    }
-    
-    .order-summary h5 {
-        font-size: 1.1rem;
-        margin-bottom: 1rem;
-        color: var(--text);
-        text-align: center;
-        font-weight: 600;
-    }
-    
-    .summary-grid {
+    .order-content {
+        padding: 2rem;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1rem;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        align-items: start;
+    }
+    
+    /* Resumen del pedido */
+    .order-summary-card {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem 2rem;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+    
+    .order-summary-card h5 {
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+        color: var(--text);
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .summary-items {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
     }
     
     .summary-item {
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        padding: 0.75rem;
-        background: white;
-        border-radius: var(--radius);
+        gap: 0.75rem;
+        padding: 0.5rem 0.75rem;
+        background: #f8fafc;
+        border-radius: 8px;
         border: 1px solid rgba(0,0,0,0.05);
     }
     
-    .summary-item.total {
-        background: var(--brand);
-        color: white;
-        font-weight: 600;
+    .summary-item .summary-icon {
+        font-size: 1.1rem;
+        width: 20px;
+        text-align: center;
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
     }
     
     .summary-label {
-        font-weight: 500;
+        flex: 1;
+        font-size: 0.9rem;
         color: var(--text-secondary);
-    }
-    
-    .summary-item.total .summary-label {
-        color: white;
+        font-weight: 500;
     }
     
     .summary-value {
         font-weight: 600;
         color: var(--text);
+        font-size: 0.9rem;
+        margin-right: 0.5rem;
     }
     
-    .summary-item.total .summary-value {
+    .summary-total {
+        background: var(--brand);
         color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        text-align: center;
+    }
+    
+    .total-label {
+        display: block;
+        font-size: 0.9rem;
+        margin-bottom: 0.25rem;
+        opacity: 0.9;
+    }
+    
+    .total-value {
+        display: block;
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+    }
+    
+    .total-note {
+        display: block;
+        font-size: 0.8rem;
+        opacity: 0.8;
+    }
+    
+    /* Formulario */
+    .order-form-content {
+        background: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        border: 1px solid rgba(0,0,0,0.05);
     }
     
     .form-section {
-        margin-bottom: 2rem;
+        margin-bottom: 0.5rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 1px solid #e2e8f0;
+    }
+    
+    .form-section:last-of-type {
+        border-bottom: none;
+        margin-bottom: 0;
     }
     
     .form-section h5 {
-        font-size: 1rem;
-        margin-bottom: 1rem;
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
         color: var(--text);
-        border-bottom: 1px solid var(--brand);
-        padding-bottom: 0.5rem;
         font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .section-icon {
+        font-size: 0.9rem;
     }
     
     .form-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 1rem;
+        gap: 0.3rem;
+    }
+    
+    .form-group {
+        margin-bottom: 0.3rem;
+    }
+    
+    .form-group label {
+        display: block;
+        margin-bottom: 0.15rem;
+        font-weight: 500;
+        color: var(--text);
+        font-size: 0.85rem;
+    }
+    
+    .input-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+    
+    .input-icon {
+        position: absolute;
+        left: 14px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1rem;
+        z-index: 2;
+        pointer-events: none;
+        color: #64748b;
+    }
+    
+    .input-wrapper input,
+    .input-wrapper textarea {
+        width: 100% !important;
+        padding: 8px 8px 8px 35px !important;
+        border: 2px solid #e2e8f0 !important;
+        border-radius: 6px !important;
+        font-size: 0.85rem !important;
+        transition: all 0.3s ease !important;
+        background: white !important;
+    }
+    
+    .input-wrapper input:focus,
+    .input-wrapper textarea:focus {
+        outline: none !important;
+        border-color: var(--brand) !important;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+    }
+    
+    .input-wrapper textarea {
+        resize: vertical;
+        min-height: 50px;
     }
     
     .checkbox-group {
-        margin-bottom: 1rem;
+        margin-bottom: 0.3rem;
     }
     
     .checkbox-label {
         display: flex;
         align-items: center;
-        gap: 0.75rem;
+        gap: 0.4rem;
         cursor: pointer;
-        font-size: 0.95rem;
-        color: var(--text);
+        font-size: 0.75rem;
+        color: var(--text-secondary);
+        line-height: 1.2;
+        margin-bottom: 0.2rem;
     }
     
     .checkbox-label input[type="checkbox"] {
-        width: 18px;
-        height: 18px;
+        width: 12px;
+        height: 12px;
         accent-color: var(--brand);
+        margin: 0;
+        flex-shrink: 0;
+    }
+    
+    .terms-section {
+        background: #f8fafc;
+        padding: 0.75rem;
+        border-radius: 6px;
+        border: 1px solid #e2e8f0;
     }
     
     .form-actions {
         text-align: center;
-        margin-top: 2rem;
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid #e2e8f0;
+    }
+    
+    .btn-submit {
+        background: var(--brand);
+        color: white;
+        border: none;
+        padding: 1rem 2rem;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .btn-submit:hover {
+        background: #2563eb;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+    }
+    
+    .btn-submit:active {
+        transform: translateY(0);
+    }
+    
+    .form-note {
+        margin-top: 1rem;
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+    }
+    
+    /* Sección Crea tu llavero corporativo */
+    .creator {
+        background: var(--bg-secondary);
+        padding: 2rem 0;
+    }
+    
+    .creator-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+    
+    .creator-header h2 {
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 1rem;
+    }
+    
+    .creator-header p {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.6;
+    }
+    
+    .product-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        align-items: start;
+    }
+    
+    /* Columna de imagen */
+    .image-column {
+        background: white;
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        border: 1px solid rgba(0,0,0,0.05);
+        position: static !important;
+        top: unset !important;
+    }
+    
+    .upload-section {
+        position: static !important;
+        top: unset !important;
+    }
+    
+    .drop-zone {
+        position: static !important;
+        top: unset !important;
+    }
+    
+    
+    .upload-section h3 {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .drop-zone {
+        border: 3px dashed #e2e8f0;
+        border-radius: 12px;
+        padding: 2rem;
+        transition: all 0.3s ease;
+        background: #f8fafc;
+        text-align: center;
+    }
+    
+    .drop-zone:hover,
+    .drop-zone.dragover {
+        border-color: var(--brand);
+        background: rgba(59, 130, 246, 0.05);
+        transform: translateY(-2px);
+    }
+    
+    .drop-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+    
+    .upload-icon {
+        font-size: 3rem;
+        opacity: 0.6;
+        margin-bottom: 0.5rem;
+    }
+    
+    .drop-content h4 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--text);
+        margin: 0;
+    }
+    
+    .drop-content p {
+        font-size: 1rem;
+        color: var(--text-secondary);
+        margin: 0;
+    }
+    
+    .btn-upload {
+        background: var(--brand);
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+    
+    .btn-upload:hover {
+        background: #2563eb;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+    }
+    
+    .upload-info {
+        margin-top: 0.5rem;
+    }
+    
+    .upload-info small {
+        color: var(--text-secondary);
+        font-size: 0.85rem;
+    }
+    
+    .image-preview {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+    
+    .preview-header h4 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--text);
+        margin: 0;
+        text-align: center;
+    }
+    
+    .image-preview canvas {
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        border: 2px solid #e2e8f0;
+    }
+    
+    .btn-remove-image {
+        background: #ef4444;
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+    }
+    
+    .btn-remove-image:hover {
+        background: #dc2626;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+    }
+    
+    /* Columna de opciones */
+    .options-column {
+        background: white;
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+    
+    .options-card h3 {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: 2rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .options-grid {
+        display: grid;
+        gap: 1.5rem;
+    }
+    
+    .option-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+    
+    .option-group label {
+        font-weight: 600;
+        color: var(--text);
+        font-size: 0.95rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    
+    .option-icon {
+        font-size: 1.1rem;
+    }
+    
+    .select-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+    
+    
+    .select-wrapper select {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #e2e8f0;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        background: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .select-wrapper select:focus {
+        outline: none;
+        border-color: var(--brand);
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+    
+    .select-wrapper select:hover {
+        border-color: #cbd5e1;
     }
     
     .form-note {
         margin-top: 1rem;
         font-size: 0.9rem;
         color: var(--text-secondary);
+    }
+    
+    /* Sección de acciones */
+    .actions-section {
+        margin-top: 0.25rem;
+        text-align: center;
+    }
+    
+    .actions-section .wrap {
+        background: white;
+        border-radius: 16px;
+        padding: 2rem;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        border: 1px solid rgba(0,0,0,0.05);
+        max-width: 1060px;
+        margin: 0 auto;
+    }
+    
+    .actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    
+    /* Carrusel informativo */
+    .info-banner {
+        background: var(--bg-secondary);
+        padding: 2rem 0;
+    }
+    
+    .info-carousel {
+        position: relative;
+        max-width: 1060px;
+        margin: 0 auto;
+    }
+    
+    .info-slides {
+        position: relative;
+        overflow: hidden;
+        border-radius: var(--radius);
+    }
+    
+    .info-slide {
+        display: none;
+        animation: fadeIn 0.5s ease-in-out;
+    }
+    
+    .info-slide.active {
+        display: block;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    
+    .info-card {
+        background: white;
+        border-radius: var(--radius);
+        padding: 3rem;
+        box-shadow: var(--shadow);
+        text-align: center;
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+    
+    .info-card h2 {
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 1.5rem;
+        line-height: 1.2;
+    }
+    
+    .info-card p {
+        font-size: 1.1rem;
+        line-height: 1.7;
+        color: var(--text-secondary);
+        text-align: left;
+    }
+    
+    .info-dots {
+        text-align: center;
+        margin-top: 2rem;
+    }
+    
+    .info-dots .dot {
+        height: 12px;
+        width: 12px;
+        margin: 0 6px;
+        background-color: #bbb;
+        border-radius: 50%;
+        display: inline-block;
+        transition: background-color 0.3s ease;
+        cursor: pointer;
+    }
+    
+    .info-dots .dot.active,
+    .info-dots .dot:hover {
+        background-color: var(--brand);
     }
     
     /* Responsive crítico */
@@ -675,6 +1207,102 @@
         
         section {
             padding: 2rem 0;
+        }
+        
+        .info-banner {
+            padding: 2rem 0;
+        }
+        
+        .info-card {
+            padding: 2rem;
+        }
+        
+        .info-card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .info-card p {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        
+        .info-dots {
+            margin-top: 1.5rem;
+        }
+        
+        .info-dots .dot {
+            height: 10px;
+            width: 10px;
+            margin: 0 4px;
+        }
+        
+        /* Formulario responsive */
+        .order-content {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            padding: 1.5rem;
+        }
+        
+        .order-summary-card {
+            position: static;
+            order: 2;
+        }
+        
+        .order-form-content {
+            order: 1;
+        }
+        
+        
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .input-wrapper input,
+        .input-wrapper textarea {
+            padding: 10px 8px 10px 35px !important;
+            font-size: 16px !important; /* Evita zoom en iOS */
+        }
+        
+        .btn-submit {
+            width: 100%;
+            padding: 1.25rem 2rem;
+            font-size: 1.1rem;
+        }
+        
+        /* Responsive para Crea tu llavero corporativo */
+        .creator-header h2 {
+            font-size: 1.8rem;
+        }
+        
+        .creator-header p {
+            font-size: 1rem;
+        }
+        
+        .product-layout {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        
+        .options-column {
+            order: 2;
+        }
+        
+        .image-column {
+            order: 1;
+        }
+        
+        .drop-zone {
+            padding: 2rem 1rem;
+        }
+        
+        .options-card h3 {
+            font-size: 1.1rem;
+        }
+        
+        .select-wrapper select {
+            padding: 14px 12px 14px 40px;
+            font-size: 16px; /* Evita zoom en iOS */
         }
         
         section h2 {
@@ -1021,21 +1649,43 @@
     <!-- Crea tu llavero corporativo -->
     <section class="creator" id="creador">
         <div class="wrap">
+            <div class="creator-header">
             <h2>Crea tu llavero corporativo</h2>
+                <p>Personaliza tu llavero con tu logo y elige las opciones que mejor se adapten a tu marca</p>
+            </div>
             
             <!-- Layout principal -->
             <div class="product-layout">
-                <!-- Columna izquierda - Imagen -->
+                <!-- Columna izquierda - Imagen y Botones -->
                 <div class="image-column">
                     <div class="upload-section">
+                        <h3>
+                            <span class="section-icon">📤</span>
+                            Sube tu logo
+                        </h3>
                         <div class="drop-zone" id="dropZone">
-                            <div class="drop-content" id="dropContent">
-                                <p>Arrastra tu logo aquí o <button type="button" class="btn-link" onclick="document.getElementById('fileInput').click()">selecciona un archivo</button></p>
-                                <input type="file" id="fileInput" accept="image/*" style="display: none;">
-                            </div>
+                                                    <div class="drop-content" id="dropContent">
+                                <div class="upload-icon">📁</div>
+                                <h4>Arrastra tu logo aquí</h4>
+                                <p>o</p>
+                                <button type="button" class="btn-upload" onclick="document.getElementById('fileInput').click()">
+                                    <span class="btn-icon">📁</span>
+                                    Selecciona un archivo
+                                </button>
+                                <div class="upload-info">
+                                    <small>Formatos: JPG, PNG, SVG • Máximo: 10MB</small>
+                                </div>
+                            <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                        </div>
                             <div class="image-preview" id="imagePreview" style="display: none;">
+                                <div class="preview-header">
+                                    <h4>Vista previa del logo</h4>
+                                </div>
                                 <canvas id="imgCanvas" width="300" height="300"></canvas>
-                                <button type="button" class="btn-remove-image" onclick="removeImage()">✕ Eliminar logo</button>
+                                <button type="button" class="btn-remove-image" onclick="removeImage()">
+                                    <span class="btn-icon">✕</span>
+                                    Eliminar logo
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -1043,36 +1693,61 @@
 
                 <!-- Columna derecha - Opciones -->
                 <div class="options-column">
+                    <div class="options-card">
+                        <h3>
+                            <span class="section-icon">⚙️</span>
+                            Opciones de personalización
+                        </h3>
+                        
                     <div class="options-grid">
                         <div class="option-group">
-                            <label for="estilo">Estilo</label>
+                                <label for="estilo">
+                                    <span class="option-icon">🎨</span>
+                                    Estilo
+                                </label>
+                                <div class="select-wrapper">
                             <select id="estilo">
                                 <option value="photo">Foto completa</option>
                                 <option value="silhouette">Silueta</option>
                             </select>
+                                </div>
                         </div>
 
                         <div class="option-group">
-                            <label for="forma">Forma</label>
+                                <label for="forma">
+                                    <span class="option-icon">⭕</span>
+                                    Forma
+                                </label>
+                                <div class="select-wrapper">
                             <select id="forma">
                                 <option value="round">Redondo</option>
                                 <option value="rect">Rectangular</option>
                                 <option value="pill">Píldora</option>
                                 <option value="silhouette">Silueta</option>
                             </select>
+                                </div>
                         </div>
 
                         <div class="option-group">
-                            <label for="tamaño">Tamaño</label>
+                                <label for="tamaño">
+                                    <span class="option-icon">📏</span>
+                                    Tamaño
+                                </label>
+                                <div class="select-wrapper">
                             <select id="tamaño">
                                 <option value="40">40mm</option>
                                 <option value="50" selected>50mm</option>
                                 <option value="60">60mm</option>
                             </select>
+                                </div>
                         </div>
 
                         <div class="option-group">
-                            <label for="color">Color base</label>
+                                <label for="color">
+                                    <span class="option-icon">🎨</span>
+                                    Color base
+                                </label>
+                                <div class="select-wrapper">
                             <select id="color">
                                 <option value="#ffffff">Blanco</option>
                                 <option value="#000000">Negro</option>
@@ -1083,159 +1758,210 @@
                         </div>
 
                         <div class="option-group">
-                            <label for="cantidad">Cantidad (mínimo 30)</label>
+                            <label for="cantidad">
+                                <span class="option-icon">🔢</span>
+                                Cantidad (mínimo 30)
+                            </label>
                             <input type="number" id="cantidad" min="30" value="30">
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Precios y condiciones -->
-            <div class="pricing-section">
-                <div class="pricing-header">
-                    <h3>Precios y condiciones</h3>
-                    <p>Precios competitivos para pedidos corporativos con materiales de alta calidad</p>
-                </div>
-                <div class="pricing-content">
-                    <div class="price-highlight">
-                        <div class="price-main">
-                            <span class="price-amount">Desde 1,20€</span>
-                            <span class="price-note">+ IVA</span>
-                        </div>
-                        <div class="price-details">
-                            <p><strong>Pedido mínimo:</strong> 30 unidades</p>
-                            <p><strong>Envío:</strong> Se paga aparte</p>
-                            <p><strong>Plazo de entrega:</strong> 5-7 días hábiles</p>
-                        </div>
-                    </div>
-                    <div class="pricing-features">
-                        <div class="feature-item">
-                            <span>Sin costes ocultos</span>
-                        </div>
-                        <div class="feature-item">
-                            <span>Muestra de prueba disponible</span>
-                        </div>
-                        <div class="feature-item">
-                            <span>Facturación incluida</span>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Acciones -->
-            <div class="actions-section">
-                <div class="actions">
-                    <button type="button" class="btn btn-primary" onclick="scrollToForm()">Enviar pedido</button>
-                    <a href="#" class="btn btn-whatsapp" id="whatsappLink" target="_blank" rel="noopener">
-                        Pedir por WhatsApp
-                    </a>
+        </div>
+    </section>
+
+    <!-- Precios y condiciones -->
+    <section class="pricing-section">
+        <div class="wrap">
+            <div class="pricing-header">
+                <h3>Precios y condiciones</h3>
+                <p>Precios competitivos para pedidos corporativos con materiales de alta calidad</p>
+            </div>
+            <div class="pricing-content">
+                <div class="price-highlight">
+                    <div class="price-main">
+                        <span class="price-amount">Desde 1,20€</span>
+                        <span class="price-note">+ IVA</span>
+                    </div>
+                    <div class="price-details">
+                        <p><strong>Pedido mínimo:</strong> 30 unidades</p>
+                        <p><strong>Envío:</strong> Se paga aparte</p>
+                        <p><strong>Plazo de entrega:</strong> 5-7 días hábiles</p>
+                    </div>
+                </div>
+                <div class="pricing-features">
+                    <div class="feature-item">
+                        <span>Sin costes ocultos</span>
+                    </div>
+                    <div class="feature-item">
+                        <span>Muestra de prueba disponible</span>
+                    </div>
+                    <div class="feature-item">
+                        <span>Facturación incluida</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Acciones -->
+    <section class="actions-section">
+        <div class="wrap">
+            <div class="actions">
+                <button type="button" class="btn btn-primary" onclick="scrollToForm()">Enviar pedido</button>
+                <a href="#" class="btn btn-whatsapp" id="whatsappLink" target="_blank" rel="noopener">
+                    Pedir por WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Completa tu pedido -->
+    <section class="order-form-section" id="orderForm">
+        <div class="wrap">
+            <div class="order-header">
+                <h4>Completa tu pedido</h4>
+                <p>Confirma tus datos para recibir tu llavero personalizado</p>
+            </div>
+            
+            <div class="order-content">
+                    <!-- Resumen del pedido -->
+                    <div class="order-summary-card">
+                        <h5>
+                            <span class="summary-icon">📋</span>
+                            Resumen del pedido
+                        </h5>
+                        <div class="summary-items">
+                    <div class="summary-item">
+                                <span class="summary-icon">🔢</span>
+                                <span class="summary-label">Cantidad</span>
+                        <span class="summary-value" id="summaryCantidad">1 unidad</span>
+                    </div>
+                    <div class="summary-item">
+                                <span class="summary-icon">📏</span>
+                                <span class="summary-label">Tamaño</span>
+                        <span class="summary-value" id="summaryTamaño">50mm</span>
+                    </div>
+                    <div class="summary-item">
+                                <span class="summary-icon">🎨</span>
+                                <span class="summary-label">Estilo</span>
+                        <span class="summary-value" id="summaryEstilo">Foto completa</span>
+                    </div>
+                    <div class="summary-item">
+                                <span class="summary-icon">⭕</span>
+                                <span class="summary-label">Forma</span>
+                        <span class="summary-value" id="summaryForma">Redondo</span>
+                    </div>
+                    <div class="summary-item">
+                                <span class="summary-icon">🎨</span>
+                                <span class="summary-label">Color</span>
+                        <span class="summary-value" id="summaryColor">Blanco</span>
+                    </div>
+                    </div>
+                        <div class="summary-total">
+                            <span class="total-label">Precio total</span>
+                            <span class="total-value" id="summaryPrecio">€43.56</span>
+                            <span class="total-note">(sin envío)</span>
                 </div>
             </div>
 
-            <!-- Completa tu pedido -->
-            <div class="order-form-section" id="orderForm">
-                <div class="order-header">
-                    <h4>Completa tu pedido</h4>
-                    <p>Confirma tus datos para recibir tu llavero personalizado</p>
-                </div>
-                
-                <div class="order-summary">
-                    <h5>Resumen del pedido</h5>
-                    <div class="summary-grid">
-                        <div class="summary-item">
-                            <span class="summary-label">Cantidad:</span>
-                            <span class="summary-value" id="summaryCantidad">1 unidad</span>
-                        </div>
-                        <div class="summary-item">
-                            <span class="summary-label">Tamaño:</span>
-                            <span class="summary-value" id="summaryTamaño">50mm</span>
-                        </div>
-                        <div class="summary-item">
-                            <span class="summary-label">Estilo:</span>
-                            <span class="summary-value" id="summaryEstilo">Foto completa</span>
-                        </div>
-                        <div class="summary-item">
-                            <span class="summary-label">Forma:</span>
-                            <span class="summary-value" id="summaryForma">Redondo</span>
-                        </div>
-                        <div class="summary-item">
-                            <span class="summary-label">Color:</span>
-                            <span class="summary-value" id="summaryColor">Blanco</span>
-                        </div>
-                        <div class="summary-item total">
-                            <span class="summary-label">Precio total:</span>
-                            <span class="summary-value" id="summaryPrecio">€43.56 (sin envío)</span>
-                        </div>
-                    </div>
-                </div>
-
-                <form id="pedidoForm" class="order-form-content">
-                    <div class="form-section">
-                        <h5>Datos personales</h5>
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label for="nombre">Nombre completo *</label>
-                                <input type="text" id="nombre" name="nombre" placeholder="Tu nombre completo" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="email">Email *</label>
-                                <input type="email" id="email" name="email" placeholder="tu@email.com" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="telefono">Teléfono</label>
-                                <input type="tel" id="telefono" name="telefono" placeholder="+34 600 000 000">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="ciudad">Ciudad *</label>
-                                <input type="text" id="ciudad" name="ciudad" placeholder="Madrid, Barcelona..." required>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-section">
-                        <h5>Dirección de envío</h5>
+                    <!-- Formulario -->
+            <form id="pedidoForm" class="order-form-content">
+                <div class="form-section">
+                            <h5>
+                                <span class="section-icon">👤</span>
+                                Datos personales
+                            </h5>
+                    <div class="form-grid">
                         <div class="form-group">
-                            <label for="direccion">Dirección completa *</label>
-                            <textarea id="direccion" name="direccion" rows="3" placeholder="Calle, número, piso, código postal..." required></textarea>
+                            <label for="nombre">Nombre completo *</label>
+                                    <div class="input-wrapper">
+                                        <span class="input-icon">👤</span>
+                                        <input type="text" id="nombre" name="nombre" placeholder="Nombre completo" required>
+                                    </div>
                         </div>
-                    </div>
 
-                    <div class="form-section">
                         <div class="form-group">
-                            <label for="notasPedido">Notas especiales</label>
-                            <textarea id="notasPedido" name="notasPedido" rows="2" placeholder="Instrucciones especiales, regalo, etc."></textarea>
+                                    <label for="email">Email de contacto *</label>
+                                    <div class="input-wrapper">
+                                        <span class="input-icon">✉️</span>
+                            <input type="email" id="email" name="email" placeholder="tu@email.com" required>
+                                    </div>
                         </div>
-                    </div>
 
-                    <div class="form-section terms-section">
-                        <div class="form-group checkbox-group">
-                            <label class="checkbox-label">
-                                <input type="checkbox" id="terminos" name="terminos" required>
-                                <span class="checkmark"></span>
-                                Acepto los <a href="#" class="link">términos y condiciones</a> *
-                            </label>
+                        <div class="form-group">
+                            <label for="telefono">Teléfono</label>
+                                    <div class="input-wrapper">
+                                        <span class="input-icon">📞</span>
+                            <input type="tel" id="telefono" name="telefono" placeholder="+34 600 000 000">
+                                    </div>
                         </div>
-                        
-                        <div class="form-group checkbox-group">
-                            <label class="checkbox-label">
-                                <input type="checkbox" id="newsletter" name="newsletter">
-                                <span class="checkmark"></span>
-                                Quiero recibir ofertas especiales por email
-                            </label>
-                        </div>
-                    </div>
 
-                    <div class="form-actions">
-                        <button type="submit" class="btn btn-primary btn-large">
-                            <span class="btn-icon">✓</span>
-                            Confirmar pedido
-                        </button>
-                        <p class="form-note">* Campos obligatorios</p>
+                        <div class="form-group">
+                                    <label for="ciudad">Ciudad y provincia *</label>
+                                    <div class="input-wrapper">
+                                        <span class="input-icon">🏙️</span>
+                            <input type="text" id="ciudad" name="ciudad" placeholder="Madrid, Barcelona..." required>
+                                    </div>
+                        </div>
                     </div>
-                </form>
+                </div>
+
+                <div class="form-section">
+                            <h5>
+                                <span class="section-icon">📍</span>
+                                Dirección de envío
+                            </h5>
+                    <div class="form-group">
+                        <label for="direccion">Dirección completa *</label>
+                                <div class="input-wrapper">
+                                    <span class="input-icon">🏠</span>
+                        <textarea id="direccion" name="direccion" rows="3" placeholder="Calle, número, piso, código postal..." required></textarea>
+                                </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                            <h5>
+                                <span class="section-icon">📝</span>
+                                Notas especiales
+                            </h5>
+                    <div class="form-group">
+                                <label for="notasPedido">Instrucciones adicionales</label>
+                                <div class="input-wrapper">
+                                    <span class="input-icon">💬</span>
+                        <textarea id="notasPedido" name="notasPedido" rows="2" placeholder="Instrucciones especiales, regalo, etc."></textarea>
+                                </div>
+                    </div>
+                </div>
+
+                <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="terminos" name="terminos" required>
+                            <span class="checkmark"></span>
+                            Acepto los <a href="#" class="link">términos y condiciones</a> *
+                        </label>
+                    </div>
+                    
+                <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="newsletter" name="newsletter">
+                            <span class="checkmark"></span>
+                            Quiero recibir ofertas especiales por email
+                        </label>
+                </div>
+
+                <div class="form-actions">
+                            <button type="submit" class="btn btn-primary btn-large btn-submit">
+                        <span class="btn-icon">✓</span>
+                        Confirmar pedido
+                    </button>
+                    <p class="form-note">* Campos obligatorios</p>
+                </div>
+            </form>
+                </div>
             </div>
         </div>
     </section>
@@ -1416,6 +2142,38 @@
         </div>
     </section>
 
+    <!-- Carrusel informativo -->
+    <section class="info-banner" data-animation="fade-in-up">
+        <div class="wrap">
+            <div class="info-carousel">
+                <div class="info-slides">
+                    <div class="info-slide active">
+                        <div class="info-card">
+                            <h2>Llaveros personalizados con logo 3D</h2>
+                            <p>Transforma tu logo en un llavero 3D único y regala a tus clientes un artículo útil y memorable. Nuestros llaveros con logo se producen mediante impresión 3D de alta precisión, lo que permite adaptar la forma, el tamaño y los colores a tus necesidades. Los llaveros son uno de los artículos promocionales más versátiles y asequibles, por lo que son perfectos para ferias, eventos y acciones de fidelización. Su durabilidad y practicidad hacen que la marca esté presente en el día a día de tus clientes. Elige entre diferentes materiales y colores, solicita una muestra y recíbela en pocos días; verás cómo estos llaveros personalizados se convierten en una herramienta de branding efectiva y original.</p>
+                        </div>
+                    </div>
+                    <div class="info-slide">
+                        <div class="info-card">
+                            <h2>Llaveros corporativos y merchandising</h2>
+                            <p>Los llaveros son uno de los artículos promocionales más populares y versátiles, y las empresas los utilizan porque ofrecen una estrategia de merchandising económica y de gran alcance. Comparados con otros regalos publicitarios como ropa o gadgets, su coste es bajo y permiten producir grandes cantidades sin disparar el presupuesto. Además, son objetos de uso cotidiano: la mayoría de personas lleva llaves de casa, del coche o de la oficina y un llavero duradero se convierte en un recordatorio diario de la marca. Por eso los llaveros corporativos tienen un alto índice de conservación, maximizando la visibilidad de tu logotipo durante mucho tiempo. Al poder personalizar formas, colores, mensajes y añadir funciones útiles (como abrebotellas o linterna), cada empresa adapta sus llaveros a su identidad y al público objetivo. Esto los convierte en un recurso perfecto para ferias, eventos de networking, programas de fidelización o kits de bienvenida para nuevos empleados.</p>
+                        </div>
+                    </div>
+                    <div class="info-slide">
+                        <div class="info-card">
+                            <h2>Llaveros ecológicos con impresión 3D</h2>
+                            <p>Cada vez más consumidores y empresas buscan productos sostenibles; este interés también ha llegado al mundo de los llaveros. Con nuestra impresión 3D utilizamos materiales ecológicos como PLA, un plástico biodegradable derivado de recursos renovables (maíz, caña de azúcar) que se ha popularizado por su bajo impacto ambiental. Gracias a la fabricación aditiva, el proceso genera menos residuos porque solo se deposita el material necesario capa a capa. Además, podemos trabajar con filamentos reciclados (PETG reciclado o mezclas con fibras naturales) para reducir aún más la huella de carbono. Elegir llaveros ecológicos con impresión 3D demuestra el compromiso de tu empresa con el medio ambiente y crea una conexión positiva con clientes y empleados. Puedes personalizar la forma, el color y la textura sin renunciar a la sostenibilidad, y comunicar tus valores verdes a través de un artículo práctico y duradero.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="info-dots">
+                    <span class="dot active" onclick="currentInfoSlide(1)"></span>
+                    <span class="dot" onclick="currentInfoSlide(2)"></span>
+                    <span class="dot" onclick="currentInfoSlide(3)"></span>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Materiales y Procesos -->
     <section class="materials-process">

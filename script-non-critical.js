@@ -87,6 +87,11 @@
     const slides = document.querySelectorAll('.carousel-slide');
     const dots = document.querySelectorAll('.dot');
     
+    // Variables globales para el carrusel informativo
+    let currentInfoSlideIndex = 0;
+    const infoSlides = document.querySelectorAll('.info-slide');
+    const infoDots = document.querySelectorAll('.info-dots .dot');
+    
     // Funciones del carrusel
     function showSlide(index) {
         slides.forEach(slide => slide.classList.remove('active'));
@@ -495,6 +500,7 @@
         setupForm();
         setupCarouselAutoPlay();
         updateOrderSummary();
+        initializeInfoCarousel();
     }
     
     // Inicializar cuando el DOM esté listo
@@ -504,9 +510,61 @@
         initializeNonCritical();
     }
     
+    // Funciones del carrusel informativo
+    function showInfoSlide(index) {
+        infoSlides.forEach(slide => slide.classList.remove('active'));
+        infoDots.forEach(dot => dot.classList.remove('active'));
+        
+        if (infoSlides[index]) {
+            infoSlides[index].classList.add('active');
+            infoDots[index].classList.add('active');
+        }
+    }
+    
+    function currentInfoSlide(index) {
+        currentInfoSlideIndex = index - 1;
+        showInfoSlide(currentInfoSlideIndex);
+    }
+    
+    // Auto-play del carrusel informativo
+    function setupInfoCarouselAutoPlay() {
+        const infoCarousel = document.querySelector('.info-carousel');
+        if (!infoCarousel) return;
+        
+        let autoPlayInterval;
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Iniciar auto-play cuando el carrusel es visible
+                    autoPlayInterval = setInterval(() => {
+                        currentInfoSlideIndex = (currentInfoSlideIndex + 1) % infoSlides.length;
+                        showInfoSlide(currentInfoSlideIndex);
+                    }, 8000); // Cambiar cada 8 segundos
+                } else {
+                    // Pausar auto-play cuando no es visible
+                    if (autoPlayInterval) {
+                        clearInterval(autoPlayInterval);
+                    }
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        observer.observe(infoCarousel);
+    }
+    
+    // Inicializar carrusel informativo
+    function initializeInfoCarousel() {
+        if (infoSlides.length > 0) {
+            showInfoSlide(0);
+            setupInfoCarouselAutoPlay();
+        }
+    }
+    
     // Exponer funciones globales necesarias
     window.changeSlide = changeSlide;
     window.currentSlide = currentSlide;
+    window.currentInfoSlide = currentInfoSlide;
     window.removeImage = removeImage;
     window.scrollToForm = scrollToForm;
     
